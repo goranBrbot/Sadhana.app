@@ -1,0 +1,177 @@
+:root {
+  /** CSS DARK THEME PRIMARY COLORS */
+  --color-primary-100: #ffe87c;
+  --color-primary-200: #ffea8b;
+  --color-primary-300: #ffed9a;
+  --color-primary-400: #ffefa9;
+  --color-primary-500: #fff2b7;
+  --color-primary-600: #fff5c6;
+
+  /** CSS DARK THEME SURFACE COLORS */
+  --color-surface-100: #121212;
+  --color-surface-200: #282828;
+  --color-surface-300: #3f3f3f;
+  --color-surface-400: #575757;
+  --color-surface-500: #717171;
+  --color-surface-600: #8b8b8b;
+
+  /** CSS DARK THEME MIXED SURFACE COLORS */
+  --color-surface-mixed-100: #26241c;
+  --color-surface-mixed-200: #3a3831;
+  --color-surface-mixed-300: #504e47;
+  --color-surface-mixed-400: #67655f;
+  --color-surface-mixed-500: #7e7d77;
+  --color-surface-mixed-600: #979591;
+
+  color-scheme: light dark;
+
+  line-height: 1.5;
+  font-weight: 500;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font: 1em/1.618 Inter, sans-serif;
+  color-scheme: only light;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  min-width: 380px;
+  height: 100vh;
+  margin: 0;
+
+  background: hsla(47, 100%, 95%, 1);
+  background: radial-gradient(circle, hsla(47, 100%, 95%, 1) 0%, hsla(58, 100%, 84%, 1) 100%);
+  background: -moz-radial-gradient(circle, hsla(47, 100%, 95%, 1) 0%, hsla(58, 100%, 84%, 1) 100%);
+  background: -webkit-radial-gradient(circle, hsla(47, 100%, 95%, 1) 0%, hsla(58, 100%, 84%, 1) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFFAE8", endColorstr="#FFFCAC", GradientType=1 );
+}
+
+.footer {
+  font-family: "Segoe UI", sans-serif;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+li {
+  display: none;
+}
+
+li:nth-child(-n + 1) {
+  display: list-item;
+}
+
+.logo {
+  height: 6em;
+  padding: 3em;
+  will-change: filter;
+  transition: filter 300ms;
+  filter: drop-shadow(0 0 2em #ffffff);
+}
+
+p {
+  margin: 0;
+}
+
+p:not(:last-child) {
+  margin-bottom: 1.5em;
+}
+
+.location {
+  padding-bottom: 35px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: auto;
+  border: 1px solid hsla(47, 100%, 95%, 1);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.333);
+  box-shadow: 0 0 10px 1px rgba(125, 125, 125, 0.15);
+  backdrop-filter: blur(15px);
+}
+
+.topBar {
+  width: 100%;
+  height: 35px;
+  background-color: #f86900;
+  border-radius: 10px 10px 0 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  padding: 25px;
+}
+
+small {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #fff;
+  margin-inline-start: 20px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: var(--color-surface-300);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: var(--color-surface-100);
+    background: var(--color-surface-mixed-100);
+  }
+
+  .location {
+    color: #ffffff8e;
+  }
+
+  .card {
+    background-color: hsla(47, 100%, 95%, 1);
+  }
+
+  #swarList {
+    background-color: hsla(47, 100%, 95%, 1);
+  }
+
+  .logo {
+    filter: drop-shadow(0 0 2em #fff);
+  }
+
+  mark {
+    background-color: #ffe87c;
+  }
+
+  .footer {
+    color: #fff;
+  }
+}
