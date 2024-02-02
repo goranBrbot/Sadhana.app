@@ -4,6 +4,7 @@ import GeoFindMe from "./components/geoLocation";
 import DayCard from "./components/displayCards/dayCard";
 import FastingCard from "./components/displayCards/fastingCard";
 import Swara from "./components/displayCards/swarCard";
+import Loader from "./components/loader";
 import "./styles/App.css";
 
 function App() {
@@ -35,18 +36,17 @@ function App() {
 
   return (
     <div>
-      <img className='logo' src='yidl-logo-@2x.png' alt='' />
       <div>
-        <div>
-          <GeoFindMe setLocation={handleLocationUpdate} />
-        </div>
-        <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} tithiDay={tithiDay} />}</div>
-        <br />
-        <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
-        <br />
-        <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} />}</div>
+        <Loader />
         <br />
       </div>
+      <GeoFindMe setLocation={handleLocationUpdate} />
+      <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} tithiDay={tithiDay} />}</div>
+      <br />
+      <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
+      <br />
+      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} />}</div>
+      <br />
     </div>
   );
 }

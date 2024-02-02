@@ -175,3 +175,32 @@ hr {
     color: #fff;
   }
 }
+
+#loaderSadhana {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+  color: #fff;
+  margin-inline-start: 20px;
+  text-wrap: wrap;
+}
+
+.loader {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  place-content: center;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 30px;
+}
+
+.item {
+  display: flex;
+  place-content: center;
+  overflow: visible;
+  stroke: #f86900;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
