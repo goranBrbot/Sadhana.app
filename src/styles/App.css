@@ -26,6 +26,10 @@
   /* only light onemogućuje dark mode by OS */
   color-scheme: only light;
 
+  /* ✓ Use System Font Stack */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+
   line-height: 1.5;
   font-weight: 500;
 
@@ -33,10 +37,18 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* ✓ Avoid Content Selection */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+a {
+  -webkit-touch-callout: none;
 }
 
 body {
-  font: 1em/1.618 "Roboto", sans-serif;
+  font-size: 1em/1.618;
   color: var(--color-surface-300);
   display: flex;
   flex-direction: column;
@@ -47,21 +59,7 @@ body {
   min-width: 380px;
   height: 100vh;
   margin: 0;
-  background: rgb(255, 250, 225);
-  background: radial-gradient(circle, rgb(255, 250, 225) 0%, rgb(255, 232, 124) 90%);
-  background: -moz-radial-gradient(circle, rgb(255, 250, 225) 0%, rgb(255, 232, 124) 90%);
-  background: -webkit-radial-gradient(circle, rgb(255, 250, 225) 0%, rgb(255, 232, 124) 90%);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFFAE8", endColorstr="#FFFCAC", GradientType=1 );
-}
-
-.footer {
-  font-family: "Segoe UI", sans-serif;
-  position: fixed;
-  bottom: 0em;
-  height: 8vh;
-  text-align: center;
-  font-size: 0.7rem;
-  font-weight: 500;
+  background-color: #ffe77acc;
 }
 
 ul {
@@ -78,8 +76,8 @@ li:nth-child(-n + 1) {
 }
 
 .logo {
-  height: 6em;
-  padding: 2em;
+  height: 5em;
+  padding: 1em;
   will-change: filter;
   transition: filter 300ms;
   filter: drop-shadow(0 0 2em #ffffff);
@@ -104,7 +102,7 @@ p:not(:last-child) {
   height: auto;
   border: 1px solid hsla(47, 100%, 95%, 1);
   border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.333);
+  background-color: hsla(47, 100%, 95%, 1);
   backdrop-filter: blur(15px);
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -115,7 +113,6 @@ p:not(:last-child) {
   width: auto;
   height: 35px;
   background-color: #f86900;
-  border: 1px solid hsla(47, 100%, 95%, 1);
   border-radius: 12px 12px 0 0;
   text-align: left;
 }
@@ -125,7 +122,6 @@ p:not(:last-child) {
 }
 
 small {
-  font-family: "Roboto", sans-serif;
   font-size: 0.7em;
   font-weight: 700;
   color: #fff;
@@ -137,43 +133,6 @@ hr {
   height: 1px;
   background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
 }
-
-/* @media (prefers-color-scheme: light) {
-  body {
-    color: var(--color-surface-300);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    color: var(--color-surface-100);
-    background: var(--color-surface-mixed-100);
-  }
-
-  .location {
-    color: #ffffff8e;
-  }
-
-  .card {
-    background-color: hsla(47, 100%, 95%, 1);
-  }
-
-  #swarList {
-    background-color: hsla(47, 100%, 95%, 1);
-  }
-
-  .logo {
-    filter: drop-shadow(0 0 2em #fff);
-  }
-
-  mark {
-    background-color: #ffe87c;
-  }
-
-  .footer {
-    color: #fff;
-  }
-} */
 
 #loaderSadhana {
   font-size: 2em;

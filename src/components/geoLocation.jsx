@@ -62,7 +62,7 @@ export default function GeoFindMe({ setLocation }) {
           transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
         >
           <>
-            <img className='logo' src='yidl-logo-@2x.png' alt='yoga in daily life logo' />
+            <img className='logo' src='favicon.svg' alt='Om' />
             <div>
               <span>{city}</span>
               <br />
