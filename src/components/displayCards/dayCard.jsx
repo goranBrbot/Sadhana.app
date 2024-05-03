@@ -37,7 +37,7 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
     >
       <div className='card'>
         <div className='topBar'>
-          <small>DAILY TIME</small>
+          <small>DAY TIME</small>
         </div>
         <div className='container'>
           <span>{todayDayDate}</span>

@@ -61,7 +61,7 @@ const Swara = ({ sunrise, tithiDay }) => {
     >
       <div className='card'>
         <div className='topBar'>
-          <small>DAY STARTS WITH ..</small>
+          <small>SWAR TIME</small>
         </div>
         <div className='container'>
           <ul>

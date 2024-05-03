@@ -63,10 +63,11 @@ export default function GeoFindMe({ setLocation }) {
         >
           <>
             <img className='logo' src='yidl-logo-@2x.png' alt='yoga in daily life logo' />
-            <span>{city}</span>
-            <br />
-            <span>{coords}</span>
-            <br />
+            <div>
+              <span>{city}</span>
+              <br />
+              <span>{coords}</span>
+            </div>
           </>
         </motion.div>
       )}

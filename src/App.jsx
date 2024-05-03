@@ -4,7 +4,7 @@ import GeoFindMe from "./components/geoLocation";
 import DayCard from "./components/displayCards/dayCard";
 import FastingCard from "./components/displayCards/fastingCard";
 import Swara from "./components/displayCards/swarCard";
-import Loader from "./components/loader";
+// import Loader from "./components/loader";
 import "./styles/App.css";
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
   const [sunset, setSunset] = useState(null);
   const [tithiDay, setTithiDay] = useState(null);
   const [dataReady, setDataReady] = useState(false);
+  // const [loader, setLoader] = useState(false);
 
   const handleLocationUpdate = (newLocation) => {
     const pullLocation = newLocation;
@@ -30,16 +31,14 @@ function App() {
     console.log(calculatedTithiDay);
 
     setDataReady(true);
+    // setLoader(true);
   };
 
   console.log(location);
 
   return (
     <div>
-      <div>
-        <Loader />
-        <br />
-      </div>
+      {/* <div>{ <Loader isVisible={loader} /> }</div> */}
       <GeoFindMe setLocation={handleLocationUpdate} />
       <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} tithiDay={tithiDay} />}</div>
       <br />
