@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      injectRegister: "script",
       registerType: "prompt",
       manifest: {
         name: "Yoga In Daily Life Sadhana",
