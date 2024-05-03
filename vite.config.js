@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       injectRegister: "script",
-      registerType: "autoUpdate",
+      registerType: "prompt",
       manifest: {
         name: "Yoga In Daily Life Sadhana",
         short_name: "Sadhana",
