@@ -15,7 +15,7 @@ export default defineConfig({
           "Sadhana is an application created for the purpose of easy and complete access to the necessary information for regular yoga sadhana.",
         display: "standalone",
         orientation: "portrait",
-        theme_color: "#f86900",
+        theme_color: "#ffe77acc",
         background_color: "#ffe77acc",
         icons: [
           {
