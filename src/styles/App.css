@@ -1,38 +1,18 @@
 :root {
-  /** CSS DARK THEME PRIMARY COLORS */
-  --color-primary-100: #ffe87c;
-  --color-primary-200: #ffea8b;
-  --color-primary-300: #ffed9a;
-  --color-primary-400: #ffefa9;
-  --color-primary-500: #fff2b7;
-  --color-primary-600: #fff5c6;
+  /* ✓ COLORS */
+  --color-main: rgb(248, 105, 0);
+  --color-light-bkg: rgb(253, 250, 237);
+  --color-black: #272727;
+  --color-white: #ffffff;
 
-  /** CSS DARK THEME SURFACE COLORS */
-  --color-surface-100: #121212;
-  --color-surface-200: #282828;
-  --color-surface-300: #3f3f3f;
-  --color-surface-400: #575757;
-  --color-surface-500: #717171;
-  --color-surface-600: #8b8b8b;
-
-  /** CSS DARK THEME MIXED SURFACE COLORS */
-  --color-surface-mixed-100: #26241c;
-  --color-surface-mixed-200: #3a3831;
-  --color-surface-mixed-300: #504e47;
-  --color-surface-mixed-400: #67655f;
-  --color-surface-mixed-500: #7e7d77;
-  --color-surface-mixed-600: #979591;
-
-  /* only light onemogućuje dark mode by OS */
-  color-scheme: only dark;
+  color-scheme: only light; /* only light onemogućuje dark mode by OS */
 
   /* ✓ Use System Font Stack */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
 
   line-height: 1.5;
-  font-weight: 500;
-
+  font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -49,8 +29,8 @@ a {
 
 body {
   font-size: 1em/1.618;
-  color: var(--color-surface-300);
-  background-color: rgb(255, 232, 124);
+  color: var(--color-black);
+  background-color: var(--color-light-bkg);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -80,7 +60,7 @@ li:nth-child(-n + 1) {
   padding: 1em;
   will-change: filter;
   transition: filter 300ms;
-  filter: drop-shadow(0 0 3em #ffffff);
+  filter: drop-shadow(0 0 1em var(--color-white));
 }
 
 p {
@@ -100,9 +80,9 @@ p:not(:last-child) {
   flex-direction: column;
   width: auto;
   height: auto;
-  border: 1px solid hsla(47, 100%, 95%, 1);
+  border: 1px solid var(--color-light-bkg);
   border-radius: 12px;
-  background-color: hsla(47, 100%, 95%, 1);
+  background-color: var(--color-white);
   backdrop-filter: blur(15px);
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -112,7 +92,7 @@ p:not(:last-child) {
   align-items: center;
   width: auto;
   height: 35px;
-  background-color: #f86900;
+  background-color: var(--color-main);
   border-radius: 12px 12px 0 0;
   text-align: left;
 }
@@ -124,7 +104,7 @@ p:not(:last-child) {
 small {
   font-size: 0.7em;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-white);
   margin-inline-start: 20px;
 }
 
@@ -134,7 +114,7 @@ hr {
   background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
 }
 
-#loaderSadhana {
+/* #loaderSadhana {
   font-size: 2em;
   font-weight: 700;
   color: #fff;
@@ -164,3 +144,4 @@ hr {
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+ */
