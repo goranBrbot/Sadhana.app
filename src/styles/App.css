@@ -50,6 +50,7 @@ a {
 body {
   font-size: 1em/1.618;
   color: var(--color-surface-300);
+  background-color: #ffe77acc;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -59,7 +60,6 @@ body {
   min-width: 380px;
   height: 100vh;
   margin: 0;
-  background-color: #ffe77acc;
 }
 
 ul {
@@ -80,7 +80,7 @@ li:nth-child(-n + 1) {
   padding: 1em;
   will-change: filter;
   transition: filter 300ms;
-  filter: drop-shadow(0 0 2em #ffffff);
+  filter: drop-shadow(0 0 3em #ffffff);
 }
 
 p {
@@ -124,7 +124,7 @@ p:not(:last-child) {
 small {
   font-size: 0.7em;
   font-weight: 700;
-  color: #fff;
+  color: #ffffff;
   margin-inline-start: 20px;
 }
 

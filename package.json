@@ -1,7 +1,10 @@
 {
   "name": "sadhana.app",
+  "description": "Sadhana is an application created for the purpose of easy and complete access to the necessary information for regular yoga sadhana.",
+  "keywords": ["web application", "PWA app", "yoga", "sadhana"],
+  "author": "Goran Brbot",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
