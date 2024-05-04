@@ -114,6 +114,17 @@ hr {
   background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
 }
 
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  body {
+    height: auto;
+    min-width: fit-content;
+  }
+  .logo {
+    margin-top: 2em;
+  }
+}
+
 /* #loaderSadhana {
   font-size: 2em;
   font-weight: 700;
