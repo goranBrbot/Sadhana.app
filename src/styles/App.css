@@ -50,7 +50,7 @@ a {
 body {
   font-size: 1em/1.618;
   color: var(--color-surface-300);
-  background-color: #ffe77acc;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
