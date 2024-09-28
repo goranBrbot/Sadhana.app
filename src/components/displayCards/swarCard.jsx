@@ -115,14 +115,20 @@ const Swara = ({ sunrise, tithiDay, onTextGenerated }) => {
                 <CloseIcon />
               </IconButton>
               <DialogContent dividers>
-                <Typography gutterBottom>Shiv Swarodaya shastra (63-64 verse).</Typography>
                 <Typography gutterBottom>
-                  During the first three days of “Shuklapaksha” (the bright fortnight), the Ida flows and then alternates. (1st,2nd,3rd-IDA, 4th,5th,6th Pingla, thus they keep alternating). While,
-                  conversely, during the first three days of “Krishnapaksha” (the dark fortnight), the Pingala flows first. (1st,2nd,3rd PINGLA, 4th 5th,6th IDA thus they alternate).
+                  We calculate the active swara (dominant nostril) with which the current lunar day begins at sunrise based on verses 63-64 of Shiv Swarodaya shastra.
                 </Typography>
                 <Typography gutterBottom>
-                  In the bright fortnight, the lunar swara (Ida) rises from the time of sunrise and continues till the time span of two & a half Ghadis (60 minutes). In the dark fortnight, the solar
-                  Swara (Pingala) rises first. So, these swaras flow alternately for a period of two-and-a half ghadis (60 minutes) throughout the twenty four hours of a day.
+                  <strong>
+                    &quot;During the first three days of “Shuklapaksha” (the bright fortnight), the Ida flows and then alternates. (1st,2nd,3rd-IDA, 4th,5th,6th Pingla, thus they keep alternating).
+                    While, conversely, during the first three days of “Krishnapaksha” (the dark fortnight), the Pingala flows first. (1st,2nd,3rd PINGLA, 4th 5th,6th IDA thus they alternate).&quot;
+                  </strong>
+                </Typography>
+                <Typography gutterBottom>
+                  <strong>
+                    &quot;In the bright fortnight, the lunar swara (Ida) rises from the time of sunrise and continues till the time span of two & a half Ghadis (60 minutes). In the dark fortnight, the
+                    solar Swara (Pingala) rises first. So, these swaras flow alternately for a period of two-and-a half ghadis (60 minutes) throughout the twenty four hours of a day.&quot;
+                  </strong>
                 </Typography>
               </DialogContent>
             </BootstrapDialog>

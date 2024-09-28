@@ -107,11 +107,14 @@ export default function FastingCard({ tithiDay }) {
                 <CloseIcon />
               </IconButton>
               <DialogContent dividers>
-                <Typography gutterBottom></Typography>
-                <Typography gutterBottom></Typography>
+                <Typography gutterBottom>Here are three main lunar phases for fasting.</Typography>
                 <Typography gutterBottom>
-                  On the eleventh day of each lunar cycle, the moon forms a trine with the earth and the sun during which the distance between the moon and sun is in the range of 120-132 degrees on
-                  Shulka Ekadashi and in a range of 300-312 degrees on Krishna Ekadashi.
+                  <strong>Amāvásyā</strong> is the lunar phase of the new moon and <strong>Pūrṇimā</strong> is the lunar phase of the full moon.
+                </Typography>
+                <Typography gutterBottom>
+                  While on the eleventh day of each lunar cycle, the Moon forms a trine with the Earth and the Sun during which the distance between the Moon and the Sun is in the range of 120-132
+                  degrees on <strong>Shukla Pakṣa Ekadashi</strong> and in the range of 300-312 degrees on <strong>Kṛṣṇa Pakṣa Ekadashi</strong>. Therefore, Ēkādaśī is the eleventh lunar day (tithi)
+                  in the waxing (Shukla Pakṣa) and waning (Kṛṣṇa Pakṣa) lunar cycle.
                 </Typography>
               </DialogContent>
             </BootstrapDialog>

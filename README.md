@@ -9,13 +9,11 @@ The application works on the basis of permitted access to the user's location an
 **PLANIRANJE**
 _ver. "1.0.1"_
 parsing CSS with Autoprefixer (adds vendor prefixes)
-bug fix - na sami dan Amavasye prebacuje se slijedeći datum (prikaz Danas!)
 bug fix - lokacija bez broja ulice ili sela .. "undefined"
 bug fix - ekadashi ne radi dobro, prije kraja mj. pokazuje ne slijedeći period nego onaj iza ..
 
 _"1.1.1"_
-Dodati **notifikacije** za post i švaru
-Dodati opise svih kartica
+Dodati **notifikacije** za post
 Dodati Festivale
 Dodati asanaPlaner ???
 

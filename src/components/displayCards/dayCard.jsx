@@ -83,17 +83,20 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
               </IconButton>
               <DialogContent dividers>
                 <Typography gutterBottom>
-                  The application works on the basis of permitted access to the user location and the exact time of sunrise at that location. Based on the above, it calculates Brahmamuhurta, Tithi
-                  (lunar day and bright/dark fortnight), Amavasya, Purnima, Ekadashi and the active swara of the current lunar day.
+                  The application works based on the allowed access to the user location. By granting access to the user location, current data on the{" "}
+                  <strong>geographic latitude and longitude</strong> of that location is obtained. Taking into account the obtained location, the current <strong>sunrise</strong> and sunset visible
+                  from that location are calculated.
                 </Typography>
                 <Typography gutterBottom>
-                  Tithi is a lunar day which is approximately 1/30th of the time it takes the Moon to orbit the Earth. Thus Tithi is a period in which the difference between the longitudes of Moon and
-                  Sun is exactly 12°. Tithi may begin at varying times of the day and may also vary in duration from approximately 19 to 26 hours.
+                  After calculating the sunrise by subtracting 96 minutes from the sunrise we calculate the <strong>Brahmamuhurta</strong> time lasting 48 minutes.
                 </Typography>
                 <Typography gutterBottom>
-                  A particular day is ruled by the Tithi prevailed on that day at sunrise time, but the Tithi can change anytime of the day or night as it is not based on the solar day but on the
-                  situation of the Moon in relation to the Sun.
+                  Then we calculate the <strong>Tithi</strong> (lunar day and bright <strong>Shukla Pakṣa</strong> - dark <strong>Kṛṣṇa Navamī</strong> fortnight) which is approximately 1/30th of the
+                  time it takes the Moon to go around the Earth, i.e. the period in which the difference between the longitudes of the Moon and the Sun is exactly 12°. A Tithi can start at different
+                  times of the day and can also vary in duration from approximately 19 to 26 hours so a particular day is governed by the Tithi prevailing on that day at the time of sunrise, but it
+                  can change at any time of the day or night as it is not based on a solar day, but on the position of the Moon in relation to the Sun.
                 </Typography>
+                <Typography gutterBottom>The above calculations are the basis for further calculations of other application possibilities.</Typography>
               </DialogContent>
             </BootstrapDialog>
           </React.Fragment>
