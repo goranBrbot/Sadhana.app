@@ -1,7 +1,16 @@
+import * as React from "react";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import InfoSharpIcon from "@mui/icons-material/InfoSharp";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 
 const Swara = ({ sunrise, tithiDay, onTextGenerated }) => {
   const idaDays = [1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21, 25, 26, 27];
@@ -59,6 +68,24 @@ const Swara = ({ sunrise, tithiDay, onTextGenerated }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sunrise, tithiDay]);
 
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -68,6 +95,38 @@ const Swara = ({ sunrise, tithiDay, onTextGenerated }) => {
       <div className='card'>
         <div className='topBar'>
           <small>SWAR TIME</small>
+          <React.Fragment>
+            <IconButton variant='text' size='small' style={{ marginLeft: "auto", marginRight: "5px" }} onClick={handleClickOpen}>
+              <InfoSharpIcon variant='contained' fontSize='small' style={{ color: "rgba(253, 250, 237, 0.5)" }}></InfoSharpIcon>
+            </IconButton>
+            <BootstrapDialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={open}>
+              <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
+                Swara information
+              </DialogTitle>
+              <IconButton
+                aria-label='close'
+                onClick={handleClose}
+                sx={(theme) => ({
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: theme.palette.grey[500],
+                })}>
+                <CloseIcon />
+              </IconButton>
+              <DialogContent dividers>
+                <Typography gutterBottom>Shiv Swarodaya shastra (63-64 verse).</Typography>
+                <Typography gutterBottom>
+                  During the first three days of “Shuklapaksha” (the bright fortnight), the Ida flows and then alternates. (1st,2nd,3rd-IDA, 4th,5th,6th Pingla, thus they keep alternating). While,
+                  conversely, during the first three days of “Krishnapaksha” (the dark fortnight), the Pingala flows first. (1st,2nd,3rd PINGLA, 4th 5th,6th IDA thus they alternate).
+                </Typography>
+                <Typography gutterBottom>
+                  In the bright fortnight, the lunar swara (Ida) rises from the time of sunrise and continues till the time span of two & a half Ghadis (60 minutes). In the dark fortnight, the solar
+                  Swara (Pingala) rises first. So, these swaras flow alternately for a period of two-and-a half ghadis (60 minutes) throughout the twenty four hours of a day.
+                </Typography>
+              </DialogContent>
+            </BootstrapDialog>
+          </React.Fragment>
         </div>
         <div className='container'>
           <ul>

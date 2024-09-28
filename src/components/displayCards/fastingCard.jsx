@@ -1,7 +1,16 @@
+import * as React from "react";
 import { format } from "date-fns";
 import { SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import InfoSharpIcon from "@mui/icons-material/InfoSharp";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 
 export default function FastingCard({ tithiDay }) {
   function amavasya() {
@@ -29,14 +38,8 @@ export default function FastingCard({ tithiDay }) {
     const kpEkadashiStart = SearchMoonPhase(300, today, 30);
     const kpEkadashiEnd = SearchMoonPhase(312, today, 30);
 
-    const spDate = `${format(spEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(
-      spEkadashiEnd.date,
-      "dd.MM.yyyy kk:mm"
-    )}h`;
-    const kpDate = `${format(kpEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(
-      kpEkadashiEnd.date,
-      "dd.MM.yyyy kk:mm"
-    )}h`;
+    const spDate = `${format(spEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(spEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
+    const kpDate = `${format(kpEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(kpEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
 
     if (tithiDay < 15 && spEkadashiStart != null && spEkadashiEnd != null) {
       return (
@@ -57,6 +60,24 @@ export default function FastingCard({ tithiDay }) {
     } else if (tithiDay == 11) return "Ekadashi is today!";
   }
 
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -66,6 +87,35 @@ export default function FastingCard({ tithiDay }) {
       <div className='card'>
         <div className='topBar'>
           <small>FASTING TIME</small>
+          <React.Fragment>
+            <IconButton variant='text' size='small' style={{ marginLeft: "auto", marginRight: "5px" }} onClick={handleClickOpen}>
+              <InfoSharpIcon variant='contained' fontSize='small' style={{ color: "rgba(253, 250, 237, 0.5)" }}></InfoSharpIcon>
+            </IconButton>
+            <BootstrapDialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={open}>
+              <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
+                Fasting information
+              </DialogTitle>
+              <IconButton
+                aria-label='close'
+                onClick={handleClose}
+                sx={(theme) => ({
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: theme.palette.grey[500],
+                })}>
+                <CloseIcon />
+              </IconButton>
+              <DialogContent dividers>
+                <Typography gutterBottom></Typography>
+                <Typography gutterBottom></Typography>
+                <Typography gutterBottom>
+                  On the eleventh day of each lunar cycle, the moon forms a trine with the earth and the sun during which the distance between the moon and sun is in the range of 120-132 degrees on
+                  Shulka Ekadashi and in a range of 300-312 degrees on Krishna Ekadashi.
+                </Typography>
+              </DialogContent>
+            </BootstrapDialog>
+          </React.Fragment>
         </div>
         <div className='container'>
           <span>{amavasya()}</span>

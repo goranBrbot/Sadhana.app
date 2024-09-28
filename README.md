@@ -4,7 +4,7 @@
 
 _ver. "1.0.0"_
 Initial release of PWA application for calculation of active swara according to Shiv Swarodaya shastra.
-The application works on the basis of permitted access to the user's location and the exact time of sunrise at that location. Based on the above, it calculates Brahmamuhurta, Tithi (and bright/dark fortnight), Amavasya, Purnima, Ekadashi and the active swara of the current lunar day.
+The application works on the basis of permitted access to the user's location and the exact time of sunrise at that location. Based on the above, it calculates Brahmamuhurta, Tithi (lunar day and bright/dark fortnight), Amavasya, Purnima, Ekadashi and the active swara of the current lunar day.
 
 **PLANIRANJE**
 _ver. "1.0.1"_
