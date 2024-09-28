@@ -7,12 +7,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "prompt",
+      registerType: "autoUpdate",
+      devOptions: {
+        enabled: true, // Omogućuje serviceWorker u razvoju
+      },
       manifest: {
         name: "Yoga In Daily Life Sadhana",
         short_name: "Sadhana",
-        description:
-          "Sadhana is an application created for the purpose of easy and complete access to the necessary information for regular yoga sadhana.",
+        description: "Sadhana is an application created for the purpose of easy and complete access to the necessary information for regular yoga sadhana.",
         display: "standalone",
         orientation: "portrait",
         theme_color: "rgb(253, 250, 237)",

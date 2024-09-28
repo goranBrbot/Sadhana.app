@@ -19,6 +19,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* ✓ Avoid Content Selection */
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -31,11 +33,22 @@ body {
   font-size: 1em/1.618;
   color: var(--color-black);
   background-color: var(--color-light-bkg);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -ms-flex-line-pack: center;
   align-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   min-width: 380px;
   height: 100vh;
@@ -59,7 +72,12 @@ li:nth-child(-n + 1) {
   height: 5em;
   padding: 1em;
   will-change: filter;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
   transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  -webkit-filter: drop-shadow(0 0 1em var(--color-white));
   filter: drop-shadow(0 0 1em var(--color-white));
 }
 
@@ -76,19 +94,31 @@ p:not(:last-child) {
 }
 
 .card {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   width: auto;
   height: auto;
   border: 1px solid var(--color-light-bkg);
   border-radius: 12px;
   background-color: var(--color-white);
+  -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
+  -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .topBar {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   width: auto;
   height: 35px;
@@ -105,12 +135,22 @@ small {
   font-size: 0.7em;
   font-weight: 700;
   color: var(--color-white);
+  -webkit-margin-start: 20px;
   margin-inline-start: 20px;
 }
 
 hr {
   border: 0;
   height: 1px;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(248, 103, 0, 0.1)),
+    color-stop(#f86900),
+    to(rgba(248, 103, 0, 0.1))
+  );
+  background-image: -o-linear-gradient(left, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
   background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
 }
 
@@ -118,6 +158,8 @@ hr {
   /* For mobile phones: */
   body {
     height: auto;
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
     min-width: fit-content;
   }
   .logo {
