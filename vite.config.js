@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      injectRegister: "auto",
       devOptions: {
         enabled: true, // Omogućuje serviceWorker u razvoju
       },
@@ -51,7 +52,15 @@ export default defineConfig({
         workbox: {
           runtimeCaching: [
             {
-              globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+              urlPattern: /^https:\/\/nominatim\.openstreetmap\.org\//,
+              handler: "NetworkFirst",
+              options: {
+                cacheName: "osm-cache",
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+                },
+              },
             },
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -99,4 +108,11 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    terserOptions: {
+      compress: {
+        drop_console: true, // This removes all console.log() in production
+      },
+    },
+  },
 });

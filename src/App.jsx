@@ -37,6 +37,23 @@ function App() {
     // setLoader(true);
   };
 
+  /*const publicVapidKey = process.env.VITE_VAPID_PUBLIC_KEY;*/
+  const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+
+  // Funkcija za konverziju VAPID ključa iz Base64 formata
+  function urlBase64ToUint8Array(base64String) {
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
   useEffect(() => {
     async function requestNotificationPermission() {
       if ("Notification" in window && "serviceWorker" in navigator && "PushManager" in window) {
@@ -49,6 +66,35 @@ function App() {
             console.log("Korisnik je odbio dozvolu za prikazivanje notifikacija.");
           }
         }
+      }
+    }
+
+    async function subscribeUser() {
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+        });
+        console.log("Korisnik je pretplaćen:", subscription);
+        /*
+        // Ovdje možeš dobiti p256dh i auth ključeve
+        const p256dh = subscription.getKey("p256dh");
+        const auth = subscription.getKey("auth");
+
+        console.log("p256dh:", btoa(String.fromCharCode(...new Uint8Array(p256dh))));
+        console.log("auth:", btoa(String.fromCharCode(...new Uint8Array(auth)))); */
+
+        // Pošalji pretplatu backend serveru
+        await fetch("http://localhost:3000/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(subscription),
+        });
+      } catch (error) {
+        console.error("Greška prilikom pretplate korisnika na push notifikacije:", error);
       }
     }
 
@@ -88,10 +134,12 @@ function App() {
     }
 
     if (dataReady && !notificationSent) {
-      requestNotificationPermission();
-      scheduleNotification();
+      requestNotificationPermission().then(() => {
+        subscribeUser(); // Poziv na pretplatu
+        scheduleNotification(); // Planiranje slanja notifikacije
+      });
     }
-  }, [dataReady, sunrise, tithiDay, swaraText, notificationSent]);
+  }, [publicVapidKey, dataReady, sunrise, tithiDay, swaraText, notificationSent]);
 
   return (
     <div>
