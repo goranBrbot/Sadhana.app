@@ -77,8 +77,8 @@ function App() {
           applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
         });
         console.log("Korisnik je pretplaćen:", subscription);
-        /*
-        // Ovdje možeš dobiti p256dh i auth ključeve
+
+        /* // Ovdje možeš dobiti p256dh i auth ključeve
         const p256dh = subscription.getKey("p256dh");
         const auth = subscription.getKey("auth");
 
@@ -86,7 +86,7 @@ function App() {
         console.log("auth:", btoa(String.fromCharCode(...new Uint8Array(auth)))); */
 
         // Pošalji pretplatu backend serveru
-        await fetch("https://sadhana-app.vercel.app/subscribe", {
+        await fetch("http://localhost:5173/subscribe", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -96,6 +96,20 @@ function App() {
       } catch (error) {
         console.error("Greška prilikom pretplate korisnika na push notifikacije:", error);
       }
+    }
+
+    function scheduleNotification() {
+      const now = new Date();
+      const nextSunRise = SearchRiseSet("Sun", location, +1, new Date(), 1, 0.0);
+      const sunriseTime = new Date(nextSunRise.date);
+
+      // Postavi tajmer za slanje notifikacije u trenutku izlaska sunca
+      const timeUntilSunrise = sunriseTime.getTime() - now.getTime();
+
+      setTimeout(() => {
+        sendNotification();
+        setNotificationSent(true); // Označimo da je notifikacija poslana za taj dan
+      }, timeUntilSunrise);
     }
 
     function sendNotification() {
@@ -114,20 +128,6 @@ function App() {
             console.log("ServiceWorker not ready: ", error);
           });
       }
-    }
-
-    function scheduleNotification() {
-      const now = new Date();
-      const nextSunRise = SearchRiseSet("Sun", location, +1, new Date(), 1, 0.0);
-      const sunriseTime = new Date(nextSunRise.date);
-
-      // Postavi tajmer za slanje notifikacije u trenutku izlaska sunca
-      const timeUntilSunrise = sunriseTime.getTime() - now.getTime();
-
-      setTimeout(() => {
-        sendNotification();
-        setNotificationSent(true); // Označimo da je notifikacija poslana za taj dan
-      }, timeUntilSunrise);
     }
 
     if (dataReady && !notificationSent) {

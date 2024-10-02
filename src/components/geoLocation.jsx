@@ -16,24 +16,40 @@ export default function GeoFindMe({ setLocation }) {
     getCityFromCoords(latitude, longitude);
     setLoading(false);
     setCoords(`Lat ${latitude}° Long ${longitude}°`);
-    setLocation(new Observer(latitude, longitude, height));
+
+    // Spremi lokaciju u localStorage
+    const newLocation = new Observer(latitude, longitude, height);
+    localStorage.setItem("locationState", JSON.stringify(newLocation));
+    setLocation(newLocation);
   }
 
   function error() {
-    setCoords("Unable to retrieve your location");
+    // Ako dohvaćanje lokacije ne uspije, koristi spremljenu lokaciju iz localStorage
+    const savedState = localStorage.getItem("locationState");
+    if (savedState) {
+      const locationState = JSON.parse(savedState);
+
+      if (locationState && typeof locationState.latitude === "number" && typeof locationState.longitude === "number") {
+        setCoords("Using previously saved location");
+        const { latitude, longitude } = locationState;
+        const height = 0; // ili druga vrijednost, ako imaš visinu spremljenu
+        setLocation(new Observer(latitude, longitude, height));
+        setLoading(false);
+      } else {
+        setCoords("No valid saved location found");
+        setLoading(false);
+      }
+    } else {
+      setCoords("Unable to retrieve your location and no saved location found");
+      setLoading(false);
+    }
   }
 
   async function getCityFromCoords(latitude, longitude) {
     try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-      );
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
       const data = await response.json();
-      setCity(
-        `${data.address.road} ${data.address.house_number}, ${data.address.city}` ||
-          data.address.village ||
-          "City not found"
-      );
+      setCity(`${data.address.road} ${data.address.house_number}, ${data.address.city}` || data.address.village || "City not found");
     } catch (error) {
       console.error("Error fetching city:", error);
       setCity("City not found");
