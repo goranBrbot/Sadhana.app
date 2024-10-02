@@ -86,7 +86,7 @@ function App() {
         console.log("auth:", btoa(String.fromCharCode(...new Uint8Array(auth)))); */
 
         // Pošalji pretplatu backend serveru
-        await fetch("http://localhost:3000/subscribe", {
+        await fetch("https://sadhana-app.vercel.app/subscribe", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -118,15 +118,12 @@ function App() {
 
     function scheduleNotification() {
       const now = new Date();
-      const sunriseTime = new Date(sunrise);
+      const nextSunRise = SearchRiseSet("Sun", location, +1, new Date(), 1, 0.0);
+      const sunriseTime = new Date(nextSunRise.date);
 
-      // Ako je trenutni dan, ali već nakon izlaska sunca, postavi za sljedeći dan
-      if (now > sunriseTime) {
-        sunriseTime.setDate(sunriseTime.getDate() + 1);
-      }
-
-      const timeUntilSunrise = sunriseTime.getTime() - now.getTime();
       // Postavi tajmer za slanje notifikacije u trenutku izlaska sunca
+      const timeUntilSunrise = sunriseTime.getTime() - now.getTime();
+
       setTimeout(() => {
         sendNotification();
         setNotificationSent(true); // Označimo da je notifikacija poslana za taj dan
@@ -139,7 +136,7 @@ function App() {
         scheduleNotification(); // Planiranje slanja notifikacije
       });
     }
-  }, [publicVapidKey, dataReady, sunrise, tithiDay, swaraText, notificationSent]);
+  }, [location, publicVapidKey, dataReady, sunrise, tithiDay, swaraText, notificationSent]);
 
   return (
     <div>
