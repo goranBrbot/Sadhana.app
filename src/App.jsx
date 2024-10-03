@@ -87,7 +87,12 @@ function App() {
         console.log("auth:", btoa(String.fromCharCode(...new Uint8Array(auth)))); */
 
         // Pošalji pretplatu backend serveru
-        await fetch("https://sadhana-app.vercel.app/subscribe", {
+        const backendUrl =
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3000/subscribe" // ili port gdje backend radi
+            : "https://sadhana-app.vercel.app/subscribe"; // URL produkcije
+
+        await fetch(`${backendUrl}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
