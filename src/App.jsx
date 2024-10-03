@@ -90,7 +90,7 @@ function App() {
         const backendUrl =
           process.env.NODE_ENV === "development"
             ? "http://localhost:3000/subscribe" // ili port gdje backend radi
-            : "https://sadhana-app.vercel.app/subscribe"; // URL produkcije
+            : "https://swaryog.sanatankultura.com/subscribe"; // URL produkcije
 
         await fetch(`${backendUrl}`, {
           method: "POST",
