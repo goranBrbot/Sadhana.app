@@ -54,6 +54,7 @@ function App() {
     return outputArray;
   }
 
+  // Implementacija notifikacija
   useEffect(() => {
     async function requestNotificationPermission() {
       if ("Notification" in window && "serviceWorker" in navigator && "PushManager" in window) {
@@ -86,7 +87,7 @@ function App() {
         console.log("auth:", btoa(String.fromCharCode(...new Uint8Array(auth)))); */
 
         // Pošalji pretplatu backend serveru
-        await fetch("http://localhost:5173/subscribe", {
+        await fetch("https://sadhana-app.vercel.app/subscribe", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

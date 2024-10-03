@@ -30,9 +30,10 @@ export default function GeoFindMe({ setLocation }) {
       const locationState = JSON.parse(savedState);
 
       if (locationState && typeof locationState.latitude === "number" && typeof locationState.longitude === "number") {
-        setCoords("Using previously saved location");
+        setCoords(`Using previously saved location!`);
+        getCityFromCoords(locationState.latitude, locationState.longitude);
         const { latitude, longitude } = locationState;
-        const height = 0; // ili druga vrijednost, ako imaš visinu spremljenu
+        const height = 0;
         setLocation(new Observer(latitude, longitude, height));
         setLoading(false);
       } else {
