@@ -12,6 +12,7 @@ export default defineConfig({
       devOptions: {
         enabled: true, // Omogućuje serviceWorker u razvoju
       },
+      strategies: "injectManifest",
       manifest: {
         name: "Yoga In Daily Life Sadhana",
         short_name: "Sadhana",
@@ -91,21 +92,35 @@ export default defineConfig({
               },
             },
             {
-              handler: "NetworkOnly",
-              urlPattern: /\/api\/.*\/*.json/,
-              method: "POST",
+              urlPattern: /^https:\/\/swaryog\.sanatankultura\.com\//,
+              handler: "NetworkFirst",
               options: {
-                backgroundSync: {
-                  name: "myQueueName",
-                  options: {
-                    maxRetentionTime: 24 * 60,
-                  },
+                cacheableResponse: {
+                  statuses: [0, 200],
                 },
               },
             },
           ],
         },
       },
+
+      selfDestroying: false,
+      events: [
+        {
+          event: "push",
+          handler: async function (event) {
+            const data = event.data.json();
+            const options = {
+              body: data.body || "Default body",
+              icon: "/favicon.ico",
+              vibrate: [200, 100, 200, 100, 200, 100, 200],
+              tag: "swara",
+              requireInteraction: true, // Ostavlja notifikaciju dok korisnik ne reagira
+            };
+            event.waitUntil(self.registration.showNotification("Day starts with ..", options));
+          },
+        },
+      ],
     }),
   ],
   build: {

@@ -13,6 +13,12 @@ app.use(express.json()); // Omogućava parsiranje JSON tijela zahtjeva
 const publicVapidKey = process.env.VITE_VAPID_PUBLIC_KEY;
 const privateVapidKey = process.env.VITE_VAPID_PRIVATE_KEY;
 
+// Provjera da su VAPID ključevi postavljeni
+if (!publicVapidKey || !privateVapidKey) {
+  console.error("VAPID ključevi nisu ispravno postavljeni.");
+  process.exit(1); // Prekid programa ako ključevi nisu postavljeni
+}
+
 // Provjera da su ključevi postavljeni
 console.log("Public VAPID Key:", publicVapidKey);
 console.log("Private VAPID Key:", privateVapidKey);

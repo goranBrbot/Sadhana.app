@@ -56,6 +56,24 @@ function App() {
 
   // Implementacija notifikacija
   useEffect(() => {
+    function sendNotification() {
+      if ("serviceWorker" in navigator && "PushManager" in window) {
+        navigator.serviceWorker.ready
+          .then((registration) => {
+            registration.showNotification("Day starts with ..", {
+              body: `${swaraText}`,
+              icon: "favicon.ico",
+              vibrate: [200, 100, 200, 100, 200, 100, 200],
+              tag: "swara",
+              requireInteraction: true, // Ostavlja notifikaciju dok korisnik ne reagira
+            });
+          })
+          .catch((error) => {
+            console.log("ServiceWorker not ready: ", error);
+          });
+      }
+    }
+
     async function requestNotificationPermission() {
       if ("Notification" in window && "serviceWorker" in navigator && "PushManager" in window) {
         // Provjera je li korisnik već dao ili odbio dozvolu
@@ -104,35 +122,18 @@ function App() {
       }
     }
 
-    function scheduleNotification() {
+    async function scheduleNotification() {
       const now = new Date();
       const nextSunRise = SearchRiseSet("Sun", location, +1, new Date(), 1, 0.0);
       const sunriseTime = new Date(nextSunRise.date);
 
       // Postavi tajmer za slanje notifikacije u trenutku izlaska sunca
       const timeUntilSunrise = sunriseTime.getTime() - now.getTime();
-
-      setTimeout(() => {
-        sendNotification();
-        setNotificationSent(true); // Označimo da je notifikacija poslana za taj dan
-      }, timeUntilSunrise);
-    }
-
-    function sendNotification() {
-      if ("serviceWorker" in navigator && "PushManager" in window) {
-        navigator.serviceWorker.ready
-          .then((registration) => {
-            registration.showNotification("Day starts with ..", {
-              body: `${swaraText}`,
-              icon: "favicon.ico",
-              vibrate: [200, 100, 200, 100, 200, 100, 200],
-              tag: "swara",
-              requireInteraction: true, // Ostavlja notifikaciju dok korisnik ne reagira
-            });
-          })
-          .catch((error) => {
-            console.log("ServiceWorker not ready: ", error);
-          });
+      if (timeUntilSunrise > 0) {
+        setTimeout(() => {
+          sendNotification();
+          setNotificationSent(true); // Označimo da je notifikacija poslana za taj dan
+        }, timeUntilSunrise);
       }
     }
 
