@@ -50,7 +50,13 @@ export default function GeoFindMe({ setLocation }) {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
       const data = await response.json();
-      setCity(`${data.address.road} ${data.address.house_number}, ${data.address.city}` || data.address.village || "City not found");
+      const road = data.address.road !== undefined ? data.address.road : "";
+      const house_number = data.address.house_number !== undefined ? data.address.house_number : "";
+      const village = data.address.village !== undefined ? data.address.village : "";
+      const town = data.address.town !== undefined ? data.address.town : "";
+      const city = data.address.city !== undefined ? data.address.city : "";
+
+      setCity(`${road} ${house_number}, ${(village, town || city)}`);
     } catch (error) {
       console.error("Error fetching city:", error);
       setCity("City not found");

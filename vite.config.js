@@ -12,7 +12,7 @@ export default defineConfig({
       devOptions: {
         enabled: true, // Omogućuje serviceWorker u razvoju
       },
-      strategies: "injectManifest",
+      strategies: "generateSW",
       manifest: {
         name: "Yoga In Daily Life Sadhana",
         short_name: "Sadhana",

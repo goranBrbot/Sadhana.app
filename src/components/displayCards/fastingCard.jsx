@@ -38,12 +38,8 @@ export default function FastingCard({ tithiDay }) {
     const kpEkadashiStart = SearchMoonPhase(300, today, 30);
     const kpEkadashiEnd = SearchMoonPhase(312, today, 30);
 
-    const spDate = `${format(spEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(spEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
-    const kpDate = `${format(kpEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(kpEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
-
-    console.log(tithiDay);
-
-    if (tithiDay < 15 && tithiDay != 11 && spEkadashiStart != null && spEkadashiEnd != null) {
+    if (tithiDay < 11 && tithiDay != 11 && spEkadashiStart != null && spEkadashiEnd != null) {
+      const spDate = `${format(spEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(spEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
       return (
         <div>
           Ekadashi of Shukla Pakṣa
@@ -53,7 +49,8 @@ export default function FastingCard({ tithiDay }) {
       );
     }
 
-    if (tithiDay >= 15 && tithiDay != 26 && kpEkadashiStart != null && kpEkadashiEnd != null) {
+    if (tithiDay > 11 && tithiDay != 26 && kpEkadashiStart != null && kpEkadashiEnd != null) {
+      const kpDate = `${format(kpEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(kpEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
       return (
         <div>
           Ekadashi of Kṛṣṇa Navamī
@@ -66,26 +63,6 @@ export default function FastingCard({ tithiDay }) {
     if (tithiDay == 11 || tithiDay == 26) {
       return <div>Ekadashi is today!</div>;
     }
-
-    /*     if (tithiDay === 11) {
-      return (
-        <div>
-          Ekadashi is today!
-          <br />
-          {spDate}
-        </div>
-      );
-    }
-
-    if (tithiDay === 26) {
-      return (
-        <div>
-          Ekadashi is today!
-          <br />
-          {kpDate}
-        </div>
-      );
-    } */
   }
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({

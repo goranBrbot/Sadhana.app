@@ -1,12 +1,10 @@
 import express from "express";
 import webPush from "web-push";
 import dotenv from "dotenv";
-import cors from "cors";
 
 dotenv.config(); // Učitaj varijable iz .env datoteke
 
 const app = express();
-app.use(cors());
 app.use(express.json()); // Omogućava parsiranje JSON tijela zahtjeva
 
 // Sada možeš koristiti varijable iz .env

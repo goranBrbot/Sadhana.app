@@ -29,7 +29,7 @@ function App() {
 
     const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
     const tithiPeriod = razlikaMoonSun / 12;
-    const calculatedTithiDay = Math.floor(tithiPeriod) + 1;
+    const calculatedTithiDay = Math.ceil(tithiPeriod);
     setTithiDay(calculatedTithiDay);
     console.log(calculatedTithiDay);
 
