@@ -12,7 +12,7 @@ import InfoSharpIcon from "@mui/icons-material/InfoSharp";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 
-const Swara = ({ sunrise, tithiDay, onTextGenerated }) => {
+const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
   const idaDays = [1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21, 25, 26, 27];
   const pingalaDays = [4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24, 28, 29, 30];
 
@@ -55,18 +55,18 @@ const Swara = ({ sunrise, tithiDay, onTextGenerated }) => {
       setIdaVremena(idaResult);
       const generatedText = `${idaResult[0].sequence} swara at ${idaResult[0].start} - ${idaResult[0].end}`;
       console.log(generatedText);
-      onTextGenerated(generatedText);
+      setSwaraText(generatedText);
     } else if (pingalaDays.includes(tithiDay)) {
       const pingalaResult = [];
       swarVrijeme(tithiDay, pingalaResult, sunrise, 60, 24);
       setPingalaVremena(pingalaResult);
       const generatedText = `${pingalaResult[0].sequence} swara at ${pingalaResult[0].start} - ${pingalaResult[0].end}`;
       console.log(generatedText);
-      onTextGenerated(generatedText);
+      setSwaraText(generatedText);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sunrise, tithiDay]);
+  }, [sunrise, tithiDay, setSwaraText]);
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {
@@ -159,5 +159,5 @@ export default Swara;
 Swara.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
   tithiDay: PropTypes.number,
-  onTextGenerated: PropTypes.func,
+  setSwaraText: PropTypes.func,
 };

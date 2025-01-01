@@ -130,7 +130,6 @@ export default function FastingCard({ tithiDay }) {
           <br />
           <span>{purnima()}</span>
           <br />
-          <br />
           <span>{ekadashi()}</span>
         </div>
       </div>

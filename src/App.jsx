@@ -3,6 +3,7 @@ import { SearchRiseSet, PairLongitude } from "astronomy-engine";
 import GeoFindMe from "./components/geoLocation";
 import DayCard from "./components/displayCards/dayCard";
 import FastingCard from "./components/displayCards/fastingCard";
+import FestivalCard from "./components/displayCards/festivalCard";
 import Swara from "./components/displayCards/swarCard";
 // import Loader from "./components/loader";
 import "./styles/App.css";
@@ -12,8 +13,8 @@ function App() {
   const [sunrise, setSunrise] = useState(null);
   const [sunset, setSunset] = useState(null);
   const [tithiDay, setTithiDay] = useState(null);
-  const [dataReady, setDataReady] = useState(false);
   const [swaraText, setSwaraText] = useState("");
+  const [dataReady, setDataReady] = useState(false);
   const [notificationSent, setNotificationSent] = useState(false);
   // const [loader, setLoader] = useState(false);
 
@@ -37,6 +38,14 @@ function App() {
     // setLoader(true);
   };
 
+  const updateSwaraText = (generatedText) => {
+    const newText = generatedText;
+    setSwaraText(newText);
+    console.log(swaraText);
+  };
+
+  // Implementacija notifikacija
+
   /*const publicVapidKey = process.env.VITE_VAPID_PUBLIC_KEY;*/
   const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
 
@@ -54,7 +63,6 @@ function App() {
     return outputArray;
   }
 
-  // Implementacija notifikacija
   useEffect(() => {
     function sendNotification() {
       if ("serviceWorker" in navigator && "PushManager" in window) {
@@ -151,10 +159,11 @@ function App() {
       <GeoFindMe setLocation={handleLocationUpdate} />
       <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} tithiDay={tithiDay} />}</div>
       <br />
+      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
+      <br />
       <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
       <br />
-      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} onTextGenerated={setSwaraText} />}</div>
-      <br />
+      <div>{dataReady && <FestivalCard location={location} />}</div>
     </div>
   );
 }
