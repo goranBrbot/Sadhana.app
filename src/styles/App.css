@@ -63,17 +63,17 @@ body {
 
 h3 {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  margin-bottom: 0;
+  margin: 0;
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--color-black);
 }
 
 small {
   font-size: 0.7rem;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--color-black);
-  margin-top: 0;
+  margin: 0;
 }
 
 p {
@@ -226,7 +226,6 @@ li:nth-child(-n + 1) {
   -ms-flex-direction: column;
   flex-direction: column;
   width: clamp(320px, 360px, 380px); /* treba dinamički preko utopije  riješiti */
-  height: auto;
   border: 1px solid var(--color-white);
   border-radius: 24px;
   background-color: var(--color-white);
@@ -265,8 +264,8 @@ li:nth-child(-n + 1) {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/swar2.jpg");
-  background-position: top right;
+  background-image: url("/backgrounds/fest.jpg");
+  background-position: 0 8%;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
@@ -338,19 +337,16 @@ li:nth-child(-n + 1) {
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
-  width: auto;
-  height: auto;
-  font-size: 1rem;
-  vertical-align: middle;
+  margin: 0;
+  padding: 20px;
+  padding-left: 2em;
   text-align: left;
-  margin-inline-start: 25px;
-  padding-bottom: 25px;
-  cursor: pointer;
 }
 
 .container {
-  margin-inline-start: 25px;
-  padding-bottom: 25px;
+  margin: 0;
+  padding: 2em;
+  padding-top: 0;
   transition: max-height 0.3s ease-out;
 }
 
