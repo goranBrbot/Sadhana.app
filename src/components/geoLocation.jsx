@@ -85,14 +85,15 @@ export default function GeoFindMe({ setLocation }) {
           transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
         >
           <>
-            {/* <img className='logo' src='favicon.svg' alt='Om' /> */}
-            <img className='iconMap' src='icons/map-pin.png' alt='Map location' />
-            <div>
-              <span className='naslovLokacije'>YOUR LOCATION</span>
-              <br />
-              <span>{city}</span>
-              <br />
-              <span>{coords}</span>
+            <div className='location'>
+              {/* <img className='logo' src='favicon.svg' alt='Om' /> */}
+              <img className='iconMap' src='icons/map-pin.png' alt='Map location' />
+              <div>
+                {/* <small>YOUR LOCATION</small> */}
+                <span>{city}</span>
+                <br />
+                <span>{coords}</span>
+              </div>
             </div>
           </>
         </motion.div>

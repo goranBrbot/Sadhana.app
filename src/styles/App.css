@@ -1,3 +1,32 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("/src/fonts/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/src/fonts/roboto/Roboto-SemiBold.ttf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/src/fonts/roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  body {
+    height: auto;
+  }
+
+  .logo {
+    margin-top: 2em;
+  }
+}
+
 :root {
   /* ✓ COLORS */
   --color-main: rgb(248, 105, 0);
@@ -7,9 +36,8 @@
 
   color-scheme: only light; /* only light onemogućuje dark mode by OS */
 
-  /* ✓ Use System Font Stack */
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-
+  font-family: "Roboto";
+  font-style: normal;
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -54,26 +82,34 @@ body {
   -ms-flex-align: center;
   align-items: center;
   margin: 0;
-  padding-top: 2em;
-  padding-bottom: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
+hr {
+  border: 0;
+  height: 1px;
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(248, 103, 0, 0.1)), color-stop(#f86900), to(rgba(248, 103, 0, 0.1)));
+  background-image: -o-linear-gradient(left, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
+  background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
+}
+
 h3 {
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 0;
-  font-size: 1.3rem;
   font-weight: 700;
+  font-style: normal;
+  font-size: 1.2rem;
   color: var(--color-black);
 }
 
 small {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--color-black);
   margin: 0;
+  font-weight: 500;
+  font-size: 0.7rem;
+  color: var(--color-black);
 }
 
 p {
@@ -98,117 +134,68 @@ li:nth-child(-n + 1) {
   display: list-item;
 }
 
-.logo {
-  height: 5em;
-  padding: 1em;
-  will-change: filter;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  -webkit-filter: drop-shadow(0 0 1em var(--color-white));
-  filter: drop-shadow(0 0 1em var(--color-white));
-  display: none;
+/* Tablica sa zaobljenim kutovima samo na gornjim i donjim rubovima */
+table {
+  border-collapse: separate;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
-.iconMap {
-  height: 60px;
-  margin-bottom: 8px;
+tr {
+  background-color: #f4eed9;
 }
 
-.iconSun {
-  height: 80px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  pointer-events: none;
-  /*   filter: drop-shadow(0 0 0 white) drop-shadow(0 0 5px rgb(252, 212, 64));
- */
+th,
+td {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+  text-align: center;
+  height: 30px;
 }
 
-.iconSwar {
-  height: 60px;
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  pointer-events: none;
-  will-change: filter;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  -webkit-filter: drop-shadow(0 0 1px #fff);
-  filter: drop-shadow(0 0 1px white);
-  filter: drop-shadow(0 0 0 white) drop-shadow(0 0 5px rgb(255, 255, 255));
+/* Zaobljeni kutovi na gornjim ćelijama */
+thead th:first-child {
+  border-top-left-radius: 15px;
 }
 
-.iconFood {
-  height: 80px;
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  pointer-events: none;
-  will-change: filter;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  -webkit-filter: drop-shadow(0 0 0.3em #a5a5a5);
-  filter: drop-shadow(0 0 0.3em #a5a5a5);
-  z-index: -1;
+thead th:last-child {
+  border-top-right-radius: 15px;
 }
 
-.iconFestival {
-  height: 50px;
-  position: absolute;
-  top: -10px;
-  right: -5px;
-  pointer-events: none;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  filter: drop-shadow(0 0 0.3em #a5a5a5);
-  z-index: -1;
+/* Zaobljeni kutovi na donjim ćelijama */
+tfoot td:first-child {
+  border-bottom-left-radius: 15px;
 }
 
-.iconFestival2 {
-  height: 80px;
-  position: absolute;
-  top: 90px;
-  right: 50px;
-  pointer-events: none;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  filter: drop-shadow(0 0 0.3em #a5a5a5);
-  z-index: -1;
+tfoot td:last-child {
+  border-bottom-right-radius: 15px;
 }
 
-.iconChogadiya {
-  height: 60px;
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  pointer-events: none;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  -webkit-filter: drop-shadow(0 0 0.3em #a5a5a5);
-  filter: drop-shadow(0 0 0.3em #a5a5a5);
-  z-index: -1;
+/* Stil za boje ćelija */
+.povoljno {
+  background-color: #e7f1e8;
+}
+
+.nepovoljno {
+  background-color: rgb(255, 232, 229);
+}
+
+.aktivni {
+  font-weight: 700;
 }
 
 .location {
-  padding-bottom: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin: 24px;
+  font-size: 0.8rem;
+  text-align: left;
 }
 
 .naslovLokacije {
@@ -218,6 +205,7 @@ li:nth-child(-n + 1) {
 }
 
 .card {
+  margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -245,7 +233,7 @@ li:nth-child(-n + 1) {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/sky.png");
+  background-image: url("/backgrounds/daycard.jpg");
   background-position: top right;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -265,7 +253,7 @@ li:nth-child(-n + 1) {
   width: 100%;
   height: 100%;
   background-image: url("/backgrounds/fest.jpg");
-  background-position: 0 8%;
+  background-position: 0 10%;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
@@ -337,27 +325,20 @@ li:nth-child(-n + 1) {
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
-  margin: 0;
-  padding: 20px;
-  padding-left: 2em;
+  padding-top: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 16px;
   text-align: left;
 }
 
 .container {
-  margin: 0;
-  padding: 2em;
   padding-top: 0;
+  padding-left: 24px;
+  padding-bottom: 24px;
+  padding-right: 24px;
   transition: max-height 0.3s ease-out;
 }
-
-/* .topBar small::after {
-  content: "\10C40";
-  display: inline-block;
-  transform: rotate(180deg);
-  margin-left: 8px;
-  font-size: 0.7em;
-  vertical-align: top;
-} */
 
 .container.visible {
   visibility: visible;
@@ -370,23 +351,113 @@ li:nth-child(-n + 1) {
   display: none;
 }
 
-hr {
-  border: 0;
-  height: 1px;
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(248, 103, 0, 0.1)), color-stop(#f86900), to(rgba(248, 103, 0, 0.1)));
-  background-image: -o-linear-gradient(left, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
-  background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
+/* .logo {
+  height: 5em;
+  padding: 1em;
+  will-change: filter;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
+  transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  -webkit-filter: drop-shadow(0 0 1em var(--color-white));
+  filter: drop-shadow(0 0 1em var(--color-white));
+  display: none;
+} */
+
+.iconMap {
+  height: 40px;
+  margin-right: 10px;
 }
 
-@media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  body {
-    height: auto;
-  }
+.iconSun {
+  height: 80px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  pointer-events: none;
+  /*   filter: drop-shadow(0 0 0 white) drop-shadow(0 0 5px rgb(252, 212, 64));
+ */
+}
 
-  .logo {
-    margin-top: 2em;
-  }
+.iconSwar {
+  height: 60px;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  pointer-events: none;
+  will-change: filter;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
+  transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  -webkit-filter: drop-shadow(0 0 1px #fff);
+  filter: drop-shadow(0 0 1px white);
+  filter: drop-shadow(0 0 0 white) drop-shadow(0 0 5px rgb(255, 255, 255));
+}
+
+.iconFood {
+  height: 80px;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  pointer-events: none;
+  will-change: filter;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
+  transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  -webkit-filter: drop-shadow(0 0 0.3em #a5a5a5);
+  filter: drop-shadow(0 0 0.3em #a5a5a5);
+  z-index: -1;
+}
+
+.iconFestival {
+  height: 50px;
+  position: absolute;
+  top: 30px;
+  right: 35px;
+  pointer-events: none;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
+  transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  filter: drop-shadow(0 0 0.3em #a5a5a5);
+  z-index: -1;
+}
+
+.iconFestival2 {
+  height: 100px;
+  position: absolute;
+  top: 120px;
+  right: 50px;
+  pointer-events: none;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
+  transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  filter: drop-shadow(0 0 0.3em #a5a5a5);
+  z-index: -1;
+}
+
+.iconChogadiya {
+  height: 60px;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  pointer-events: none;
+  -webkit-transition: -webkit-filter 300ms;
+  transition: -webkit-filter 300ms;
+  -o-transition: filter 300ms;
+  transition: filter 300ms;
+  transition: filter 300ms, -webkit-filter 300ms;
+  -webkit-filter: drop-shadow(0 0 0.3em #a5a5a5);
+  filter: drop-shadow(0 0 0.3em #a5a5a5);
+  z-index: -1;
 }
 
 /* #loaderSadhana {
@@ -420,56 +491,3 @@ hr {
   stroke-linecap: round;
 }
  */
-
-/* Tablica sa zaobljenim kutovima samo na gornjim i donjim rubovima */
-table {
-  border-collapse: separate;
-  width: 100%;
-  margin-top: 20px;
-  border-radius: 15px;
-  overflow: hidden;
-}
-
-tr {
-  background-color: #f4eed9;
-}
-
-th,
-td {
-  padding-left: 10px;
-  padding-right: 10px;
-  width: fit-content;
-  text-align: center;
-  height: 30px;
-}
-
-/* Zaobljeni kutovi na gornjim ćelijama */
-thead th:first-child {
-  border-top-left-radius: 15px;
-}
-
-thead th:last-child {
-  border-top-right-radius: 15px;
-}
-
-/* Zaobljeni kutovi na donjim ćelijama */
-tfoot td:first-child {
-  border-bottom-left-radius: 15px;
-}
-
-tfoot td:last-child {
-  border-bottom-right-radius: 15px;
-}
-
-/* Stil za boje ćelija */
-.povoljno {
-  background-color: #e7f1e8;
-}
-
-.nepovoljno {
-  background-color: rgb(255, 232, 229);
-}
-
-.aktivni {
-  font-weight: bold;
-}

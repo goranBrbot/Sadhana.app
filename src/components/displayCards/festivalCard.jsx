@@ -151,8 +151,7 @@ export default function FestivalCard({ location }) {
           <tbody>
             {festivals.map(([name, date], index) => {
               const isNext = index === nextIndex;
-              const style = { fontWeight: isNext ? "bold" : "normal" };
-
+              const style = { fontWeight: isNext ? "700" : "400" };
               return (
                 <tr key={index}>
                   <td style={{ ...style, textAlign: "left" }}>{name}</td>
@@ -176,10 +175,10 @@ export default function FestivalCard({ location }) {
         <div className='topBar' onClick={toggleContainer}>
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & FESTIVALS</small>
-          <img className='iconFestival' src='icons/puja.png' alt='Bell' />
-          <img className='iconFestival2' src='festivalIcons/swastika.png' alt='Festival avatar' />
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+          <img className='iconFestival' src='icons/puja.png' alt='Bell' />
+          <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' />
           {/* <p>{vedicTime}</p> */}
           <span>Tithi: {panchangData.Tithi}</span>
           <br />

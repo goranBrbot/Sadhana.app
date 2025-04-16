@@ -67,11 +67,11 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
     >
       <div className='card swarCard'>
         <div className='topBar'>
-          <h3>Swara yoga</h3>
-          <small>ACTIVE NOSTRIL</small>
+          <h3>Active nostril</h3>
+          <small>SWARA YOGA</small>
         </div>
         <div className='container'>
-          <img className='iconSwar' src='icons/wind.png' alt='Breathing' />
+          {/* <img className='iconSwar' src='icons/wind.png' alt='Breathing' /> */}
           <ul>
             {idaVremena.map((item, index) => (
               <li key={index}>{`${item.sequence} at ${item.start} - ${item.end}`}</li>
