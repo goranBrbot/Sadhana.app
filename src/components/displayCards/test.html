@@ -1,0 +1,198 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vedic Date Calculator</title>
+</head>
+
+<body>
+    <h2>Vedic Date Calculator</h2>
+    <input type="date" id="dateInput" />
+    <button onclick="calculateVedicDate()">Calculate</button>
+    <pre id="output"></pre>
+
+    <script>
+        const tithiNames = [
+            "Pratipada", "Dvitiya", "Tritiya", "Chaturthi", "Panchami",
+            "Shashti", "Saptami", "Ashtami", "Navami", "Dashami",
+            "Ekadashi", "Dwadashi", "Trayodashi", "Chaturdashi", "Purnima / Amavasya"
+        ];
+
+        const lunarMonths = [
+            "Chaitra", "Vaishakha", "Jyeshtha", "Ashadha", "Shravana",
+            "Bhadrapada", "Ashwin", "Kartika", "Margashirsha", "Pausha", "Magha", "Phalguna"
+        ];
+
+        const samvatsara60 = [
+            "Prabhava", "Vibhava", "Shukla", "Pramoda", "Prajapati", "Angirasa",
+            "Shrimukha", "Bhava", "Yuva", "Dhatu", "Ishvara", "Bahudhanya",
+            "Pramathi", "Vikrama", "Vrisha", "Chitrabhanu", "Subhanu", "Tarana",
+            "Parthiva", "Vyaya", "Sarvajit", "Sarvadhari", "Virodhi", "Vikrita",
+            "Khara", "Nandana", "Vijaya", "Jaya", "Manmatha", "Durmukhi",
+            "Hemalamba", "Vilamba", "Vikarin", "Sharvari", "Plava", "Shubhakrit",
+            "Shobhakrith", "Krodhi", "Vishwavasu", "Parabhava", "Plavanga", "Kilaka",
+            "Saumya", "Sadharana", "Virodhikrith", "Paritapi", "Pramadi", "Ananda",
+            "Rakshasa", "Nala", "Pingala", "Kalayukta", "Siddharthi", "Raudra",
+            "Durmati", "Dundubhi", "Rudhirodgari", "Raktakshi", "Krodhana", "Akshaya"
+        ];
+
+        function calculateVedicDate() {
+            const inputDate = new Date(document.getElementById("dateInput").value);
+            if (isNaN(inputDate)) return alert("Please select a valid date");
+
+            const moonAge = getMoonAge(inputDate);
+            const tithiNum = Math.floor((moonAge / 29.53) * 30) % 30;
+            const tithiName = tithiNames[tithiNum % 15];
+            const paksha = tithiNum < 15 ? "Shukla" : "Krishna";
+
+            const lunarMonth = getApproxLunarMonth(inputDate);
+            const samvatsaraName = getSamvatsara(inputDate);
+
+            document.getElementById("output").innerText =
+                `Tithi: ${tithiName} (${paksha} paksha)\n` +
+                `Month: ${lunarMonth}\n` +
+                `Samvatsara: ${samvatsaraName}`;
+        }
+
+        // Approximate Moon age based on known new moon
+        function getMoonAge(date) {
+            const knownNewMoon = new Date("2000-01-06T18:14:00Z"); // reference new moon
+            const diff = date - knownNewMoon;
+            const days = diff / (1000 * 60 * 60 * 24);
+            return (days % 29.53 + 29.53) % 29.53;
+        }
+
+        function getApproxLunarMonth(date) {
+            const yearStart = new Date(date.getFullYear(), 3, 1); // Chaitra starts ~March
+            const monthDiff = ((date - yearStart) / (1000 * 60 * 60 * 24 * 29.5));
+            const index = Math.floor(monthDiff) % 12;
+            return lunarMonths[(index + 12) % 12];
+        }
+
+        function getSamvatsara(date) {
+            const baseYear = 1987; // Prabhava
+            const cycleIndex = (date.getFullYear() - baseYear) % 60;
+            return samvatsara60[(cycleIndex + 60) % 60];
+        }
+    </script>
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reverse Vedic Date</title>
+</head>
+
+<body>
+    <h2>Find Gregorian Date from Vedic Info</h2>
+
+    <label>Month:
+        <select id="month">
+            <option>Chaitra</option>
+            <option>Vaishakha</option>
+            <option>Jyeshtha</option>
+            <option>Ashadha</option>
+            <option>Shravana</option>
+            <option>Bhadrapada</option>
+            <option>Ashwin</option>
+            <option>Kartika</option>
+            <option>Margashirsha</option>
+            <option selected>Pausha</option>
+            <option>Magha</option>
+            <option>Phalguna</option>
+        </select>
+    </label><br><br>
+
+    <label>Paksha:
+        <select id="paksha">
+            <option selected>Shukla</option>
+            <option>Krishna</option>
+        </select>
+    </label><br><br>
+
+    <label>Tithi:
+        <select id="tithi">
+            <option>Pratipada</option>
+            <option>Dvitiya</option>
+            <option>Tritiya</option>
+            <option>Chaturthi</option>
+            <option>Panchami</option>
+            <option>Shashti</option>
+            <option>Saptami</option>
+            <option>Ashtami</option>
+            <option>Navami</option>
+            <option>Dashami</option>
+            <option>Ekadashi</option>
+            <option>Dwadashi</option>
+            <option>Trayodashi</option>
+            <option>Chaturdashi</option>
+            <option selected>Purnima / Amavasya</option>
+        </select>
+    </label><br><br>
+
+    <button onclick="findGregorianDate()">Find Date</button>
+    <pre id="output"></pre>
+
+    <script>
+        const monthApprox = {
+            "Chaitra": 3, "Vaishakha": 4, "Jyeshtha": 5, "Ashadha": 6,
+            "Shravana": 7, "Bhadrapada": 8, "Ashwin": 9, "Kartika": 10,
+            "Margashirsha": 11, "Pausha": 0, "Magha": 1, "Phalguna": 2
+        };
+
+        const tithiToMoonAge = {
+            "Pratipada": 1, "Dvitiya": 2.5, "Tritiya": 4, "Chaturthi": 5.5,
+            "Panchami": 7, "Shashti": 8.5, "Saptami": 10, "Ashtami": 11.5,
+            "Navami": 13, "Dashami": 14.5, "Ekadashi": 16, "Dwadashi": 17.5,
+            "Trayodashi": 19, "Chaturdashi": 20.5, "Purnima / Amavasya": 29.5
+        };
+
+        function findGregorianDate() {
+            const month = document.getElementById("month").value;
+            const paksha = document.getElementById("paksha").value;
+            const tithi = document.getElementById("tithi").value;
+
+            let desiredMoonAge = tithiToMoonAge[tithi];
+            if (paksha === "Krishna") {
+                desiredMoonAge = 29.53 - desiredMoonAge;
+            }
+
+            const approxMonth = monthApprox[month];
+            const baseDate = new Date(new Date().getFullYear(), approxMonth, 15); // middle of that lunar month
+
+            // Search ±15 dana za datum s najbližom starošću Mjeseca
+            let closestDate = baseDate;
+            let smallestDiff = Infinity;
+
+            for (let i = -15; i <= 15; i++) {
+                const testDate = new Date(baseDate);
+                testDate.setDate(baseDate.getDate() + i);
+                const moonAge = getMoonAge(testDate);
+                const diff = Math.abs(moonAge - desiredMoonAge);
+
+                if (diff < smallestDiff) {
+                    smallestDiff = diff;
+                    closestDate = testDate;
+                }
+            }
+
+            document.getElementById("output").innerText =
+                `Approximate Gregorian date:\n${closestDate.toDateString()}\n\n` +
+                `Note: Vedic day begins at sunrise`;
+        }
+
+        function getMoonAge(date) {
+            const knownNewMoon = new Date("2000-01-06T18:14:00Z");
+            const diff = date - knownNewMoon;
+            const days = diff / (1000 * 60 * 60 * 24);
+            return (days % 29.53 + 29.53) % 29.53;
+        }
+    </script>
+</body>
+
+</html>

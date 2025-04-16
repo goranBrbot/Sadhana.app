@@ -9,7 +9,7 @@
   ],
   "author": "Goran Brbot",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.2.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -32,6 +32,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "swiper": "^11.2.6",
     "typescript": "^5.3.3",
     "universal-geocoder": "^0.14.2",
     "web-push": "^3.6.7"
