@@ -172,13 +172,9 @@ export default function FestivalCard({ location }) {
       animate={{ opacity: 1 }} // Animation to apply (fade in)
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
-      <div
-        className='card'
-        style={{
-          "--card-bg": "url(backgrounds/y.jpg)",
-          "--card-bg-position": "top right",
-        }}>
+      <div className='card festivalCard'>
         <div className='topBar' onClick={toggleContainer}>
+          <h3>Upcoming festivals</h3>
           <small>PANCHANG & FESTIVALS</small>
           <img className='iconFestival' src='icons/puja.png' alt='Bell' />
           <img className='iconFestival2' src='festivalIcons/swastika.png' alt='Festival avatar' />

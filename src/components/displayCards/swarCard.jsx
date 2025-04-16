@@ -65,17 +65,13 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
       animate={{ opacity: 1 }} // Animation to apply (fade in)
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
-      <div
-        className='card'
-        style={{
-          "--card-bg": "url(backgrounds/swar2.jpg)",
-          "--card-bg-position": "100% 10%",
-        }}>
+      <div className='card swarCard'>
         <div className='topBar'>
-          <small>ACTIVE SWARA</small>
-          <img className='iconSwar' src='icons/wind.png' alt='Breathing' />
+          <h3>Swara yoga</h3>
+          <small>ACTIVE NOSTRIL</small>
         </div>
         <div className='container'>
+          <img className='iconSwar' src='icons/wind.png' alt='Breathing' />
           <ul>
             {idaVremena.map((item, index) => (
               <li key={index}>{`${item.sequence} at ${item.start} - ${item.end}`}</li>

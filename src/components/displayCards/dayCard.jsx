@@ -34,7 +34,8 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
     >
       <div className='card dayCard'>
         <div className='topBar'>
-          <small>DAY-TIME INFORMATION</small>
+          <h3>Basic information</h3>
+          <small>DAY TIME BY LOCATION</small>
         </div>
         <div className='container'>
           <img className='iconSun' src='icons/sun.png' alt='Sun' />

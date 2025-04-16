@@ -66,14 +66,10 @@ export default function FastingCard({ tithiDay }) {
       animate={{ opacity: 1 }} // Animation to apply (fade in)
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
-      <div
-        className='card'
-        style={{
-          "--card-bg": "url(backgrounds/y.jpg)",
-          "--card-bg-position": "top right",
-        }}>
+      <div className='card fastingCard'>
         <div className='topBar' onClick={toggleContainer}>
-          <small>FASTING DAYS</small>
+          <h3>Fasting days</h3>
+          <small>LUNAR PHASES</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <img className='iconFood' src='icons/thali.png' alt='Fasting' />

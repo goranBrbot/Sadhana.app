@@ -144,13 +144,9 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
       animate={{ opacity: 1 }} // Animation to apply (fade in)
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
-      <div
-        className='card'
-        style={{
-          "--card-bg": "url(backgrounds/1.jpg)",
-          "--card-bg-position": "top right",
-        }}>
+      <div className='card choghadiyaCard'>
         <div className='topBar' onClick={toggleContainer}>
+          <h3>Best daily timings</h3>
           <small>CHOGHADIYA MUHURTA</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>

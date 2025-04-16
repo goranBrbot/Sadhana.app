@@ -8,7 +8,7 @@
   color-scheme: only light; /* only light onemogućuje dark mode by OS */
 
   /* ✓ Use System Font Stack */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
   line-height: 1.5;
   font-weight: 400;
@@ -59,6 +59,29 @@ body {
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+h3 {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin-bottom: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-black);
+  margin-top: 0;
+}
+
+p {
+  margin: 0;
+}
+
+p:not(:last-child) {
+  margin-bottom: 1.5em;
 }
 
 ul {
@@ -184,14 +207,6 @@ li:nth-child(-n + 1) {
   z-index: -1;
 }
 
-p {
-  margin: 0;
-}
-
-p:not(:last-child) {
-  margin-bottom: 1.5em;
-}
-
 .location {
   padding-bottom: 35px;
 }
@@ -213,7 +228,7 @@ p:not(:last-child) {
   width: clamp(320px, 360px, 380px); /* treba dinamički preko utopije  riješiti */
   height: auto;
   border: 1px solid var(--color-white);
-  border-radius: 20px;
+  border-radius: 24px;
   background-color: var(--color-white);
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
@@ -242,19 +257,101 @@ p:not(:last-child) {
   mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
 }
 
+.card.swarCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/backgrounds/swar2.jpg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 8px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+.card.fastingCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/backgrounds/y.jpg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 8px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+.card.festivalCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/backgrounds/y.jpg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 8px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+.card.choghadiyaCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/backgrounds/1.jpg");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 8px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
 .topBar {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
   width: auto;
-  height: 50px;
-  /* background: linear-gradient(to right, var(--color-main), rgb(165, 72, 0)); */
-  border-radius: 12px 12px 0 0;
+  height: auto;
+  font-size: 1rem;
+  vertical-align: middle;
   text-align: left;
+  margin-inline-start: 25px;
+  padding-bottom: 25px;
   cursor: pointer;
+}
+
+.container {
+  margin-inline-start: 25px;
+  padding-bottom: 25px;
+  transition: max-height 0.3s ease-out;
 }
 
 /* .topBar small::after {
@@ -266,12 +363,6 @@ p:not(:last-child) {
   vertical-align: top;
 } */
 
-.container {
-  padding: 25px;
-  padding-top: 0;
-  transition: max-height 0.3s ease-out;
-}
-
 .container.visible {
   visibility: visible;
 }
@@ -281,14 +372,6 @@ p:not(:last-child) {
   height: 0;
   /* visibility: hidden; */
   display: none;
-}
-
-small {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--color-black);
-  -webkit-margin-start: 25px;
-  margin-inline-start: 25px;
 }
 
 hr {
@@ -393,22 +476,4 @@ tfoot td:last-child {
 
 .aktivni {
   font-weight: bold;
-}
-
-/* Tamna tema */
-.dark-mode th {
-  background-color: #333;
-}
-
-.dark-mode .povoljno {
-  background-color: #305d3c;
-}
-
-.dark-mode .nepovoljno {
-  background-color: #7d2b2b;
-}
-
-.dark-mode .aktivni {
-  background-color: #8a7300 !important;
-  border-color: #fff;
 }
