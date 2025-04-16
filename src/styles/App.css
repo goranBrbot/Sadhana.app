@@ -223,7 +223,7 @@ p:not(:last-child) {
   overflow: hidden;
 }
 
-.card::before {
+.card.dayCard::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -231,8 +231,8 @@ p:not(:last-child) {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: var(--card-bg, none);
-  background-position: var(--card-bg-position, none);
+  background-image: url("/backgrounds/sky.png");
+  background-position: top right;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;

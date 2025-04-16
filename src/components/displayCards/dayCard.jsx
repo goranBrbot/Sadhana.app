@@ -32,12 +32,7 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
       animate={{ opacity: 1 }} // Animation to apply (fade in)
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
-      <div
-        className='card'
-        style={{
-          "--card-bg": "url(backgrounds/sky.png)",
-          "--card-bg-position": "top right",
-        }}>
+      <div className='card dayCard'>
         <div className='topBar'>
           <small>DAY-TIME INFORMATION</small>
         </div>
