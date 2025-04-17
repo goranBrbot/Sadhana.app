@@ -249,11 +249,11 @@ function App() {
       <br />
       <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
       <br />
+      <div>{dataReady && <Choghadiya location={location} sunrise={sunrise} sunset={sunset} />}</div>
+      <br />
       <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
       <br />
       <div>{dataReady && <FestivalCard location={location} />}</div>
-      <br />
-      <div>{dataReady && <Choghadiya location={location} sunrise={sunrise} sunset={sunset} />}</div>
     </div>
   );
 }
