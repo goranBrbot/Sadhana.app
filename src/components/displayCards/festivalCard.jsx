@@ -174,7 +174,7 @@ export default function FestivalCard({ location }) {
       <div className='card festivalCard'>
         <div className='topBar' onClick={toggleContainer}>
           <h3>Upcoming festivals</h3>
-          <small>PANCHANG & FESTIVALS</small>
+          <small>PANCHANG & CALENDAR</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <img className='iconFestival' src='icons/puja.png' alt='Bell' />

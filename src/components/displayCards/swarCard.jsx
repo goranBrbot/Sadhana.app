@@ -9,6 +9,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
 
   const [idaVremena, setIdaVremena] = useState([]);
   const [pingalaVremena, setPingalaVremena] = useState([]);
+  const [remainingTime, setRemainingTime] = useState(null);
 
   const swarVrijeme = (dan, lista, startVrijeme, trajanjeMinuta, brojElemenata) => {
     const rezultat = [];
@@ -30,13 +31,20 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
       const sequence = redoslijed[i % 2];
       rezultat.push({
         sequence: sequence,
-        start: format(trenutnoVrijeme, "kk:mm'h'"),
-        end: format(endTime, "kk:mm'h'"),
+        start: trenutnoVrijeme,
+        end: endTime,
       });
       trenutnoVrijeme = endTime;
     }
 
     lista.push(...rezultat);
+  };
+
+  const calculateRemainingTime = (currentTime, nextChangeTime) => {
+    const diff = Math.abs(nextChangeTime - currentTime); // Razlika u milisekundama
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return { hours, minutes };
   };
 
   useEffect(() => {
@@ -59,6 +67,37 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sunrise, tithiDay, setSwaraText]);
 
+  useEffect(() => {
+    if (idaVremena.length > 0 || pingalaVremena.length > 0) {
+      const sada = new Date();
+      let nextChangeTime;
+
+      // Provjeri je li trenutni interval posljednji u nizu
+      if (idaVremena.length > 0) {
+        nextChangeTime = idaVremena[0].end > sada ? idaVremena[0].end : sunrise;
+      } else if (pingalaVremena.length > 0) {
+        nextChangeTime = pingalaVremena[0].end > sada ? pingalaVremena[0].end : sunrise;
+      }
+
+      // Ako je nextChangeTime prije trenutnog vremena, koristi sunrise za sljedeći dan
+      if (nextChangeTime <= sada) {
+        nextChangeTime = new Date(sunrise.getTime() + 24 * 60 * 60 * 1000); // Dodaj 24 sata
+      }
+
+      // Inicijalni izračun preostalog vremena
+      const initialRemaining = calculateRemainingTime(sada, nextChangeTime);
+      setRemainingTime(initialRemaining);
+
+      // Postavljanje intervala za ažuriranje preostalog vremena
+      const interval = setInterval(() => {
+        const remaining = calculateRemainingTime(new Date(), nextChangeTime);
+        setRemainingTime(remaining);
+      }, 1000); // Ažuriraj svake sekunde
+
+      return () => clearInterval(interval); // Očisti interval prilikom unmounta
+    }
+  }, [idaVremena, pingalaVremena, sunrise]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -74,14 +113,19 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
         <div className='container'>
           <ul>
             {idaVremena.map((item, index) => (
-              <li key={index}>{`${item.sequence} at ${item.start} - ${item.end}`}</li>
+              <li key={index}>{`${item.sequence} at ${format(item.start, "kk:mm'h'")} - ${format(item.end, "kk:mm'h'")}`}</li>
             ))}
           </ul>
           <ul>
             {pingalaVremena.map((item, index) => (
-              <li key={index}>{`${item.sequence} at ${item.start} - ${item.end}`}</li>
+              <li key={index}>{`${item.sequence} at ${format(item.start, "kk:mm'h'")} - ${format(item.end, "kk:mm'h'")}`}</li>
             ))}
           </ul>
+          {remainingTime && (
+            <span>
+              Change in: {remainingTime.hours}h {remainingTime.minutes}min
+            </span>
+          )}
         </div>
       </div>
     </motion.div>

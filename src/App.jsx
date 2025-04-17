@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { SearchRiseSet, PairLongitude } from "astronomy-engine";
+//import { add } from "date-fns";
 import GeoFindMe from "./components/geoLocation";
 import DayCard from "./components/displayCards/dayCard";
 import FastingCard from "./components/displayCards/fastingCard";
@@ -35,8 +36,10 @@ function App() {
 
     const SunRise = SearchRiseSet("Sun", pullLocation, +1, new Date(), -1, 0.0);
     const SunSet = SearchRiseSet("Sun", pullLocation, -1, new Date(), -1, 0.0);
+    /* const tomorrow = add(new Date(), { days: 1 }); */
     setSunrise(SunRise.date);
     setSunset(SunSet.date);
+    console.log(SunRise.date, SunSet.date);
 
     const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
     const tithiPeriod = razlikaMoonSun / 12;

@@ -69,7 +69,7 @@ export default function FastingCard({ tithiDay }) {
       <div className='card fastingCard'>
         <div className='topBar' onClick={toggleContainer}>
           <h3>Fasting days</h3>
-          <small>LUNAR PHASES</small>
+          <small>VRATA & UPVAS</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <img className='iconFood' src='icons/thali.png' alt='Fasting' />

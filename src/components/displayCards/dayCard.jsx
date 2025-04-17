@@ -9,9 +9,8 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
 
   const todayDayDate = format(new Date(), "dd.MM.yyyy - EEEE");
   const todaySunriseTime = format(sunrise, "kk:mm'h'");
-  console.log(todaySunriseTime);
-
   const todaySunsetTime = format(sunset, "kk:mm'h'");
+
   const brahmamuhurtaStart = format(addMinutes(sunrise, -96), "kk:mm'h'"); // 1 sat i 36 minuta manje
   const brahmamuhurtaEnd = format(addMinutes(sunrise, -48), "kk:mm'h'"); // 48 minuta manje
 
@@ -34,8 +33,8 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
     >
       <div className='card dayCard'>
         <div className='topBar'>
-          <h3>Basic information</h3>
-          <small>DAY TIME BY LOCATION</small>
+          <h3>Good morning</h3>
+          <small>YOUR LOCATION INFO</small>
         </div>
         <div className='container'>
           <img className='iconSun' src='icons/sun.png' alt='Sun' />

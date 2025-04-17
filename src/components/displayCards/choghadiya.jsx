@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { isBefore, addDays, differenceInMilliseconds, addMilliseconds, getDay } from "date-fns";
+import { addDays, differenceInMilliseconds, addMilliseconds, getDay } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
@@ -13,91 +13,52 @@ const CHOGHADIYA_MAP = {
   6: { dan: ["Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal"], noc: ["Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh"] },
 };
 
-const CHOGHADIYA_TIPOVI = {
-  Amrit: "Najpovoljnije vrijeme za početak bilo kojeg važnog posla.",
-  Shubh: "Vrlo povoljno za sve pozitivne aktivnosti.",
-  Labh: "Dobro za poslovne dobitke i ulaganja.",
-  Char: "Neutralno vrijeme, pogodno za svakodnevne zadatke.",
-  Rog: "Nepovoljno – izbjegavajte zdravstvene i važne odluke.",
-  Kaal: "Vrlo nepovoljno – ne preporučuje se početak ničega.",
-  Udveg: "Vrijeme stresa i prepreka, najbolje izbjegavati važne radnje.",
+const CHOGHADIYA_TYPE = {
+  Amrit: "Best",
+  Shubh: "Good",
+  Labh: "Gain",
+  Char: "Neutral",
+  Rog: "Evil",
+  Kaal: "Loss",
+  Udveg: "Bad",
 };
 
 const Choghadiya = ({ location, sunrise, sunset }) => {
   const [dnevnaTablica, setDnevnaTablica] = useState([]);
   const [nocnaTablica, setNocnaTablica] = useState([]);
   const [containerVisible, setContainerVisible] = useState(false);
+  const [aktivnaChoghadiya, setAktivnaChoghadiya] = useState(null); // Dodano za aktivnu Choghadiya
 
   const toggleContainer = () => setContainerVisible(!containerVisible);
-
-  /* useEffect(() => {
-    if (!location || !sunrise || !sunset) return;
-
-    const danas = new Date();
-    const sutra = addDays(new Date(sunrise), 1);
-
-    const dayOfWeek = danas.getDay();
-    const dnevniChoghadiya = CHOGHADIYA_MAP[dayOfWeek].dan;
-    const nocniChoghadiya = CHOGHADIYA_MAP[dayOfWeek].noc;
-
-    const generirajIntervale = (startDate, endDate, niz) => {
-      const trajanje = new Date((endDate - startDate) / 8);
-      return niz.map((chogh, i) => {
-        const start = new Date(startDate.getTime() + i * trajanje);
-        const end = new Date(start.getTime() + trajanje);
-        return { chogh, start, end };
-      });
-    };
-
-    setDnevnaTablica(generirajIntervale(new Date(sunrise), new Date(sunset), dnevniChoghadiya));
-    setNocnaTablica(generirajIntervale(new Date(sunset), new Date(sutra), nocniChoghadiya));
-  }, [location, sunrise, sunset]);
-
-  const sada = new Date();
-  const formatTime = (date) => date.toTimeString().slice(0, 5);
-  const stilReda = (tip) => (["Rog", "Kaal", "Udveg"].includes(tip) ? "nepovoljno" : "povoljno");
-
-  const renderTablica = (podaci, naslov) => (
-    <div>
-      <br />
-      <p>{naslov}</p>
-      <table>
-        <tbody>
-          {podaci.map(({ chogh, start, end }, i) => (
-            <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`} title={CHOGHADIYA_TIPOVI[chogh]}>
-              <td>
-                {formatTime(start)} – {formatTime(end)}
-              </td>
-              <td>{chogh}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  ); */
 
   useEffect(() => {
     if (!location || !sunrise || !sunset) return;
 
-    const danas = new Date();
-    const dayOfWeek = getDay(danas);
-    const dnevniChoghadiya = CHOGHADIYA_MAP[dayOfWeek].dan;
-    const nocniChoghadiya = CHOGHADIYA_MAP[dayOfWeek].noc;
-
-    const startDay = new Date(sunrise); // lokalno
-    const endDay = new Date(sunset); // lokalno
-
-    const startNight = endDay;
-    const endNight = addDays(startDay, 1);
-
-    // Ako je endNight "manje" od startNight (zbog vremenskih pomaka), korigiraj
-    if (isBefore(endNight, startNight)) {
-      endNight.setHours(endNight.getHours() + 24);
+    // Osigurajte da su sunrise i sunset na istom danu
+    let adjustedSunset = sunset;
+    if (adjustedSunset <= sunrise) {
+      adjustedSunset = addDays(adjustedSunset, 1);
     }
+
+    const startDay = sunrise; // Početak dnevnog intervala
+    const endDay = adjustedSunset; // Kraj dnevnog intervala
+
+    const startNight = sunset; // Početak noćnog intervala
+    const endNight = addDays(sunrise, 1); // Kraj noćnog intervala (sunrise sljedećeg dana)
+
+    console.log("Sunrise:", startDay);
+    console.log("Sunset:", endDay);
+    console.log("Start Night:", startNight);
+    console.log("End Night:", endNight);
 
     const generirajIntervale = (startDate, endDate, niz) => {
       const ukupnoTrajanje = differenceInMilliseconds(endDate, startDate);
       const trajanjeSegmenta = ukupnoTrajanje / 8;
+
+      console.log("Start Date:", startDate);
+      console.log("End Date:", endDate);
+      console.log("Ukupno Trajanje (ms):", ukupnoTrajanje);
+      console.log("Trajanje Segmenta (ms):", trajanjeSegmenta);
 
       return niz.map((chogh, i) => {
         const start = addMilliseconds(startDate, i * trajanjeSegmenta);
@@ -106,11 +67,17 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
       });
     };
 
-    const dnevniRaspored = generirajIntervale(startDay, endDay, dnevniChoghadiya);
-    const nocniRaspored = generirajIntervale(startNight, endNight, nocniChoghadiya);
+    const dnevniRaspored = generirajIntervale(startDay, endDay, CHOGHADIYA_MAP[getDay(new Date())].dan);
+    const nocniRaspored = generirajIntervale(startNight, endNight, CHOGHADIYA_MAP[getDay(new Date())].noc);
 
     setDnevnaTablica(dnevniRaspored);
     setNocnaTablica(nocniRaspored);
+
+    // Pronađi aktivnu Choghadiya
+    const sada = new Date();
+    const aktivna = dnevniRaspored.concat(nocniRaspored).find(({ start, end }) => sada >= start && sada < end) || null;
+
+    setAktivnaChoghadiya(aktivna ? aktivna.chogh : null);
   }, [location, sunrise, sunset]);
 
   const sada = new Date();
@@ -124,7 +91,7 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
       <table>
         <tbody>
           {podaci.map(({ chogh, start, end }, i) => (
-            <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`} title={CHOGHADIYA_TIPOVI[chogh]}>
+            <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`} title={CHOGHADIYA_TYPE[chogh]}>
               <td>
                 {formatTime(start)} – {formatTime(end)}
               </td>
@@ -136,7 +103,7 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
     </div>
   );
 
-  if (!location || !sunrise || !sunset) return <p>Učitavanje podataka...</p>;
+  if (!location || !sunrise || !sunset) return <p>Loading data ..</p>;
 
   return (
     <motion.div
@@ -148,6 +115,11 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
         <div className='topBar' onClick={toggleContainer}>
           <h3>Best daily timings</h3>
           <small>CHOGHADIYA MUHURTA</small>
+          {aktivnaChoghadiya && (
+            <small className='aktivnaChoghadiya'>
+              {aktivnaChoghadiya} - {CHOGHADIYA_TYPE[aktivnaChoghadiya]}
+            </small>
+          )}
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           {renderTablica(dnevnaTablica, "From sunrise to sunset.")}

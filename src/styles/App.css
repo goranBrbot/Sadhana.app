@@ -139,6 +139,7 @@ table {
   border-collapse: separate;
   width: 100%;
   margin-top: 20px;
+  margin-bottom: 10px;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -257,14 +258,14 @@ tfoot td:last-child {
   width: 100%;
   height: 100%;
   background-image: url("/backgrounds/nature.png");
-  background-position: center left;
+  background-position: center right;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
-  opacity: 0.8;
+  opacity: 1;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card.fastingCard::before {
@@ -324,6 +325,12 @@ tfoot td:last-child {
   mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
 }
 
+.aktivnaChoghadiya {
+  position: absolute;
+  top: 30px;
+  right: 28px;
+}
+
 .topBar {
   display: flex;
   flex-direction: column;
@@ -371,7 +378,6 @@ tfoot td:last-child {
 
 .iconMap {
   height: 40px;
-  margin-right: 10px;
 }
 
 .iconSun {
@@ -387,7 +393,7 @@ tfoot td:last-child {
 .iconSwar {
   height: 225px;
   position: absolute;
-  top: 0px;
+  top: 8px;
   right: -5px;
   bottom: 0;
   z-index: 1;
@@ -398,9 +404,7 @@ tfoot td:last-child {
   -o-transition: filter 300ms;
   transition: filter 300ms;
   transition: filter 300ms, -webkit-filter 300ms;
-  -webkit-filter: drop-shadow(0 0 1px #fff);
-  filter: drop-shadow(0 0 1px white);
-  filter: drop-shadow(0 0 0 white) drop-shadow(0 0 5px rgb(255, 255, 255));
+  filter: drop-shadow(0 0 0 white) drop-shadow(0 0 8px rgb(253, 250, 237));
 }
 
 .iconFood {
