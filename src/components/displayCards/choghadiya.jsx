@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { addDays, differenceInMilliseconds, addMilliseconds, getDay } from "date-fns";
+import { format, addMinutes } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
@@ -80,7 +81,6 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
 
   const renderTablica = (podaci, naslov) => (
     <div>
-      <br />
       <p>{naslov}</p>
       <table>
         <tbody>
@@ -99,6 +99,9 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
 
   if (!location || !sunrise || !sunset) return <p>Loading data ..</p>;
 
+  const brahmamuhurtaStart = format(addMinutes(sunrise, -96), "kk:mm'h'"); // 1 sat i 36 minuta manje
+  const brahmamuhurtaEnd = format(addMinutes(sunrise, -48), "kk:mm'h'"); // 48 minuta manje
+
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -116,8 +119,11 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
           )}
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          {renderTablica(dnevnaTablica, "From sunrise to sunset.")}
-          {renderTablica(nocnaTablica, "From sunset to sunrise.")}
+          <span>
+            Brahma-muhūrta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
+          </span>
+          {renderTablica(dnevnaTablica, "Choghadiya table from sunrise to sunset.")} <br />
+          {renderTablica(nocnaTablica, "Choghadiya table from sunset to sunrise.")}
         </div>
       </div>
     </motion.div>

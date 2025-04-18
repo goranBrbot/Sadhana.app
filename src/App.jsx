@@ -245,8 +245,11 @@ function App() {
       </React.Fragment>
 
       {/* <div>{ <Loader isVisible={loader} /> }</div> */}
-      <GeoFindMe setLocation={handleLocationUpdate} />
-      <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} tithiDay={tithiDay} />}</div>
+      {/* <GeoFindMe setLocation={handleLocationUpdate} /> */}
+      <div style={{ display: "none" }}>
+        <GeoFindMe setLocation={handleLocationUpdate} />
+      </div>
+      <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} />}</div>
       <br />
       <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
       <br />
@@ -254,7 +257,7 @@ function App() {
       <br />
       <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
       <br />
-      <div>{dataReady && <FestivalCard location={location} />}</div>
+      <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} />}</div>
     </div>
   );
 }

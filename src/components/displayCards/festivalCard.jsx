@@ -3,8 +3,9 @@ import { parse, isToday, isAfter, isWithinInterval, differenceInMilliseconds } f
 import { PropTypes } from "prop-types";
 import Panchang from "../panchang";
 import { motion } from "framer-motion";
+//import GregorianToVedicTime from "../vedicTime";
+//import FindGregorianDateFromVedic from "../vedicToGregorian";
 
-// Festivals list extracted to avoid duplication
 const FESTIVALS = [
   ["Makar Sankranti", "14.1."],
   ["Vasant Panchami", "2.2."],
@@ -34,8 +35,10 @@ const FESTIVALS = [
   ["UN World Meditation Day", "21.12."],
 ];
 
-export default function FestivalCard({ location }) {
+export default function FestivalCard({ location, tithiDay }) {
   const panchangData = Panchang(new Date(), location);
+  //const vedicTime = GregorianToVedicTime(new Date(), location);
+  //const obljetnicaMahasamadhi = FindGregorianDateFromVedic("Pauṣa", "Kṛṣṇa Pakṣa", "Caturthī", "Purnimanta", location);
 
   const [containerVisible, setContainerVisible] = useState(false);
   const [nextFestivalInfo, setNextFestivalInfo] = useState({
@@ -113,6 +116,17 @@ export default function FestivalCard({ location }) {
     );
   };
 
+  function tithiCalc(day) {
+    if (day <= 15) {
+      return day;
+    } else if (day > 15) {
+      return day - 15;
+    }
+  }
+
+  const brightDarkTithi = tithiCalc(tithiDay);
+  const brightDarkTithiHtml = tithiDay <= 15 ? `${tithiDay} Tithi - ${brightDarkTithi} day of "Shukla Pakṣa"` : `${tithiDay} Tithi - ${brightDarkTithi} day of "Kṛṣṇa Navamī"`;
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
@@ -123,6 +137,10 @@ export default function FestivalCard({ location }) {
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <img className='iconFestival' src='icons/puja.png' alt='Bell' />
+          {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
+          {/* <p>{vedicTime}</p> */}
+          <span>{brightDarkTithiHtml}</span>
+          <br />
           <span>Tithi: {panchangData.Tithi}</span>
           <br />
           <span>Paksha: {panchangData.Paksha}</span>
@@ -140,11 +158,11 @@ export default function FestivalCard({ location }) {
           <span>Var: {panchangData.Var}</span>
           <br />
           {nextFestivalInfo.name && (
-            <div style={{ marginTop: "10px", fontWeight: "500" }}>
-              <span>{`Next Festival: "${nextFestivalInfo.name}"`}</span>
+            <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
+              <span>{`Next is "${nextFestivalInfo.name}"`}</span>
               <br />
               <span>
-                {nextFestivalInfo.daysRemaining} | {nextFestivalInfo.timeRemaining}
+                in {nextFestivalInfo.daysRemaining} | {nextFestivalInfo.timeRemaining}
               </span>
             </div>
           )}
@@ -157,4 +175,5 @@ export default function FestivalCard({ location }) {
 
 FestivalCard.propTypes = {
   location: PropTypes.object,
+  tithiDay: PropTypes.number,
 };

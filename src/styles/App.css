@@ -189,13 +189,13 @@ tfoot td:last-child {
 }
 
 .location {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   gap: 0.5em;
-  margin: 24px;
-  font-size: 0.8rem;
+  /* margin: 24px; 
+  font-size: 0.8rem; */
   text-align: left;
 }
 
@@ -327,8 +327,15 @@ tfoot td:last-child {
 
 .aktivniInfo {
   position: absolute;
-  top: 30px;
-  right: 28px;
+  top: 44px;
+  right: 15px;
+  width: auto;
+  padding: 1px 8px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-white);
+  border-radius: 10px;
 }
 
 .topBar {
@@ -376,9 +383,9 @@ tfoot td:last-child {
   display: none;
 } */
 
-.iconMap {
+/* .iconMap {
   height: 40px;
-}
+} */
 
 .iconSun {
   height: 80px;
@@ -402,12 +409,13 @@ tfoot td:last-child {
 }
 
 .iconFood {
-  height: 80px;
+  height: 100px;
   position: absolute;
-  top: 25px;
-  right: 25px;
+  top: 45px;
+  right: -5px;
   pointer-events: none;
   will-change: filter;
+  rotate: -155deg;
   -webkit-transition: -webkit-filter 300ms;
   transition: -webkit-filter 300ms;
   -o-transition: filter 300ms;

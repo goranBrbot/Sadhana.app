@@ -87,7 +87,7 @@ export default function GeoFindMe({ setLocation }) {
           <>
             <div className='location'>
               {/* <img className='logo' src='favicon.svg' alt='Om' /> */}
-              <img className='iconMap' src='icons/map-pin.png' alt='Map location' />
+              {/* <img className='iconMap' src='icons/map-pin.png' alt='Map location' /> */}
               <div>
                 {/* <small>YOUR LOCATION</small> */}
                 <span>{city}</span>

@@ -1,29 +1,15 @@
-import { format, addMinutes } from "date-fns";
+import { format } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
+import GeoFindMe from "../geoLocation";
 
-export default function DayCard({ sunrise, sunset, tithiDay }) {
+export default function DayCard({ sunrise, sunset }) {
   console.log(sunrise);
   console.log(sunset);
-  console.log(tithiDay);
 
-  const todayDayDate = format(new Date(), "dd.MM.yyyy - EEEE");
+  const todayDayDate = format(new Date(), "EEEE dd.MM.yyyy");
   const todaySunriseTime = format(sunrise, "kk:mm'h'");
   const todaySunsetTime = format(sunset, "kk:mm'h'");
-
-  const brahmamuhurtaStart = format(addMinutes(sunrise, -96), "kk:mm'h'"); // 1 sat i 36 minuta manje
-  const brahmamuhurtaEnd = format(addMinutes(sunrise, -48), "kk:mm'h'"); // 48 minuta manje
-
-  function tithiCalc(day) {
-    if (day <= 15) {
-      return day;
-    } else if (day > 15) {
-      return day - 15;
-    }
-  }
-
-  const brightDarkTithi = tithiCalc(tithiDay);
-  const brightDarkTithiHtml = tithiDay <= 15 ? `${tithiDay} Tithi - ${brightDarkTithi} day of "Shukla Pakṣa"` : `${tithiDay} Tithi - ${brightDarkTithi} day of "Kṛṣṇa Navamī"`;
 
   return (
     <motion.div
@@ -33,21 +19,16 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
     >
       <div className='card dayCard'>
         <div className='topBar'>
-          <h3>Good morning</h3>
-          <small>YOUR LOCATION INFO</small>
+          <h3>Basic information</h3>
+          <small>BY YOUR LOCATION</small>
         </div>
         <div className='container'>
           <img className='iconSun' src='icons/sun.png' alt='Sun' />
+          <span>{GeoFindMe(location)}</span>
           <span>{todayDayDate}</span>
           <br />
           <span>
-            Sunrise: {todaySunriseTime} / Sunset: {todaySunsetTime}
-          </span>
-          <br />
-          <span>{brightDarkTithiHtml}</span>
-          <br />
-          <span>
-            Brahma-muhūrta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
+            Sunrise: {todaySunriseTime} - Sunset: {todaySunsetTime}
           </span>
         </div>
       </div>
@@ -58,5 +39,4 @@ export default function DayCard({ sunrise, sunset, tithiDay }) {
 DayCard.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
   sunset: PropTypes.instanceOf(Date),
-  tithiDay: PropTypes.number,
 };
