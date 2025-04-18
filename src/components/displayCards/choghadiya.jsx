@@ -34,14 +34,8 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
   useEffect(() => {
     if (!location || !sunrise || !sunset) return;
 
-    // Osigurajte da su sunrise i sunset na istom danu
-    let adjustedSunset = sunset;
-    if (adjustedSunset <= sunrise) {
-      adjustedSunset = addDays(adjustedSunset, 1);
-    }
-
     const startDay = sunrise; // Početak dnevnog intervala
-    const endDay = adjustedSunset; // Kraj dnevnog intervala
+    const endDay = sunset; // Kraj dnevnog intervala
 
     const startNight = sunset; // Početak noćnog intervala
     const endNight = addDays(sunrise, 1); // Kraj noćnog intervala (sunrise sljedećeg dana)
@@ -116,7 +110,7 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
           <h3>Best daily timings</h3>
           <small>CHOGHADIYA MUHURTA</small>
           {aktivnaChoghadiya && (
-            <small className='aktivnaChoghadiya'>
+            <small className='aktivniInfo'>
               {aktivnaChoghadiya} - {CHOGHADIYA_TYPE[aktivnaChoghadiya]}
             </small>
           )}

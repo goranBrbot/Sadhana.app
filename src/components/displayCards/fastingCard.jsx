@@ -57,7 +57,7 @@ export default function FastingCard({ tithiDay }) {
     }
   }
 
-  const [containerVisible, setContainerVisible] = useState(false);
+  const [containerVisible, setContainerVisible] = useState(true);
   const toggleContainer = () => setContainerVisible(!containerVisible);
 
   return (
@@ -69,7 +69,7 @@ export default function FastingCard({ tithiDay }) {
       <div className='card fastingCard'>
         <div className='topBar' onClick={toggleContainer}>
           <h3>Fasting days</h3>
-          <small>VRATA & UPVAS</small>
+          <small>VRAT & UPVAS</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <img className='iconFood' src='icons/thali.png' alt='Fasting' />

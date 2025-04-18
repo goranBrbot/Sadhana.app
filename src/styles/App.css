@@ -238,15 +238,15 @@ tfoot td:last-child {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/daycard.jpg");
-  background-position: top right;
+  background-image: url("/backgrounds/daycard.png");
+  background-position: center 30%;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
   opacity: 0.8;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card.swarCard::before {
@@ -258,14 +258,14 @@ tfoot td:last-child {
   width: 100%;
   height: 100%;
   background-image: url("/backgrounds/nature.png");
-  background-position: center right;
+  background-position: center 85%;
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
   opacity: 1;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card.fastingCard::before {
@@ -325,7 +325,7 @@ tfoot td:last-child {
   mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
 }
 
-.aktivnaChoghadiya {
+.aktivniInfo {
   position: absolute;
   top: 30px;
   right: 28px;
@@ -398,12 +398,6 @@ tfoot td:last-child {
   bottom: 0;
   z-index: 1;
   pointer-events: none;
-  will-change: filter;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
   filter: drop-shadow(0 0 0 white) drop-shadow(0 0 8px rgb(253, 250, 237));
 }
 
@@ -425,10 +419,10 @@ tfoot td:last-child {
 }
 
 .iconFestival {
-  height: 50px;
+  height: 80px;
   position: absolute;
-  top: 30px;
-  right: 35px;
+  top: 150px;
+  right: 50px;
   pointer-events: none;
   -webkit-transition: -webkit-filter 300ms;
   transition: -webkit-filter 300ms;
