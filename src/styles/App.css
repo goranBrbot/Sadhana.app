@@ -189,13 +189,13 @@ tfoot td:last-child {
 }
 
 .location {
-  /* display: flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   gap: 0.5em;
-  /* margin: 24px; 
-  font-size: 0.8rem; */
+  margin: 24px;
+  font-size: 0.8rem;
   text-align: left;
 }
 

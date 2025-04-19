@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Observer } from "astronomy-engine";
 import { PropTypes } from "prop-types";
-import { motion } from "framer-motion";
 
 export default function GeoFindMe({ setLocation }) {
   const [coords, setCoords] = useState("");
@@ -96,15 +95,13 @@ export default function GeoFindMe({ setLocation }) {
       {loading ? (
         <div className='loading-indicator'>Loading location...</div>
       ) : (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
-          <div className='location'>
-            <div>
-              <span>{city}</span>
-              <br />
-              <span>{coords}</span>
-            </div>
+        <div className='location' style={{ display: "none" }}>
+          <div>
+            <span>{city}</span>
+            <br />
+            <span>{coords}</span>
           </div>
-        </motion.div>
+        </div>
       )}
     </div>
   );

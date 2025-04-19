@@ -248,7 +248,7 @@ function App() {
 
       {/* <div>{ <Loader isVisible={loader} /> }</div> */}
       {/* <GeoFindMe setLocation={handleLocationUpdate} /> */}
-      <div style={{ display: "none" }}>
+      <div>
         <GeoFindMe setLocation={handleLocationUpdate} />
       </div>
       <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} />}</div>
