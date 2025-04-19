@@ -24,7 +24,7 @@ const CHOGHADIYA_TYPE = {
   Udveg: "Bad",
 };
 
-const Choghadiya = ({ location, sunrise, sunset }) => {
+const Choghadiya = ({ sunrise, sunset }) => {
   const [dnevnaTablica, setDnevnaTablica] = useState([]);
   const [nocnaTablica, setNocnaTablica] = useState([]);
   const [containerVisible, setContainerVisible] = useState(false);
@@ -33,7 +33,10 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
   const toggleContainer = () => setContainerVisible(!containerVisible);
 
   useEffect(() => {
-    if (!location || !sunrise || !sunset) return;
+    if (!sunrise || !sunset) return;
+
+    console.log("Sunrise:", sunrise);
+    console.log("Sunset:", sunset);
 
     const startDay = sunrise; // Početak dnevnog intervala
     const endDay = sunset; // Kraj dnevnog intervala
@@ -73,7 +76,7 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
     const aktivna = dnevniRaspored.concat(nocniRaspored).find(({ start, end }) => sada >= start && sada < end) || null;
 
     setAktivnaChoghadiya(aktivna ? aktivna.chogh : null);
-  }, [location, sunrise, sunset]);
+  }, [sunrise, sunset]);
 
   const sada = new Date();
   const formatTime = (date) => date.toTimeString().slice(0, 5);
@@ -97,10 +100,12 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
     </div>
   );
 
-  if (!location || !sunrise || !sunset) return <p>Loading data ..</p>;
+  if (!sunrise || !sunset) return <p>Loading data ..</p>;
 
   const brahmamuhurtaStart = format(addMinutes(sunrise, -96), "kk:mm'h'"); // 1 sat i 36 minuta manje
   const brahmamuhurtaEnd = format(addMinutes(sunrise, -48), "kk:mm'h'"); // 48 minuta manje
+
+  console.log("Choghadiya data:", { dnevnaTablica, nocnaTablica });
 
   return (
     <motion.div
@@ -133,7 +138,6 @@ const Choghadiya = ({ location, sunrise, sunset }) => {
 export default Choghadiya;
 
 Choghadiya.propTypes = {
-  location: PropTypes.object,
   sunrise: PropTypes.instanceOf(Date),
   sunset: PropTypes.instanceOf(Date),
 };

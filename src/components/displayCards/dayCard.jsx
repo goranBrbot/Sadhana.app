@@ -1,15 +1,14 @@
 import { format } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
-import GeoFindMe from "../geoLocation";
 
-export default function DayCard({ sunrise, sunset }) {
-  console.log(sunrise);
-  console.log(sunset);
-
+export default function DayCard({ sunrise, sunset, location, locationName }) {
   const todayDayDate = format(new Date(), "EEEE dd.MM.yyyy");
   const todaySunriseTime = format(sunrise, "kk:mm'h'");
   const todaySunsetTime = format(sunset, "kk:mm'h'");
+
+  // Formatiraj `location` za prikaz
+  const formattedLocation = location && location.latitude && location.longitude ? `Lat ${location.latitude}° Long ${location.longitude}° Alt ${location.height}m` : "Location not available";
 
   return (
     <motion.div
@@ -24,12 +23,15 @@ export default function DayCard({ sunrise, sunset }) {
         </div>
         <div className='container'>
           <img className='iconSun' src='icons/sun.png' alt='Sun' />
-          <span>{GeoFindMe(location)}</span>
           <span>{todayDayDate}</span>
           <br />
           <span>
             Sunrise: {todaySunriseTime} - Sunset: {todaySunsetTime}
           </span>
+          <br />
+          <span>{locationName}</span>
+          <br />
+          <span>{formattedLocation}</span>
         </div>
       </div>
     </motion.div>
@@ -39,4 +41,6 @@ export default function DayCard({ sunrise, sunset }) {
 DayCard.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
   sunset: PropTypes.instanceOf(Date),
+  location: PropTypes.object,
+  locationName: PropTypes.string,
 };

@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 
 function App() {
   const [location, setLocation] = useState(null);
+  const [locationName, setLocationName] = useState("");
   const [sunrise, setSunrise] = useState(null);
   const [sunset, setSunset] = useState(null);
   const [tithiDay, setTithiDay] = useState(null);
@@ -29,12 +30,14 @@ function App() {
   // const [loader, setLoader] = useState(false);
 
   const handleLocationUpdate = (newLocation) => {
-    const pullLocation = newLocation;
+    const pullLocation = newLocation.pozicija;
+    const pullLocationName = newLocation.adresa;
     setLocation(pullLocation);
-    console.log(location);
+    setLocationName(pullLocationName);
+    console.log("Location updated:", pullLocation, pullLocationName);
 
     const SunRise = SearchRiseSet("Sun", pullLocation, +1, new Date(), -1, 0.0);
-    const SunSet = SearchRiseSet("Sun", pullLocation, -1, new Date(), +1, 0.0);
+    const SunSet = SearchRiseSet("Sun", pullLocation, -1, new Date(), -1, 0.0);
     setSunrise(SunRise.date);
     setSunset(SunSet.date);
     console.log(SunRise.date, SunSet.date);
@@ -52,7 +55,6 @@ function App() {
   const updateSwaraText = (generatedText) => {
     const newText = generatedText;
     setSwaraText(newText);
-    console.log(swaraText);
   };
 
   // Implementacija notifikacija
@@ -249,11 +251,11 @@ function App() {
       <div style={{ display: "none" }}>
         <GeoFindMe setLocation={handleLocationUpdate} />
       </div>
-      <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} />}</div>
+      <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} />}</div>
       <br />
       <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
       <br />
-      <div>{dataReady && <Choghadiya location={location} sunrise={sunrise} sunset={sunset} />}</div>
+      <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} />}</div>
       <br />
       <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
       <br />
