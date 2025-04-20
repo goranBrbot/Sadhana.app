@@ -15,7 +15,8 @@ export default function GeoFindMe({ setLocation }) {
     try {
       const response = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`);
       const data = await response.json();
-      return Array.isArray(data.elevation) && data.elevation.length > 0 ? data.elevation[0] : 0;
+      const result = Array.isArray(data.elevation) && data.elevation.length > 0 ? data.elevation[0] : 0;
+      return Math.round(result);
     } catch (error) {
       console.error("Error fetching elevation:", error);
       return 0;
@@ -26,12 +27,13 @@ export default function GeoFindMe({ setLocation }) {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
       const data = await response.json();
+      const tourism = data.address.tourism || "";
       const road = data.address.road || "";
       const house_number = data.address.house_number || "";
       const village = data.address.village || "";
       const town = data.address.town || "";
       const city = data.address.city || "";
-      return `${road} ${house_number}, ${(village, town || city)}`;
+      return `${tourism} ${road} ${house_number}, ${village} ${town ? town : city}`;
     } catch (error) {
       console.error("Error fetching city:", error);
       return "City not found";

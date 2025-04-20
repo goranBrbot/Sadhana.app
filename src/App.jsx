@@ -55,7 +55,7 @@ function App() {
     console.log("Location updated:", pullLocation, pullLocationName);
 
     const SunRise = SearchRiseSet("Sun", pullLocation, +1, new Date(), -1, 0.0);
-    const SunSet = SearchRiseSet("Sun", pullLocation, -1, new Date(), -1, 0.0);
+    const SunSet = SearchRiseSet("Sun", pullLocation, -1, SunRise.date, 1, 0.0);
     setSunrise(SunRise.date);
     setSunset(SunSet.date);
     console.log(SunRise.date, SunSet.date);
