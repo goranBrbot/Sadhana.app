@@ -29,6 +29,21 @@ function App() {
   const [notificationSent, setNotificationSent] = useState(false);
   // const [loader, setLoader] = useState(false);
 
+  const preloadImages = (imageUrls) => {
+    imageUrls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
+  };
+
+  useEffect(() => {
+    const imageUrls = [
+      "/backgrounds/daycard.png",
+      // Dodajte sve slike koje želite preloadati
+    ];
+    preloadImages(imageUrls);
+  }, []);
+
   const handleLocationUpdate = (newLocation) => {
     const pullLocation = newLocation.pozicija;
     const pullLocationName = newLocation.adresa;

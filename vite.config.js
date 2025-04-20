@@ -100,6 +100,48 @@ export default defineConfig({
                 },
               },
             },
+            {
+              urlPattern: /^https:\/\/api\.open-meteo\.com\//,
+              handler: "NetworkFirst",
+              options: {
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              // Pravilo za keširanje slika
+              urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
+              handler: "CacheFirst",
+              options: {
+                cacheName: "image-cache",
+                expiration: {
+                  maxEntries: 50, // Maksimalno 50 slika
+                  maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dana
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/api\.weatherbit\.io\//,
+              handler: "NetworkFirst",
+              options: {
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/api\.ipgeolocation\.io\//,
+              handler: "NetworkFirst",
+              options: {
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
           ],
         },
       },
