@@ -29,17 +29,20 @@ function App() {
   const [notificationSent, setNotificationSent] = useState(false);
   // const [loader, setLoader] = useState(false);
 
+  // Service Worker u vite.config kešira slike a ovdje preloada za učitavanje slika unaprijed ..
   const preloadImages = (imageUrls) => {
     imageUrls.forEach((url) => {
       const img = new Image();
       img.src = url;
+      img.onload = () => console.log(`Image loaded: ${url}`);
+      img.onerror = () => console.error(`Failed to load image: ${url}`);
     });
   };
 
   useEffect(() => {
     const imageUrls = [
       "/backgrounds/daycard.png",
-      // Dodajte sve slike koje želite preloadati
+      // Dodajte sve slike koje želite preloadati!
     ];
     preloadImages(imageUrls);
   }, []);
