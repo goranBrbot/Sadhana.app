@@ -39,43 +39,62 @@ export default function GeoFindMe({ setLocation }) {
   }
 
   async function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
-    setCoords(`Lat ${latitude}° Long ${longitude}° Alt ${altitude}m`);
+    try {
+      let newLocation = null;
+      if (position) {
+        // Ako geolokacija uspije
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
+        setCoords(`Lat ${latitude}° Long ${longitude}° Alt ${altitude}m`);
 
-    const pulledCity = await getCityFromCoords(latitude, longitude);
-    setCity(pulledCity);
+        const pulledCity = await getCityFromCoords(latitude, longitude);
+        setCity(pulledCity);
 
-    const newLocation = { pozicija: new Observer(latitude, longitude, altitude), adresa: pulledCity };
-    localStorage.setItem("locationState", JSON.stringify(newLocation));
-    setLocation(newLocation);
-
-    setLoading(false);
+        newLocation = { pozicija: new Observer(latitude, longitude, altitude), adresa: pulledCity };
+        localStorage.setItem("locationState", JSON.stringify(newLocation));
+        console.log("Saved to localStorage:", JSON.parse(localStorage.getItem("locationState")));
+      } else {
+        // Ako geolokacija ne uspije, koristi fallback iz localStorage
+        const savedState = localStorage.getItem("locationState");
+        console.log("Retrieved from localStorage:", savedState);
+        if (savedState) {
+          const locationState = JSON.parse(savedState);
+          console.log("Parsed locationState:", locationState);
+          if (locationState) {
+            const { latitude, longitude, height } = locationState.pozicija;
+            const adresa = locationState.adresa;
+            if (typeof latitude === "number" && typeof longitude === "number" && typeof height === "number") {
+              setCoords(`Using previously saved location`);
+              setCity(adresa || "City not found");
+              newLocation = { pozicija: new Observer(latitude, longitude, height), adresa: adresa };
+            } else {
+              setCoords("No valid saved location found");
+              setCity("City not found");
+            }
+          } else {
+            setCoords("Unable to retrieve your location and no saved location found");
+            setCity("City not found");
+          }
+        }
+      }
+      if (newLocation) {
+        setLocation(newLocation);
+      } else {
+        console.error("Failed to determine location.");
+      }
+    } catch (error) {
+      console.error("Error in success function:", error);
+      setCoords("An error occurred while retrieving your location");
+      setCity("City not found");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function error() {
-    console.warn("Geolocation failed, using localStorage as fallback.");
-    // Ako dohvaćanje lokacije ne uspije, koristi spremljenu lokaciju iz localStorage
-    const savedState = localStorage.getItem("locationState");
-    if (savedState) {
-      const locationState = JSON.parse(savedState);
-      if (locationState && typeof locationState.latitude === "number" && typeof locationState.longitude === "number") {
-        const { latitude, longitude } = locationState;
-        const altitude = locationState.altitude || 0;
-        setCoords(`Using previously saved location!`);
-        // getCityFromCoords(locationState.latitude, locationState.longitude);
-        getCityFromCoords(latitude, longitude).then((cityName) => setCity(cityName));
-        setLocation(new Observer(latitude, longitude, altitude));
-      } else {
-        setCoords("No valid saved location found");
-        setCity("City not found");
-      }
-    } else {
-      setCoords("Unable to retrieve your location and no saved location found");
-      setCity("City not found");
-    }
-    setLoading(false);
+    console.warn("Geolocation failed, falling back to localStorage.");
+    success(null); // Poziva success s null kako bi se fallback logika obradila
   }
 
   useEffect(() => {
