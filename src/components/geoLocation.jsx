@@ -153,32 +153,21 @@ export default function GeoFindMe({ setLocation }) {
   }, []);
 
   return (
-    // OVA KOMPONENTA SE UOPĆE NE RENDA VIZUALNO A SLUŽITI ĆE ZA LOADER U BUDUĆNOSTI ..
-    /*     <div className='location'>
-      {loading ? (
-        <div className='loading-indicator'>Loading location...</div>
-      ) : (
-        <div className='location' style={{ display: "none" }}>
-          <div>
-            <span>{city}</span>
-            <br />
-            <span>{coords}</span>
-          </div>
-        </div>
-      )}
-    </div>
- */
-
     <div className='location'>
       {loading ? (
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "100vh",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
           }}>
           <LoadingCircularProgress />
+          <small style={{ marginTop: "24px" }}>Preparing data for your location ..</small>
         </Box>
       ) : (
         <div className='location' style={{ display: "none" }}>
