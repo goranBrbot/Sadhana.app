@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { format } from "date-fns";
+import { format, add } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
@@ -14,6 +14,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
   const swarVrijeme = (dan, lista, startVrijeme, trajanjeMinuta, brojElemenata) => {
     const rezultat = [];
     let trenutnoVrijeme = new Date(startVrijeme);
+    console.log(trenutnoVrijeme);
 
     const filteredIda = idaDays.includes(dan);
     const filteredPingala = pingalaDays.includes(dan);
@@ -81,7 +82,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
 
       // Ako je nextChangeTime prije trenutnog vremena, koristi sunrise za sljedeći dan
       if (nextChangeTime <= sada) {
-        nextChangeTime = new Date(sunrise.getTime() + 24 * 60 * 60 * 1000); // Dodaj 24 sata
+        nextChangeTime = add(sunrise, { hours: 24 }); // Dodaj 24 sata na sunrise
       }
 
       // Inicijalni izračun preostalog vremena

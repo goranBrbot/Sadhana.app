@@ -1,6 +1,47 @@
 import { useState, useEffect } from "react";
 import { Observer } from "astronomy-engine";
 import { PropTypes } from "prop-types";
+import CircularProgress, { circularProgressClasses } from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
+function LoadingCircularProgress(props) {
+  return (
+    <Box sx={{ position: "relative" }}>
+      <CircularProgress
+        variant='determinate'
+        sx={(theme) => ({
+          color: theme.palette.grey[200],
+          ...theme.applyStyles("dark", {
+            color: theme.palette.grey[800],
+          }),
+        })}
+        size={40}
+        thickness={4}
+        {...props}
+        value={100}
+      />
+      <CircularProgress
+        variant='indeterminate'
+        disableShrink
+        sx={(theme) => ({
+          color: "#a8d3f5",
+          animationDuration: "550ms",
+          position: "absolute",
+          left: 0,
+          [`& .${circularProgressClasses.circle}`]: {
+            strokeLinecap: "round",
+          },
+          ...theme.applyStyles("dark", {
+            color: "#a8d3f5",
+          }),
+        })}
+        size={40}
+        thickness={4}
+        {...props}
+      />
+    </Box>
+  );
+}
 
 export default function GeoFindMe({ setLocation }) {
   const [coords, setCoords] = useState("");
@@ -30,10 +71,11 @@ export default function GeoFindMe({ setLocation }) {
       const tourism = data.address.tourism || "";
       const road = data.address.road || "";
       const house_number = data.address.house_number || "";
+      const hamlet = data.address.hamlet || "";
       const village = data.address.village || "";
       const town = data.address.town || "";
       const city = data.address.city || "";
-      return `${tourism} ${road} ${house_number}, ${village} ${town ? town : city}`;
+      return `${tourism} ${road ? road : hamlet} ${house_number} ${village}, ${town ? town : city}`;
     } catch (error) {
       console.error("Error fetching city:", error);
       return "City not found";
@@ -48,7 +90,7 @@ export default function GeoFindMe({ setLocation }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
-        setCoords(`Lat ${latitude}° Long ${longitude}° Alt ${altitude}m`);
+        setCoords(`Lat ${latitude} Long ${longitude} Alt ${altitude}m`);
 
         const pulledCity = await getCityFromCoords(latitude, longitude);
         setCity(pulledCity);
@@ -112,9 +154,32 @@ export default function GeoFindMe({ setLocation }) {
 
   return (
     // OVA KOMPONENTA SE UOPĆE NE RENDA VIZUALNO A SLUŽITI ĆE ZA LOADER U BUDUĆNOSTI ..
-    <div className='location'>
+    /*     <div className='location'>
       {loading ? (
         <div className='loading-indicator'>Loading location...</div>
+      ) : (
+        <div className='location' style={{ display: "none" }}>
+          <div>
+            <span>{city}</span>
+            <br />
+            <span>{coords}</span>
+          </div>
+        </div>
+      )}
+    </div>
+ */
+
+    <div className='location'>
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}>
+          <LoadingCircularProgress />
+        </Box>
       ) : (
         <div className='location' style={{ display: "none" }}>
           <div>
