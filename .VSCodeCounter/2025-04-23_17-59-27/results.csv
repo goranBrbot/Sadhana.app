@@ -1,0 +1,27 @@
+"filename", "language", "JSON", "Markdown", "JavaScript", "JavaScript JSX", "CSS", "HTML", "XML", "comment", "blank", "total"
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\.eslintrc.cjs", "JavaScript", 0, 0, 12, 0, 0, 0, 0, 0, 1, 13
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\README.md", "Markdown", 0, 30, 0, 0, 0, 0, 0, 0, 21, 51
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\generateVapidKeys.js", "JavaScript", 0, 0, 3, 0, 0, 0, 0, 1, 2, 6
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\index.html", "HTML", 0, 0, 0, 0, 0, 24, 0, 0, 3, 27
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\package-lock.json", "JSON", 8128, 0, 0, 0, 0, 0, 0, 0, 1, 8129
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\package.json", "JSON", 53, 0, 0, 0, 0, 0, 0, 0, 1, 54
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\public\favicon.svg", "XML", 0, 0, 0, 0, 0, 0, 8, 0, 1, 9
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\public\icons\srce.svg", "XML", 0, 0, 0, 0, 0, 0, 6, 0, 0, 6
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\server.js", "JavaScript", 0, 0, 40, 0, 0, 0, 0, 7, 10, 57
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\App.jsx", "JavaScript JSX", 0, 0, 0, 153, 0, 0, 0, 19, 25, 197
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\displayCards\choghadiya.jsx", "JavaScript JSX", 0, 0, 0, 118, 0, 0, 0, 1, 25, 144
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\displayCards\dayCard.jsx", "JavaScript JSX", 0, 0, 0, 120, 0, 0, 0, 2, 9, 131
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\displayCards\fastingCard.jsx", "JavaScript JSX", 0, 0, 0, 80, 0, 0, 0, 0, 10, 90
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\displayCards\festivalCard.jsx", "JavaScript JSX", 0, 0, 0, 152, 0, 0, 0, 8, 20, 180
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\displayCards\swarCard.jsx", "JavaScript JSX", 0, 0, 0, 117, 0, 0, 0, 7, 22, 146
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\displayCards\test.html", "HTML", 0, 0, 0, 0, 0, 99, 0, 81, 18, 198
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\geoLocation.jsx", "JavaScript JSX", 0, 0, 0, 172, 0, 0, 0, 4, 12, 188
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\loader.jsx", "JavaScript JSX", 0, 0, 0, 56, 0, 0, 0, 20, 5, 81
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\panchang.js", "JavaScript", 0, 0, 276, 0, 0, 0, 0, 17, 23, 316
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\vedicTime.js", "JavaScript", 0, 0, 18, 0, 0, 0, 0, 1, 10, 29
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\components\vedicToGregorian.js", "JavaScript", 0, 0, 52, 0, 0, 0, 0, 2, 17, 71
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\main.jsx", "JavaScript JSX", 0, 0, 0, 9, 0, 0, 0, 0, 2, 11
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\styles\App.css", "CSS", 0, 0, 0, 0, 381, 0, 0, 55, 51, 487
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\src\styles\index.css", "CSS", 0, 0, 0, 0, 4, 0, 0, 0, 1, 5
+"c:\Users\Goran Brbot\VSC_PROJEKTI\sadhana.app\vite.config.js", "JavaScript", 0, 0, 171, 0, 0, 0, 0, 2, 3, 176
+"Total", "-", 8181, 30, 572, 977, 385, 123, 14, 227, 293, 10802

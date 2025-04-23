@@ -45,7 +45,7 @@ export default function FastingCard({ tithiDay }) {
       const kpDate = `${format(kpEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(kpEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
       return (
         <div>
-          Ekadashi of Kṛṣṇa Navamī
+          Ekadashi of Kṛṣṇa Pakṣa
           <br />
           {kpDate}
         </div>
@@ -72,10 +72,10 @@ export default function FastingCard({ tithiDay }) {
           <small>VRAT & UPVAS</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <img className='iconFood' src='icons/thali.png' alt='Fasting' />
-          <span>{amavasya()}</span>
-          <br />
+          <img className='iconFood' src='icons/fasting.png' alt='Fasting' />
           <span>{purnima()}</span>
+          <br />
+          <span>{amavasya()}</span>
           <br />
           <span>{ekadashi()}</span>
         </div>

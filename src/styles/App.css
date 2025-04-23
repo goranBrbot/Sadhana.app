@@ -258,7 +258,7 @@ tfoot td:last-child {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/y.jpg");
+  background-image: url("/backgrounds/fast.png");
   background-position: top right;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -266,7 +266,7 @@ tfoot td:last-child {
   opacity: 0.8;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card.festivalCard::before {
@@ -374,8 +374,8 @@ tfoot td:last-child {
   position: absolute;
   top: 10px;
   right: 10px;
-  cursor: pointer;
-  filter: drop-shadow(0 0 0 rgb(255, 190, 49)) drop-shadow(0 0 8px rgb(252, 212, 64));
+  cursor: default;
+  filter: drop-shadow(0 0 0 rgb(255, 190, 49)) drop-shadow(0 0 3px rgb(252, 212, 64));
 }
 
 .iconSwar {
@@ -390,13 +390,12 @@ tfoot td:last-child {
 }
 
 .iconFood {
-  height: 100px;
+  height: 80px;
   position: absolute;
-  top: 45px;
-  right: -5px;
+  top: 30px;
+  right: 25px;
   pointer-events: none;
   will-change: filter;
-  rotate: -155deg;
   -webkit-transition: -webkit-filter 300ms;
   transition: -webkit-filter 300ms;
   -o-transition: filter 300ms;

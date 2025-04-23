@@ -51,13 +51,13 @@ export default function GeoFindMe({ setLocation }) {
   async function fetchAltitude(latitude, longitude, gpsAltitude) {
     // Ako GPS ne vraća visinu, koristi Open-Meteo API
     if (gpsAltitude !== null) {
-      return gpsAltitude;
+      return `${Math.round(gpsAltitude)}.`; // točka označava "GPS altitude"
     }
     try {
       const response = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`);
       const data = await response.json();
       const result = Array.isArray(data.elevation) && data.elevation.length > 0 ? data.elevation[0] : 0;
-      return Math.round(result);
+      return Math.round(result); // geoid mean sea level by "Copernicus DEM GLO-90"
     } catch (error) {
       console.error("Error fetching elevation:", error);
       return 0;

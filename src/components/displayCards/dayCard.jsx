@@ -70,7 +70,7 @@ export default function DayCard({ sunrise, sunset, location, locationName }) {
                 After calculating the sunrise by subtracting 96 minutes from the sunrise we calculate the <strong>Brahmamuhurta</strong> time lasting 48 minutes.
               </Typography>
               <Typography gutterBottom>
-                Then we calculate the <strong>Tithi</strong> (lunar day and bright <strong>Shukla Pakṣa</strong> - dark <strong>Kṛṣṇa Navamī</strong> fortnight) which is approximately 1/30th of the
+                Then we calculate the <strong>Tithi</strong> (lunar day and bright <strong>Shukla Pakṣa</strong> - dark <strong>Kṛṣṇa Pakṣa</strong> fortnight) which is approximately 1/30th of the
                 time it takes the Moon to go around the Earth, i.e. the period in which the difference between the longitudes of the Moon and the Sun is exactly 12°. A Tithi can start at different
                 times of the day and can also vary in duration from approximately 19 to 26 hours so a particular day is governed by the Tithi prevailing on that day at the time of sunrise, but it can
                 change at any time of the day or night as it is not based on a solar day, but on the position of the Moon in relation to the Sun.
@@ -79,8 +79,8 @@ export default function DayCard({ sunrise, sunset, location, locationName }) {
               <Typography gutterBottom>We calculate the active swara (dominant nostril) with which the current lunar day begins at sunrise based on verses 63-64 of Shiv Swarodaya shastra.</Typography>
               <Typography gutterBottom>
                 <strong>
-                  &quot;During the first three days of “Shuklapaksha” (the bright fortnight), the Ida flows and then alternates. (1st,2nd,3rd-IDA, 4th,5th,6th Pingla, thus they keep alternating).
-                  While, conversely, during the first three days of “Krishnapaksha” (the dark fortnight), the Pingala flows first. (1st,2nd,3rd PINGLA, 4th 5th,6th IDA thus they alternate).&quot;
+                  &quot;During the first three days of “Shukla Pakṣa (the bright fortnight), the Ida flows and then alternates. (1st,2nd,3rd-IDA, 4th,5th,6th Pingla, thus they keep alternating).
+                  While, conversely, during the first three days of “Krishna Pakṣa” (the dark fortnight), the Pingala flows first. (1st,2nd,3rd PINGLA, 4th 5th,6th IDA thus they alternate).&quot;
                 </strong>
               </Typography>
               <Typography gutterBottom>
