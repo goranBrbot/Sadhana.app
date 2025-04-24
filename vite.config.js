@@ -168,7 +168,7 @@ export default defineConfig({
   build: {
     terserOptions: {
       compress: {
-        drop_console: false, // This removes all console.log() in production
+        drop_console: true, // This removes all console.log() in production
       },
     },
   },

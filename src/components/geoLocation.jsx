@@ -51,8 +51,6 @@ export default function GeoFindMe({ setLocation }) {
   async function fetchAltitude(latitude, longitude, gpsAltitude) {
     // Ako GPS ne vraća visinu, koristi Open-Meteo API
     if (gpsAltitude !== null) {
-      console.log("Using GPS altitude:", gpsAltitude);
-      console.log("type:", typeof gpsAltitude);
       return Math.round(gpsAltitude);
     }
     try {
@@ -89,8 +87,6 @@ export default function GeoFindMe({ setLocation }) {
       let newLocation = null;
       if (position) {
         // Ako geolokacija uspije
-        console.log("Geolocation success:", position);
-
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
