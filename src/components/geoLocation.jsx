@@ -50,8 +50,10 @@ export default function GeoFindMe({ setLocation }) {
 
   async function fetchAltitude(latitude, longitude, gpsAltitude) {
     // Ako GPS ne vraća visinu, koristi Open-Meteo API
-    if (gpsAltitude !== null) {
-      return gpsAltitude;
+    /* if (gpsAltitude !== null) {
+      return gpsAltitude; */
+      if (gpsAltitude !== null && !isNaN(Number(gpsAltitude))) {
+        return Math.round(Number(gpsAltitude));
     }
     try {
       const response = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`);
@@ -170,17 +172,12 @@ export default function GeoFindMe({ setLocation }) {
           <small style={{ marginTop: "24px" }}>Preparing data for your location ..</small>
         </Box>
       ) : (
-        <div className='location'>
+        <div className='location' style={{ display: "none" }}>
           <div>
             <span>{city}</span>
             <br />
             <span>{coords}</span>
           </div>
-          <p>Altituda: {String(coords.altitude)}</p>
-          <p>typeof: {typeof coords.altitude}</p>
-          <p>isNaN: {isNaN(coords.altitude) ? "DA" : "NE"}</p>
-          <p>isFinite: {isFinite(coords.altitude) ? "DA" : "NE"}</p>
-          <p>Rounded: {typeof coords.altitude === "number" && isFinite(coords.altitude) ? Math.round(coords.altitude) : "Nepoznato"} m</p>
         </div>
       )}
     </div>
