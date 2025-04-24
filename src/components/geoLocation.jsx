@@ -51,7 +51,7 @@ export default function GeoFindMe({ setLocation }) {
   async function fetchAltitude(latitude, longitude, gpsAltitude) {
     // Ako GPS ne vraća visinu, koristi Open-Meteo API
     if (gpsAltitude !== null) {
-      return gpsAltitude.toPrecision(3); // number to 3 numbers
+      return gpsAltitude;
     }
     try {
       const response = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`);
@@ -90,7 +90,7 @@ export default function GeoFindMe({ setLocation }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
-        setCoords(`Lat ${latitude} Long ${longitude} Alt ${Math.round(altitude)}m.`); // točka označava "GPS altitude"
+        setCoords(`Lat ${latitude} Long ${longitude} Alt ${altitude.toPrecision(3)}m.`); // točka označava "GPS altitude"
 
         const pulledCity = await getCityFromCoords(latitude, longitude);
         setCity(pulledCity);
