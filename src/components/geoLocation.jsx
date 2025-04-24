@@ -53,13 +53,13 @@ export default function GeoFindMe({ setLocation }) {
     if (gpsAltitude !== null) {
       console.log("Using GPS altitude:", gpsAltitude);
       console.log("type:", typeof gpsAltitude);
-      return gpsAltitude;
+      return Math.round(gpsAltitude);
     }
     try {
       const response = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`);
       const data = await response.json();
       const result = Array.isArray(data.elevation) && data.elevation.length > 0 ? data.elevation[0] : 0;
-      return result; // geoid mean sea level by "Copernicus DEM GLO-90"
+      return Math.round(result); // geoid mean sea level by "Copernicus DEM GLO-90"
     } catch (error) {
       console.error("Error fetching elevation:", error);
       return 0;
@@ -94,7 +94,7 @@ export default function GeoFindMe({ setLocation }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
-        setCoords(`Lat ${latitude} Long ${longitude} Alt ${Math.round(altitude)}m`);
+        setCoords(`Lat ${latitude} Long ${longitude} Alt ${altitude}m`);
 
         const pulledCity = await getCityFromCoords(latitude, longitude);
         setCity(pulledCity);
