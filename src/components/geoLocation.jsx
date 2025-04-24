@@ -57,7 +57,7 @@ export default function GeoFindMe({ setLocation }) {
       const response = await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`);
       const data = await response.json();
       const result = Array.isArray(data.elevation) && data.elevation.length > 0 ? data.elevation[0] : 0;
-      return Math.round(result); // geoid mean sea level by "Copernicus DEM GLO-90"
+      return result; // geoid mean sea level by "Copernicus DEM GLO-90"
     } catch (error) {
       console.error("Error fetching elevation:", error);
       return 0;
@@ -90,7 +90,7 @@ export default function GeoFindMe({ setLocation }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
-        setCoords(`Lat ${latitude} Long ${longitude} Alt ${altitude.toPrecision(3)}m.`); // točka označava "GPS altitude"
+        setCoords(`Lat ${latitude} Long ${longitude} Alt ${Math.round(altitude)}m`);
 
         const pulledCity = await getCityFromCoords(latitude, longitude);
         setCity(pulledCity);
