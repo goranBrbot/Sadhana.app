@@ -127,6 +127,8 @@ const Choghadiya = ({ sunrise, sunset }) => {
           <span>
             Brahma-muhūrta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
           </span>
+          <br />
+          <br />
           {renderTablica(dnevnaTablica, "Choghadiya table from sunrise to sunset.")} <br />
           {renderTablica(nocnaTablica, "Choghadiya table from sunset to sunrise.")}
         </div>

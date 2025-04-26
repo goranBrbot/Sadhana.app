@@ -167,9 +167,9 @@ export default function GeoFindMe({ setLocation }) {
           }}>
           <img className='iconMap' src='icons/map-pin.png' alt='Pin' />
           <small>
-            Please enable GPS/location services.
+            Location access is required!
             <br />
-            Location access & internet connection is required!
+            Please enable GPS/location services.
           </small>
         </Box>
       )}

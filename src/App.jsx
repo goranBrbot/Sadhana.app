@@ -32,8 +32,16 @@ function App() {
 
   useEffect(() => {
     const imageUrls = [
+      "favicon.svg",
+      "/icons/map-pin.png",
+      "/icons/sun.png",
       "/backgrounds/daycard.png",
-      // Dodajte sve slike koje želite preloadati!
+      "/backgrounds/swarcard.png",
+      "/backgrounds/gurudev.png",
+      "/backgrounds/choghadiyacard.png",
+      "/backgrounds/fastingcard.png",
+      "/backgrounds/festivalcard.png",
+      // Dodati sve slike koje treba preloadati!
     ];
     preloadImages(imageUrls);
   }, []);
