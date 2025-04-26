@@ -44,9 +44,8 @@ function LoadingCircularProgress(props) {
 }
 
 export default function GeoFindMe({ setLocation }) {
-  const [coords, setCoords] = useState("");
-  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(true); // kako bi se istovremeno rendali lat, long i async dohvat mjesta
+  const [locationFailed, setLocationFailed] = useState(false);
 
   async function fetchAltitude(latitude, longitude, gpsAltitude) {
     // Ako GPS ne vraća visinu, koristi Open-Meteo API
@@ -90,10 +89,7 @@ export default function GeoFindMe({ setLocation }) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
         const altitude = await fetchAltitude(latitude, longitude, position.coords.altitude);
-        setCoords(`Lat ${latitude} Long ${longitude} Alt ${altitude}m`);
-
         const pulledCity = await getCityFromCoords(latitude, longitude);
-        setCity(pulledCity);
 
         newLocation = { pozicija: new Observer(latitude, longitude, altitude), adresa: pulledCity };
         localStorage.setItem("locationState", JSON.stringify(newLocation));
@@ -107,30 +103,19 @@ export default function GeoFindMe({ setLocation }) {
           console.log("Parsed locationState:", locationState);
           if (locationState) {
             const { latitude, longitude, height } = locationState.pozicija;
-            const adresa = locationState.adresa;
             if (typeof latitude === "number" && typeof longitude === "number" && typeof height === "number") {
-              setCoords(`Using previously saved location`);
-              setCity(adresa || "City not found");
-              newLocation = { pozicija: new Observer(latitude, longitude, height), adresa: adresa };
-            } else {
-              setCoords("No valid saved location found");
-              setCity("City not found");
+              newLocation = { pozicija: new Observer(latitude, longitude, height), adresa: `Using previously saved location!` };
             }
-          } else {
-            setCoords("Unable to retrieve your location and no saved location found");
-            setCity("City not found");
           }
         }
       }
       if (newLocation) {
         setLocation(newLocation);
       } else {
-        console.error("Failed to determine location.");
+        setLocationFailed(true);
       }
     } catch (error) {
-      console.error("Error in success function:", error);
-      setCoords("An error occurred while retrieving your location");
-      setCity("City not found");
+      setLocationFailed(true);
     } finally {
       setLoading(false);
     }
@@ -143,8 +128,6 @@ export default function GeoFindMe({ setLocation }) {
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setCoords("Geolocation is not supported by your browser");
-      setCity("City not found");
       setLoading(false);
     } else {
       navigator.geolocation.getCurrentPosition(success, error, { enableHighAccuracy: true });
@@ -154,7 +137,7 @@ export default function GeoFindMe({ setLocation }) {
 
   return (
     <div className='location'>
-      {loading ? (
+      {loading && (
         <Box
           sx={{
             display: "flex",
@@ -169,14 +152,26 @@ export default function GeoFindMe({ setLocation }) {
           <LoadingCircularProgress />
           <small style={{ marginTop: "24px" }}>Preparing data for your location ..</small>
         </Box>
-      ) : (
-        <div className='location' style={{ display: "none" }}>
-          <div>
-            <span>{city}</span>
+      )}
+      {!loading && locationFailed && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}>
+          <img className='iconMap' src='icons/map-pin.png' alt='Pin' />
+          <small>
+            Please enable GPS/location services.
             <br />
-            <span>{coords}</span>
-          </div>
-        </div>
+            Location access & internet connection is required!
+          </small>
+        </Box>
       )}
     </div>
   );

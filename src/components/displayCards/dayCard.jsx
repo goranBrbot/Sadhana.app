@@ -17,7 +17,7 @@ export default function DayCard({ sunrise, sunset, location, locationName }) {
   const todaySunsetTime = format(sunset, "kk:mm'h'");
 
   // Formatiraj `location` za prikaz
-  const formattedLocation = location && location.latitude && location.longitude ? `Lat ${location.latitude}° Long ${location.longitude}° Alt ${location.height}m` : "Location not available";
+  const formattedLocation = location && location.latitude && location.longitude ? `Lat ${location.latitude} Long ${location.longitude} Alt ${location.height}m` : "Location not available";
 
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {

@@ -365,9 +365,10 @@ tfoot td:last-child {
   display: none;
 } */
 
-/* .iconMap {
+.iconMap {
   height: 40px;
-} */
+  margin-bottom: 15px;
+}
 
 .iconSun {
   height: 80px;
