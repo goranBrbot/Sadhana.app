@@ -1,4 +1,4 @@
-import { format, addYears } from "date-fns";
+// import { format, addYears } from "date-fns";
 import { PairLongitude, SearchRiseSet, Equator } from "astronomy-engine";
 
 // Bazirano na Purnimanta sistemu
@@ -19,26 +19,25 @@ export default function Panchang(date, location) {
     return (tropicalSunLongitude - ayanamsha + 360) % 360;
   }
 
+  // Tithi - lunarni dan
   function getTithi() {
     const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
     const tithiPeriod = razlikaMoonSun / 12;
     const calculatedTithiDay = Math.ceil(tithiPeriod);
-    if (calculatedTithiDay <= 15) {
-      return calculatedTithiDay;
-    } else if (calculatedTithiDay > 15) {
-      return calculatedTithiDay - 15;
-    }
+    return calculatedTithiDay;
   }
 
+  // Paksha - svijetla/tamna polovica mjeseca
   function getPaksha() {
     const tithi = getTithi();
     if (tithi <= 15) {
-      return `Shukla Pakṣa`;
+      return `Shukla`;
     } else if (tithi > 15) {
-      return `Kṛṣṇa Pakṣa`;
+      return `Kṛṣṇa`;
     }
   }
 
+  // lunarni mjesec u godini
   function getMasa(system) {
     // lunarni mjesec u godini
     const delta = tropicalSunLongitude;
@@ -107,11 +106,27 @@ export default function Panchang(date, location) {
     }
   }
 
+  // Lunarna godina (Vikram Samvat)
   function getSamvat() {
-    const vikramSamvat = Number(format(addYears(date, 56), "yyyy"));
-    return vikramSamvat;
+    const gregorianYear = date.getFullYear(); // Trenutna Gregorijanska godina
+
+    // Pronađi Hindu Novu godinu (Chaitra Shukla Pratipada)
+    const hinduNewYear = SearchRiseSet(
+      "Sun",
+      location,
+      +1,
+      new Date(gregorianYear, 2, 21), // Početak pretrage (21. mart tekuće godine)
+      -1, // Tražimo izlazak Sunca
+      0.0 // Visina horizonta
+    ).date;
+
+    // Proveri da li je trenutni datum pre ili posle Hindu Nove godine
+    const isBeforeHinduNewYear = date < hinduNewYear;
+    const vikramSamvat = gregorianYear + 57 - (isBeforeHinduNewYear ? 1 : 0);
+    return `${vikramSamvat}`;
   }
 
+  // Nakshatra - mjesečeva trenutna konstelacija (kuća)
   function getNakshatra() {
     const moonLongitude = getSiderealMoonLongitude();
     console.log(moonLongitude);
@@ -175,6 +190,7 @@ export default function Panchang(date, location) {
     }
   }
 
+  // Yoga - spajanje Mjeseca i Sunca
   function getYoga() {
     const sunLongitude = getSiderealSunLongitude();
     const moonLongitude = getSiderealMoonLongitude();
@@ -240,52 +256,25 @@ export default function Panchang(date, location) {
     }
   }
 
+  // Karana - polovina tithija
   function getKarana() {
-    const tithi = PairLongitude("Moon", "Sun", SunRise.date) / 12;
-    const isSecondHalf = tithi % 1 >= 0.5;
-    const tithiIndex = Math.ceil(tithi);
+    const tithi = getTithi(); // Koristimo već izračunati tithi
 
-    // Fiksni Karane za mlad i pun Mjesec
-    if (tithiIndex === 0) {
-      return isSecondHalf ? "Kimstughna" : "Bava";
-    } else if (tithiIndex === 14) {
-      return isSecondHalf ? "Shakuni" : "Garaja";
+    // Fiksni Karane za mlad i pun Mesec
+    if (tithi === 15) {
+      return "Garaja";
+    } else if (tithi === 30) {
+      return "Kimstughna";
     }
 
-    // Promjenjivi Karane
-    if (tithiIndex === 1) return isSecondHalf ? "Balava" : "Bava";
-    else if (tithiIndex === 2) return isSecondHalf ? "Kaulava" : "Balava";
-    else if (tithiIndex === 3) return isSecondHalf ? "Taitila" : "Kaulava";
-    else if (tithiIndex === 4) return isSecondHalf ? "Garaja" : "Taitila";
-    else if (tithiIndex === 5) return isSecondHalf ? "Vanija" : "Garaja";
-    else if (tithiIndex === 6) return isSecondHalf ? "Vishti" : "Vanija";
-    else if (tithiIndex === 7) return isSecondHalf ? "Bava" : "Vishti";
-    else if (tithiIndex === 8) return isSecondHalf ? "Balava" : "Bava";
-    else if (tithiIndex === 9) return isSecondHalf ? "Kaulava" : "Balava";
-    else if (tithiIndex === 10) return isSecondHalf ? "Taitila" : "Kaulava";
-    else if (tithiIndex === 11) return isSecondHalf ? "Garaja" : "Taitila";
-    else if (tithiIndex === 12) return isSecondHalf ? "Vanija" : "Garaja";
-    else if (tithiIndex === 13) return isSecondHalf ? "Vishti" : "Vanija";
-    else if (tithiIndex === 15) return isSecondHalf ? "Chatushpada" : "Vishti";
-    else if (tithiIndex === 16) return isSecondHalf ? "Naga" : "Chatushpada";
-    else if (tithiIndex === 17) return isSecondHalf ? "Kimstughna" : "Naga";
-    else if (tithiIndex === 18) return isSecondHalf ? "Bava" : "Kimstughna";
-    else if (tithiIndex === 19) return isSecondHalf ? "Balava" : "Bava";
-    else if (tithiIndex === 20) return isSecondHalf ? "Kaulava" : "Balava";
-    else if (tithiIndex === 21) return isSecondHalf ? "Taitila" : "Kaulava";
-    else if (tithiIndex === 22) return isSecondHalf ? "Garaja" : "Taitila";
-    else if (tithiIndex === 23) return isSecondHalf ? "Vanija" : "Garaja";
-    else if (tithiIndex === 24) return isSecondHalf ? "Vishti" : "Vanija";
-    else if (tithiIndex === 25) return isSecondHalf ? "Bava" : "Vishti";
-    else if (tithiIndex === 26) return isSecondHalf ? "Balava" : "Bava";
-    else if (tithiIndex === 27) return isSecondHalf ? "Kaulava" : "Balava";
-    else if (tithiIndex === 28) return isSecondHalf ? "Taitila" : "Kaulava";
-    else if (tithiIndex === 29) return isSecondHalf ? "Garaja" : "Taitila";
+    // Promenljivi Karane
+    const karanas = ["Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti", "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti"];
 
-    // Ako ništa od navedenog nije zadovoljavajuće, vrati grešku
-    throw new Error("Invalid Tithi index for Karana calculation: " + tithiIndex);
+    const karanaIndex = (tithi - 1) % 7; // Određujemo indeks karane
+    return karanas[karanaIndex];
   }
 
+  // Dan u tjednu
   function getVar() {
     const dayOfWeek = date.getDay();
 

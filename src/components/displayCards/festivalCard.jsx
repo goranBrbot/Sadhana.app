@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { parse, isToday, isAfter, isWithinInterval, differenceInMilliseconds } from "date-fns";
 import { PropTypes } from "prop-types";
-//import Panchang from "../panchang";
+import Panchang from "../panchang";
 import { motion } from "framer-motion";
 //import GregorianToVedicTime from "../vedicTime";
 //import FindGregorianDateFromVedic from "../vedicToGregorian";
@@ -35,8 +35,8 @@ const FESTIVALS = [
   ["UN World Meditation Day", "21.12."],
 ];
 
-export default function FestivalCard({ /* location, */ tithiDay }) {
-  //const panchangData = Panchang(new Date(), location);
+export default function FestivalCard({ location, tithiDay }) {
+  const panchangData = Panchang(new Date(), location);
   //const vedicTime = GregorianToVedicTime(new Date(), location);
   //const obljetnicaMahasamadhi = FindGregorianDateFromVedic("Pauṣa", "Kṛṣṇa Pakṣa", "Caturthī", "Purnimanta", location);
 
@@ -117,15 +117,34 @@ export default function FestivalCard({ /* location, */ tithiDay }) {
   };
 
   function tithiCalc(day) {
-    if (day <= 15) {
-      return day;
-    } else if (day > 15) {
-      return day - 15;
+    const tithiNames = {
+      1: "Pratipada",
+      2: "Dvitiya",
+      3: "Tritiya",
+      4: "Chaturthi",
+      5: "Panchami",
+      6: "Shashti",
+      7: "Saptami",
+      8: "Ashtami",
+      9: "Navami",
+      10: "Dashami",
+      11: "Ekadashi",
+      12: "Dvadashi",
+      13: "Trayodashi",
+      14: "Chaturdashi",
+      15: "Purnima",
+      0: "Amavasya",
+    };
+
+    if (day === 0 || day === 30) {
+      return tithiNames[0];
     }
+
+    const adjustedDay = day > 15 ? day - 15 : day;
+    return tithiNames[adjustedDay];
   }
 
   const brightDarkTithi = tithiCalc(tithiDay);
-  const brightDarkTithiHtml = tithiDay <= 15 ? `${tithiDay} Tithi - ${brightDarkTithi} day of "Shukla Pakṣa"` : `${tithiDay} Tithi - ${brightDarkTithi} day of "Kṛṣṇa Pakṣa"`;
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
@@ -136,27 +155,26 @@ export default function FestivalCard({ /* location, */ tithiDay }) {
           <small className='aktivniInfo'>in {nextFestivalInfo.daysRemaining}</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <img className='iconFestival' src='icons/puja.png' alt='Bell' />
+          {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
           {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
           {/* <p>{vedicTime}</p> */}
-          <span>{brightDarkTithiHtml}</span>
+          <span>System: Purnimanta </span>
           <br />
-          {/*           <span>Tithi: {panchangData.Tithi}</span>
+          <span>Var: {panchangData.Var}</span> {/* day of the week */}
           <br />
-          <span>Paksha: {panchangData.Paksha}</span>
+          <span>Tithi: {brightDarkTithi}</span> {/* lunar day */}
           <br />
-          <span>Masa: {panchangData.Masa}</span>
+          <span>Karana: {panchangData.Karana}</span> {/* half of tithi */}
           <br />
-          <span>Samvat: {panchangData.Samvat}</span>
+          <span>Paksha: {panchangData.Paksha}</span> {/* lunar waxing or waning */}
           <br />
-          <span>Nakshatra: {panchangData.Nakshatra}</span>
+          <span>Masa: {panchangData.Masa}</span> {/* lunar month */}
           <br />
-          <span>Yoga: {panchangData.Yoga}</span>
+          <span>Samvat: {panchangData.Samvat}</span> {/* lunar year */}
           <br />
-          <span>Karana: {panchangData.Karana}</span>
+          <span>Nakshatra: {panchangData.Nakshatra}</span> {/* lunar constelation (house) */}
           <br />
-          <span>Var: {panchangData.Var}</span>
- */}{" "}
+          <span>Yoga: {panchangData.Yoga}</span> {/* Sun and Moon combination */}
           <br />
           {nextFestivalInfo.name && (
             <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
