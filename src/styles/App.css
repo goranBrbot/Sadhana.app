@@ -263,9 +263,10 @@ tfoot td:last-child {
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
-  opacity: 0.8;
+  opacity: 0.5;
   pointer-events: none;
   z-index: -1;
+  mask-image: linear-gradient(-60deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.1) 100%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card.festivalCard::before {
@@ -281,10 +282,10 @@ tfoot td:last-child {
   background-repeat: no-repeat;
   background-size: 100%;
   border-radius: 8px;
-  opacity: 0.8;
+  opacity: 1;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(-60deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0) 100%);
 }
 
 .card.choghadiyaCard::before {
@@ -308,7 +309,7 @@ tfoot td:last-child {
 
 .aktivniInfo {
   position: absolute;
-  top: 44px;
+  top: 42px;
   right: 15px;
   width: auto;
   padding: 1px 8px;

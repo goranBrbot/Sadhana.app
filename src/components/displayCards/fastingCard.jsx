@@ -72,7 +72,7 @@ export default function FastingCard({ tithiDay }) {
           <small>VRAT & UPVAS</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <img className='iconFood' src='icons/fasting.png' alt='Fasting' />
+          {/* <img className='iconFood' src='icons/fasting.png' alt='Fasting' /> */}
           <span>{purnima()}</span>
           <br />
           <span>{amavasya()}</span>

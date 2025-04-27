@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { parse, isToday, isAfter, isWithinInterval, differenceInMilliseconds } from "date-fns";
 import { PropTypes } from "prop-types";
-import Panchang from "../panchang";
+//import Panchang from "../panchang";
 import { motion } from "framer-motion";
 //import GregorianToVedicTime from "../vedicTime";
 //import FindGregorianDateFromVedic from "../vedicToGregorian";
@@ -35,8 +35,8 @@ const FESTIVALS = [
   ["UN World Meditation Day", "21.12."],
 ];
 
-export default function FestivalCard({ location, tithiDay }) {
-  const panchangData = Panchang(new Date(), location);
+export default function FestivalCard({ /* location, */ tithiDay }) {
+  //const panchangData = Panchang(new Date(), location);
   //const vedicTime = GregorianToVedicTime(new Date(), location);
   //const obljetnicaMahasamadhi = FindGregorianDateFromVedic("Pauṣa", "Kṛṣṇa Pakṣa", "Caturthī", "Purnimanta", location);
 
@@ -141,7 +141,7 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <p>{vedicTime}</p> */}
           <span>{brightDarkTithiHtml}</span>
           <br />
-          <span>Tithi: {panchangData.Tithi}</span>
+          {/*           <span>Tithi: {panchangData.Tithi}</span>
           <br />
           <span>Paksha: {panchangData.Paksha}</span>
           <br />
@@ -156,6 +156,7 @@ export default function FestivalCard({ location, tithiDay }) {
           <span>Karana: {panchangData.Karana}</span>
           <br />
           <span>Var: {panchangData.Var}</span>
+ */}{" "}
           <br />
           {nextFestivalInfo.name && (
             <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
