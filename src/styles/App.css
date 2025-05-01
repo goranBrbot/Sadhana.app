@@ -351,35 +351,34 @@ tfoot td:last-child {
 }
 
 .dropdown {
-  position: absolute; /* Pozicioniranje u odnosu na roditelja (small) */
-  top: -250%; /* Prikazuje se iznad small elementa */
-  left: 50%; /* Centriranje u odnosu na small */
-  transform: translateX(-50%); /* Poravnanje centra */
-  z-index: 10; /* Prikazuje se iznad ostalih elemenata */
-  padding: 0px;
-  border-radius: 8px; /* Zaobljeni uglovi */
+  position: absolute;
+  top: -120%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 0px; /* Razmak između dana */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .dropdown div {
-  padding: 2px 10px;
   cursor: pointer;
   text-align: center;
-  transition: transform 0.2s ease; /* Animacija za hover */
-  font-size: 0.8rem;
+  transition: transform 0.2s ease;
   border-radius: 5px;
+  padding: 0;
 }
 
 .dropdown div:hover {
-  transform: scale(1.5); /* Povećanje na hover */
-  background: #ffffff; /* Svetlija pozadina na hover */
+  transform: scale(1.3);
+  background: #ffffff;
 }
 
 .selected {
   font-weight: bold;
-  color: rgb(255, 58, 58); /* Stil za odabrani dan */
+  color: #121212; /* Stil za odabrani dan */
 }
 
 /* .logo {

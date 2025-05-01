@@ -71,12 +71,20 @@ export default function FastingCard({ tithiDay }) {
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
       <div className='card fastingCard'>
-        <div className='topBar' style={{ position: "relative" }}>
+        <div className={`topBar ${menuVisible ? "menu-open" : ""}`} style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
           <small
             className='aktivniInfo'
-            onClick={toggleMenu} // Klik za prikaz menija
+            onClick={toggleMenu}
+            onTouchStart={() => setMenuVisible(true)}
+            onTouchEnd={() => {
+              setMenuVisible(false);
+              if (menuVisible) {
+                const lastVisibleDay = daysOfWeek.find((day) => day === selectedDay) || currentDay;
+                setSelectedDay(lastVisibleDay); // Postavlja poslednji prikazani dan
+              }
+            }}
             style={{ color: selectedDay === currentDay ? "red" : "inherit" }} // Crvena boja ako je trenutni dan odabrani
           >
             {selectedDay || currentDay}
@@ -85,12 +93,15 @@ export default function FastingCard({ tithiDay }) {
                 {daysOfWeek.map((day) => (
                   <div
                     key={day}
-                    onClick={() => {
-                      setSelectedDay(day);
-                      setMenuVisible(false);
+                    onMouseOver={() => setSelectedDay(day)} // Postavlja dan na hover (za desktop)
+                    onTouchMove={(e) => {
+                      const touch = e.touches[0];
+                      const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                      if (element && element.textContent && daysOfWeek.includes(element.textContent)) {
+                        setSelectedDay(element.textContent); // Postavlja dan na osnovu dodira
+                      }
                     }}
-                    className={day === selectedDay ? "selected" : ""} // Dodaj klasu za odabrani dan
-                  >
+                    className={day === selectedDay ? "selected" : ""}>
                     {day}
                   </div>
                 ))}
