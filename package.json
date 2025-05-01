@@ -23,6 +23,7 @@
     "@material/web": "^1.5.1",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
+    "@use-gesture/react": "^10.3.1",
     "astronomy-engine": "^2.1.19",
     "cors": "^2.8.5",
     "date-fns": "^3.3.1",

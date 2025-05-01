@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDrag } from "@use-gesture/react";
 import { format } from "date-fns";
 import { SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
@@ -59,10 +60,21 @@ export default function FastingCard({ tithiDay }) {
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
-  const toggleMenu = () => setMenuVisible(!menuVisible);
 
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   const currentDay = format(new Date(), "EEEE");
+
+  const bind = useDrag(({ movement: [, my], cancel }) => {
+    if (!menuVisible) return;
+
+    const index = daysOfWeek.indexOf(selectedDay || currentDay);
+    const newIndex = Math.min(Math.max(index - Math.sign(my), 0), daysOfWeek.length - 1);
+
+    if (index !== newIndex) {
+      setSelectedDay(daysOfWeek[newIndex]);
+      cancel && cancel(); // Sprečava dalje pomeranje
+    }
+  });
 
   return (
     <motion.div
@@ -74,34 +86,12 @@ export default function FastingCard({ tithiDay }) {
         <div className={`topBar ${menuVisible ? "menu-open" : ""}`} style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
-          <small
-            className='aktivniInfo'
-            onClick={toggleMenu}
-            onTouchStart={() => setMenuVisible(true)}
-            onTouchEnd={() => {
-              setMenuVisible(false);
-              if (menuVisible) {
-                const lastVisibleDay = daysOfWeek.find((day) => day === selectedDay) || currentDay;
-                setSelectedDay(lastVisibleDay); // Postavlja poslednji prikazani dan
-              }
-            }}
-            style={{ color: selectedDay === currentDay ? "red" : "inherit" }} // Crvena boja ako je trenutni dan odabrani
-          >
+          <small className='aktivniInfo' onClick={() => setMenuVisible(!menuVisible)} style={{ color: selectedDay === currentDay ? "red" : "inherit" }}>
             {selectedDay || currentDay}
             {menuVisible && (
-              <div className='dropdown'>
+              <div className='dropdown' {...bind()}>
                 {daysOfWeek.map((day) => (
-                  <div
-                    key={day}
-                    onMouseOver={() => setSelectedDay(day)} // Postavlja dan na hover (za desktop)
-                    onTouchMove={(e) => {
-                      const touch = e.touches[0];
-                      const element = document.elementFromPoint(touch.clientX, touch.clientY);
-                      if (element && element.textContent && daysOfWeek.includes(element.textContent)) {
-                        setSelectedDay(element.textContent); // Postavlja dan na osnovu dodira
-                      }
-                    }}
-                    className={day === selectedDay ? "selected" : ""}>
+                  <div key={day} className={day === selectedDay ? "selected" : ""}>
                     {day}
                   </div>
                 ))}
