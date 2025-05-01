@@ -258,7 +258,7 @@ tfoot td:last-child {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/fastingcard.png");
+  background-image: url("/backgrounds/festivalcard.png");
   background-position: top right;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -266,6 +266,7 @@ tfoot td:last-child {
   opacity: 1;
   pointer-events: none;
   z-index: -1;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 1) 100%);
 }
 
 .card.festivalCard::before {
@@ -276,7 +277,7 @@ tfoot td:last-child {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/net.png");
+  background-image: url("/backgrounds/festivalcard.png");
   background-position: top right;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -284,7 +285,7 @@ tfoot td:last-child {
   opacity: 1;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.3) 20%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 1) 100%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 1) 100%);
 }
 
 .card.choghadiyaCard::before {
@@ -349,51 +350,6 @@ tfoot td:last-child {
   /* visibility: hidden; */
   display: none;
 }
-
-.dropdown {
-  position: absolute;
-  top: -120%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.dropdown div {
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.2s ease;
-  border-radius: 5px;
-  padding: 0;
-}
-
-.dropdown div:hover {
-  transform: scale(1.3);
-  background: #ffffff;
-}
-
-.selected {
-  font-weight: bold;
-  color: #121212; /* Stil za odabrani dan */
-}
-
-/* .logo {
-  height: 5em;
-  padding: 1em;
-  will-change: filter;
-  -webkit-transition: -webkit-filter 300ms;
-  transition: -webkit-filter 300ms;
-  -o-transition: filter 300ms;
-  transition: filter 300ms;
-  transition: filter 300ms, -webkit-filter 300ms;
-  -webkit-filter: drop-shadow(0 0 1em var(--color-white));
-  filter: drop-shadow(0 0 1em var(--color-white));
-  display: none;
-} */
 
 .iconMap {
   height: 40px;

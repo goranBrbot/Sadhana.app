@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useDrag } from "@use-gesture/react";
 import { format } from "date-fns";
 import { SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
@@ -58,49 +56,29 @@ export default function FastingCard({ tithiDay }) {
     }
   }
 
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [selectedDay, setSelectedDay] = useState(null);
-
-  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  const currentDay = format(new Date(), "EEEE");
-
-  const bind = useDrag(({ movement: [, my], cancel }) => {
-    if (!menuVisible) return;
-
-    const index = daysOfWeek.indexOf(selectedDay || currentDay);
-    const newIndex = Math.min(Math.max(index - Math.sign(my), 0), daysOfWeek.length - 1);
-
-    if (index !== newIndex) {
-      setSelectedDay(daysOfWeek[newIndex]);
-      cancel && cancel(); // Sprečava dalje pomeranje
-    }
-  });
+  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const currentDay = format(new Date(), "EEE");
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }} // Initial state (invisible)
-      animate={{ opacity: 1 }} // Animation to apply (fade in)
-      transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card fastingCard'>
-        <div className={`topBar ${menuVisible ? "menu-open" : ""}`} style={{ position: "relative" }}>
+        <div className='topBar' style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
-          <small className='aktivniInfo' onClick={() => setMenuVisible(!menuVisible)} style={{ color: selectedDay === currentDay ? "red" : "inherit" }}>
-            {selectedDay || currentDay}
-            {menuVisible && (
-              <div className='dropdown' {...bind()}>
-                {daysOfWeek.map((day) => (
-                  <div key={day} className={day === selectedDay ? "selected" : ""}>
-                    {day}
-                  </div>
-                ))}
-              </div>
-            )}
+          <small className='aktivniInfo'>
+            {daysOfWeek.map((day, index) => (
+              <span
+                key={day}
+                style={{
+                  color: day === currentDay ? "red" : "inherit",
+                  marginRight: index < daysOfWeek.length - 1 ? "3px" : "0", // Dodaje razmak osim za zadnji
+                }}>
+                {day}
+              </span>
+            ))}
           </small>
         </div>
-        <div className={`container`}>
-          {/* <img className='iconFood' src='icons/fasting.png' alt='Fasting' /> */}
+        <div className='container'>
           <span>{purnima()}</span>
           <br />
           <span>{amavasya()}</span>

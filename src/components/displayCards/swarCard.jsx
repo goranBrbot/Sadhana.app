@@ -124,7 +124,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
           </ul>
           {remainingTime && (
             <span>
-              Change in: {remainingTime.hours}h {remainingTime.minutes}min
+              Change for {remainingTime.hours}h {remainingTime.minutes}min
             </span>
           )}
         </div>
