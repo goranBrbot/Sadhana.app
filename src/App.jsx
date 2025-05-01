@@ -190,9 +190,9 @@ function App() {
       <GeoFindMe setLocation={handleLocationUpdate} />
       <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} />}</div>
       <br />
-      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
-      <br />
       <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} />}</div>
+      <br />
+      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
       <br />
       <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
       <br />

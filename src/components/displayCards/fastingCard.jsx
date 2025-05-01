@@ -57,8 +57,12 @@ export default function FastingCard({ tithiDay }) {
     }
   }
 
-  const [containerVisible, setContainerVisible] = useState(true);
-  const toggleContainer = () => setContainerVisible(!containerVisible);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(null);
+  const toggleMenu = () => setMenuVisible(!menuVisible);
+
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  const currentDay = format(new Date(), "EEEE");
 
   return (
     <motion.div
@@ -67,11 +71,34 @@ export default function FastingCard({ tithiDay }) {
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
       <div className='card fastingCard'>
-        <div className='topBar' onClick={toggleContainer}>
+        <div className='topBar' style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
+          <small
+            className='aktivniInfo'
+            onClick={toggleMenu} // Klik za prikaz menija
+            style={{ color: selectedDay === currentDay ? "red" : "inherit" }} // Crvena boja ako je trenutni dan odabrani
+          >
+            {selectedDay || currentDay}
+            {menuVisible && (
+              <div className='dropdown'>
+                {daysOfWeek.map((day) => (
+                  <div
+                    key={day}
+                    onClick={() => {
+                      setSelectedDay(day);
+                      setMenuVisible(false);
+                    }}
+                    className={day === selectedDay ? "selected" : ""} // Dodaj klasu za odabrani dan
+                  >
+                    {day}
+                  </div>
+                ))}
+              </div>
+            )}
+          </small>
         </div>
-        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+        <div className={`container`}>
           {/* <img className='iconFood' src='icons/fasting.png' alt='Fasting' /> */}
           <span>{purnima()}</span>
           <br />
