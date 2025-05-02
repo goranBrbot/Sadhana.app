@@ -351,6 +351,20 @@ tfoot td:last-child {
   display: none;
 }
 
+.moonPhase {
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+}
+
+.moonPhase > :first-child {
+  flex: 0 0 20%;
+}
+
+.moonPhase > :last-child {
+  flex: 0 0 auto;
+}
+
 .iconMap {
   height: 40px;
   margin-bottom: 15px;
@@ -405,18 +419,18 @@ tfoot td:last-child {
   z-index: -1;
 }
 
-.iconFestival {
+.iconMoon {
   height: 60px;
-  position: absolute;
-  top: 230px;
-  right: 80px;
+  margin-top: 6px;
+  margin-left: 20px;
+  margin-right: 20px;
   pointer-events: none;
   -webkit-transition: -webkit-filter 300ms;
   transition: -webkit-filter 300ms;
   -o-transition: filter 300ms;
   transition: filter 300ms;
   transition: filter 300ms, -webkit-filter 300ms;
-  filter: drop-shadow(0 0 0.3em #a5a5a5);
+  filter: drop-shadow(0 0 0.8em hsla(0, 0%, 0%, 0.5));
   z-index: -1;
 }
 

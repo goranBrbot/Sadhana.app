@@ -146,6 +146,13 @@ export default function FestivalCard({ location, tithiDay }) {
 
   const brightDarkTithi = tithiCalc(tithiDay);
 
+  function getTithiImage(tithiDay) {
+    // Osigurava da je tithiDay između 1 i 30
+    const validTithiDay = Math.max(1, Math.min(tithiDay, 30));
+
+    return <img className='iconMoon' src={`icons/moon/${validTithiDay}.png`} alt={`Moon phase for Tithi ${validTithiDay}`} />;
+  }
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
@@ -158,24 +165,38 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
           {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
           {/* <p>{vedicTime}</p> */}
-          <span>System: Purnimanta </span>
-          <br />
-          <span>Var: {panchangData.Var}</span> {/* day of the week */}
-          <br />
-          <span>Tithi: {brightDarkTithi}</span> {/* lunar day */}
-          <br />
-          <span>Karana: {panchangData.Karana}</span> {/* half of tithi */}
-          <br />
-          <span>Paksha: {panchangData.Paksha}</span> {/* lunar waxing or waning */}
-          <br />
-          <span>Masa: {panchangData.Masa}</span> {/* lunar month */}
-          <br />
-          <span>Samvat: {panchangData.Samvat}</span> {/* lunar year */}
-          <br />
-          <span>Nakshatra: {panchangData.Nakshatra}</span> {/* lunar constelation (house) */}
-          <br />
-          <span>Yoga: {panchangData.Yoga}</span> {/* Sun and Moon combination */}
-          <br />
+          <div>
+            <div>
+              <span>Purnimanta system panchang</span>
+              <br />
+              <span>Tithi: {brightDarkTithi}</span>
+              <br /> {/* lunar day */}
+              <span>Nakshatra: {panchangData.Nakshatra}</span>
+              <br /> {/* lunar constelation (house) */}
+              <span>Yoga: {panchangData.Yoga}</span>
+              <br /> {/* Sun and Moon combination */}
+              <span>Karana: {panchangData.Karana}</span>
+              <br /> {/* half of tithi */}
+              <span>Var: {panchangData.Var}</span>
+              <br /> {/* day of the week */}
+            </div>
+            <div className='moonPhase'>
+              <div>{getTithiImage(tithiDay)}</div>
+              <div>
+                <span>
+                  {tithiDay + 15} Tithi of {panchangData.Masa} Masa
+                </span><br />
+                {/* lunar month + 15 purnimanta system*/}
+                <span>
+                  {panchangData.Paksha} Paksha, {brightDarkTithi}
+                </span><br />
+                {/* lunar waxing or waning */}
+                <span>{panchangData.Samvat} Vikrama Samvata</span>
+                {/* lunar year */}
+              </div>
+            </div>
+            <br />
+          </div>
           {nextFestivalInfo.name && (
             <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
               <span>{`Next is "${nextFestivalInfo.name}"`}</span>

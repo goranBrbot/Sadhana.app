@@ -70,7 +70,7 @@ export default function FastingCard({ tithiDay }) {
               <span
                 key={day}
                 style={{
-                  color: day === currentDay ? "red" : "inherit",
+                  color: day === currentDay ? "#f28e41" : "inherit",
                   marginRight: index < daysOfWeek.length - 1 ? "3px" : "0", // Dodaje razmak osim za zadnji
                 }}>
                 {day}
