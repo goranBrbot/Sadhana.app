@@ -21,10 +21,6 @@
   body {
     height: auto;
   }
-
-  .logo {
-    margin-top: 2em;
-  }
 }
 
 :root {
@@ -86,14 +82,6 @@ body {
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
-
-hr {
-  border: 0;
-  height: 1px;
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(248, 103, 0, 0.1)), color-stop(#f86900), to(rgba(248, 103, 0, 0.1)));
-  background-image: -o-linear-gradient(left, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
-  background-image: linear-gradient(to right, rgba(248, 103, 0, 0.1), #f86900, rgba(248, 103, 0, 0.1));
 }
 
 h3 {
@@ -210,6 +198,10 @@ tfoot td:last-child {
 
 .location {
   margin: 0;
+}
+
+.card.dayCard {
+  margin-top: 1em;
 }
 
 .card.dayCard::before {
