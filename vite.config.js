@@ -21,6 +21,20 @@ export default defineConfig({
         orientation: "portrait",
         theme_color: "rgb(253, 250, 237)",
         background_color: "rgb(253, 250, 237)",
+        screenshots: [
+          {
+            src: "scrApp.png",
+            sizes: "400x772",
+            type: "image/png",
+            form_factor: "narrow" /* screenshot for mobile devices */,
+          },
+          {
+            src: "scrAppDesktop.png",
+            sizes: "1280x676",
+            type: "image/png",
+            form_factor: "wide" /* screenshot for desktop devices */,
+          },
+        ],
         icons: [
           {
             src: "pwa-64x64.png",

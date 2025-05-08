@@ -7,6 +7,7 @@ import FestivalCard from "./components/displayCards/festivalCard";
 import Swara from "./components/displayCards/swarCard";
 import Choghadiya from "./components/displayCards/choghadiya";
 // import Loader from "./components/loader";
+import InstallPrompt from "./components/installPrompt";
 import "./styles/App.css";
 
 function App() {
@@ -187,6 +188,7 @@ function App() {
     <div>
       {/* <div>{ <Loader isVisible={loader} /> }</div> */}
       {/* <GeoFindMe setLocation={handleLocationUpdate} /> */}
+      <InstallPrompt />
       <GeoFindMe setLocation={handleLocationUpdate} />
       <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} />}</div>
       <br />

@@ -1,5 +1,5 @@
 // import { format, addYears } from "date-fns";
-import { PairLongitude, SearchRiseSet, Equator } from "astronomy-engine";
+import { PairLongitude, SearchRiseSet, Equator, Search } from "astronomy-engine";
 
 // Bazirano na Purnimanta sistemu
 export default function Panchang(date, location) {
@@ -26,6 +26,74 @@ export default function Panchang(date, location) {
     const calculatedTithiDay = Math.ceil(tithiPeriod);
     return calculatedTithiDay;
   }
+
+  // Tithi info objekt - grupe tithija sa specifičnim kvalitetama (phala – plodovima)
+  function getTithiInfo(tithiNumber) {
+    const tithiNames = [
+      "Prathama",
+      "Dwitiya",
+      "Tritiya",
+      "Chaturthi",
+      "Panchami",
+      "Shashti",
+      "Saptami",
+      "Ashtami",
+      "Navami",
+      "Dashami",
+      "Ekadashi",
+      "Dwadashi",
+      "Trayodashi",
+      "Chaturdashi",
+      "Purnima / Amavasya",
+    ];
+
+    const groups = {
+      Nanda: [1, 6, 11],
+      Bhadra: [2, 7, 12],
+      Jaya: [3, 8, 13],
+      Riktha: [4, 9, 14],
+      Poorna: [5, 10, 15, 30], // 30 je Amavasya
+    };
+
+    const meanings = {
+      Nanda: { phala: "Ananda", meaning: "Radost, duhovna sreća" },
+      // Idealno za započinjanje novih pothvata, posvećenje duhovnim praksama. Pogodan dan za puje, darivanja, duhovne discipline.
+      Bhadra: { phala: "Arogya, Mangala", meaning: "Zdravlje i blagostanje" },
+      // Dobro za aktivnosti koje jačaju tijelo i um, poslove vezane uz materijalno blagostanje. Povoljno za kupovinu, liječenje, sklapanje prijateljstava.
+      Jaya: { phala: "Jaya", meaning: "Pobjeda i prevladavanje" },
+      // Povoljno za pravne sporove, pregovore, političke i vojne akcije. Dan za prevladavanje prepreka i izlazak kao pobjednik.
+      Riktha: { phala: "Nashta", meaning: "Gubitak, nepovoljnost" },
+      // Nepovoljan – asocira se s prazninom, gubitkom, neuspjehom. Izbjegavati važne odluke, transakcije, sklapanje poslova.
+      Poorna: { phala: "Sampoorna", meaning: "Ispunjenje, potpunost" },
+      // Daje osjećaj ispunjenja i zaokruženja. Pogodno za završne faze projekata, rituale, brakove, puje.
+    };
+
+    if (tithiNumber < 1 || tithiNumber > 30) {
+      return { error: "Tithi mora biti između 1 i 30." };
+    }
+
+    const pakshaTithi = tithiNumber % 15 === 0 ? 15 : tithiNumber % 15;
+    const tithiName = tithiNames[pakshaTithi - 1];
+    let matchedGroup = null;
+
+    for (const [group, numbers] of Object.entries(groups)) {
+      if (numbers.includes(pakshaTithi) || (group === "Poorna" && tithiNumber === 30)) {
+        matchedGroup = group;
+        break;
+      }
+    }
+
+    const result = {
+      tithiNumber,
+      tithiName,
+      group: matchedGroup || "Nepoznat",
+      ...(meanings[matchedGroup] || { phala: "-", meaning: "-" }),
+    };
+
+    return result;
+  }
+
+  console.log(getTithiInfo(getTithi()));
 
   // Paksha - svijetla/tamna polovica mjeseca
   function getPaksha() {
@@ -298,6 +366,73 @@ export default function Panchang(date, location) {
 
     throw new Error("Invalid day for Var calculation: " + dayOfWeek);
   }
+
+  function izracunajTithiInfo(date, location) {
+    function elongacijaZaVrijeme() {
+      const siderealSun = getSiderealSunLongitude();
+      const siderealMoon = getSiderealMoonLongitude();
+      const elongacija = (siderealMoon - siderealSun + 360) % 360;
+      return elongacija;
+    }
+
+    function binarnaPretragaPrijelaza(cilj, startDate, loc, smjer = +1, maxSec = 86400) {
+      let t1 = new Date(startDate.getTime());
+      let t2 = new Date(t1.getTime() + smjer * maxSec * 1000);
+      if (t2 < t1) [t1, t2] = [t2, t1];
+
+      const eps = 0.000001;
+
+      while (t2 - t1 > 1000) {
+        const tm = new Date((t1.getTime() + t2.getTime()) / 2);
+        const e = elongacijaZaVrijeme(tm, loc);
+        console.log(`Cilj: ${cilj}, Trenutna elongacija: ${e}, Vrijeme: ${tm}`);
+        if (e < cilj - eps) {
+          t1 = tm;
+        } else {
+          t2 = tm;
+        }
+      }
+
+      console.log(`Pronađeni prijelaz: ${t2}`);
+      return t2;
+    }
+
+    const eNow = elongacijaZaVrijeme(date, location);
+    console.log(`Trenutna elongacija: ${eNow}`);
+
+    const tithiIndex = Math.floor(eNow / 12); // 0–29 → Tithi 1–30
+    console.log(`Tithi indeks: ${tithiIndex}`);
+
+    const donjaGranica = tithiIndex * 12;
+    const gornjaGranica = (tithiIndex + 1) * 12;
+
+    console.log(`Donja granica: ${donjaGranica}, Gornja granica: ${gornjaGranica}`);
+
+    const pocetakTithija = binarnaPretragaPrijelaza(donjaGranica, new Date(date.getTime() - 36 * 3600 * 1000), location, -1);
+    let krajTithija;
+
+    try {
+      krajTithija = binarnaPretragaPrijelaza(gornjaGranica, date, location, +1);
+    } catch (e) {
+      console.error("Greška pri računanju kraja tithija:", e);
+      krajTithija = null; // tithi traje cijeli dan
+    }
+
+    const tithiTrajeCijeliDan = krajTithija === null || krajTithija.getDate() !== pocetakTithija.getDate();
+
+    console.log(`Početak tithija: ${pocetakTithija}`);
+    console.log(`Kraj tithija: ${krajTithija}`);
+    console.log(`Tithi traje cijeli dan: ${tithiTrajeCijeliDan}`);
+
+    return {
+      tithiIndex: tithiIndex + 1,
+      pocetakTithija,
+      krajTithija,
+      tithiTrajeCijeliDan,
+    };
+  }
+
+  console.log(izracunajTithiInfo(date, location));
 
   return { Tithi: getTithi(), Paksha: getPaksha(), Masa: getMasa("Purnimanta"), Samvat: getSamvat(), Nakshatra: getNakshatra(), Yoga: getYoga(), Karana: getKarana(), Var: getVara() };
 }
