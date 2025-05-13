@@ -6,8 +6,6 @@ import FastingCard from "./components/displayCards/fastingCard";
 import FestivalCard from "./components/displayCards/festivalCard";
 import Swara from "./components/displayCards/swarCard";
 import Choghadiya from "./components/displayCards/choghadiya";
-// import Loader from "./components/loader";
-import InstallPrompt from "./components/installPrompt";
 import "./styles/App.css";
 
 function App() {
@@ -19,7 +17,20 @@ function App() {
   const [swaraText, setSwaraText] = useState("");
   const [dataReady, setDataReady] = useState(false);
   const [notificationSent, setNotificationSent] = useState(false);
-  // const [loader, setLoader] = useState(false);
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
+
+  useEffect(() => {
+    const handler = (event) => {
+      event.preventDefault();
+      setInstallPromptEvent(event);
+    };
+
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  }, []);
 
   // Service Worker u vite.config kešira slike a ovdje preloada za učitavanje slika unaprijed ..
   const preloadImages = (imageUrls) => {
@@ -186,17 +197,18 @@ function App() {
 
   return (
     <div>
-      {/* <div>{ <Loader isVisible={loader} /> }</div> */}
-      {/* <GeoFindMe setLocation={handleLocationUpdate} /> */}
-      <InstallPrompt />
       <GeoFindMe setLocation={handleLocationUpdate} />
-      <div>{dataReady && <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} />}</div>
+      <div>
+        {dataReady && (
+          <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} installPromptEvent={installPromptEvent} setInstallPromptEvent={setInstallPromptEvent} />
+        )}
+      </div>
       <br />
       <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} />}</div>
       <br />
       <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
       <br />
-      <div>{dataReady && <FastingCard tithiDay={tithiDay} />}</div>
+      <div>{dataReady && <FastingCard sunrise={sunrise} tithiDay={tithiDay} />}</div>
       <br />
       <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} />}</div>
     </div>

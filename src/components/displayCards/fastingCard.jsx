@@ -1,9 +1,9 @@
-import { format } from "date-fns";
-import { SearchMoonPhase } from "astronomy-engine";
+import { format, isSameDay } from "date-fns";
+import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
-export default function FastingCard({ tithiDay }) {
+export default function FastingCard({ sunrise, tithiDay }) {
   function amavasya() {
     const today = format(new Date(), "dd.MM.yyyy");
     const newMoon = SearchMoonPhase(0, new Date(), 31);
@@ -13,13 +13,51 @@ export default function FastingCard({ tithiDay }) {
     } else return `Amavasya ${format(newMoon.date, "dd.MM.yyyy kk:mm")}h`;
   }
 
-  function purnima() {
+  /* function purnima() {
     const today = format(new Date(), "dd.MM.yyyy");
     const fullMoon = SearchMoonPhase(180, new Date(), 31);
     const purnima = format(fullMoon.date, "dd.MM.yyyy");
     if (purnima == today) {
       return `Purnima is today at ${format(fullMoon.date, "kk:mm")}h`;
     } else return `Purnima ${format(fullMoon.date, "dd.MM.yyyy kk:mm")}h`;
+  } */
+
+  // Izračunava trenutnu elongaciju Mjeseca od Sunca (0–360°)
+  function getElongation(date) {
+    let elongation = EclipticLongitude("Moon", date);
+    if (elongation < 0) {
+      elongation += 360;
+    }
+    return elongation;
+  }
+
+  function purnima() {
+    const now = new Date();
+    const elong = getElongation(now);
+
+    let fullMoonStart, fullMoonEnd;
+
+    if (elong >= 168 && elong < 180) {
+      // Trenutno smo unutar Purnima Tithija — traži početak unazad
+      fullMoonStart = SearchMoonPhase(168, now, -31);
+      fullMoonEnd = SearchMoonPhase(180, now, 31);
+    } else {
+      // Nismo u Purnimi — traži sljedeću
+      fullMoonStart = SearchMoonPhase(168, now, 31);
+      fullMoonEnd = SearchMoonPhase(180, now, 31);
+    }
+
+    const isSameVedicDay = isSameDay(sunrise, fullMoonEnd.date);
+    const isToday = now >= sunrise && now < fullMoonEnd.date && isSameVedicDay;
+
+    const startStr = format(fullMoonStart.date, "dd.MM. HH:mm");
+    const endStr = format(fullMoonEnd.date, "dd.MM. HH:mm");
+
+    if (isToday) {
+      return `Purnima is today till ${format(fullMoonEnd.date, "HH:mm")}h`;
+    } else {
+      return `Purnima ${startStr}h – ${endStr}h`;
+    }
   }
 
   function ekadashi() {
@@ -91,5 +129,6 @@ export default function FastingCard({ tithiDay }) {
 }
 
 FastingCard.propTypes = {
+  sunrise: PropTypes.instanceOf(Date),
   tithiDay: PropTypes.number,
 };
