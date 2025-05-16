@@ -183,9 +183,9 @@ export default function FestivalCard({ location, tithiDay }) {
               <div>{getTithiImage(tithiDay)}</div>
               <div>
                 <span>
-                  {tithiDay + 15} tithi {panchangData.Masa} masa
+                  {panchangData.Tithi} tithi {panchangData.Masa} masa
                 </span>
-                {/* lunar month + 15 purnimanta system*/}
+                {/* lunar month, purnimanta system*/}
                 <br />
                 <span>
                   {panchangData.Paksha} Pakṣa {brightDarkTithi}

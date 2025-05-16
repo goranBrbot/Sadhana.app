@@ -1,30 +1,34 @@
 // import { format, addYears } from "date-fns";
-import { PairLongitude, SearchRiseSet, Equator, Search } from "astronomy-engine";
+import { PairLongitude, SearchRiseSet, SunPosition, EclipticGeoMoon } from "astronomy-engine";
 
 // Bazirano na Purnimanta sistemu
 export default function Panchang(date, location) {
   const pulledLocation = location;
   const SunRise = SearchRiseSet("Sun", pulledLocation, +1, new Date(date), -1, 0.0);
-  const tropicalSunLongitude = Equator("Sun", date, pulledLocation, true, true).ra * 15;
 
-  function getSiderealMoonLongitude() {
-    const ayanamsha = 24.210517; // Vrijednost Ayanamsha za 2024. godinu (Lahiri Ayanamsha)
-    const tropicalMoonLongitude = Equator("Moon", date, pulledLocation, true, true).ra * 15;
-    return (tropicalMoonLongitude - ayanamsha + 360) % 360;
+  function getSiderealLong(ayanamsha = 24.21824) {
+    // Vrijednost Ayanamsha za 2024. godinu (Lahiri Ayanamsha)
+    const sun = SunPosition(date);
+    const moon = EclipticGeoMoon(date);
+    const sunLongitudeSidereal = (sun.elon - ayanamsha + 360) % 360;
+    const moonLongitudeSidereal = (moon.lon - ayanamsha + 360) % 360;
+    return {
+      sunLongitude: sunLongitudeSidereal,
+      moonLongitude: moonLongitudeSidereal,
+    };
   }
+  console.log(getSiderealLong());
 
-  function getSiderealSunLongitude() {
-    const ayanamsha = 24.210517; // Vrijednost Ayanamsha za 2024. godinu (Lahiri Ayanamsha)
-    const tropicalSunLongitude = Equator("Sun", date, pulledLocation, true, true).ra * 15;
-    return (tropicalSunLongitude - ayanamsha + 360) % 360;
-  }
+  // -------------------------------------------------------------------------------------------
 
   // Tithi - lunarni dan
-  function getTithi() {
+  function getTithi(system = "") {
     const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
-    const tithiPeriod = razlikaMoonSun / 12;
-    const calculatedTithiDay = Math.ceil(tithiPeriod);
-    return calculatedTithiDay;
+    const tithi = Math.ceil(razlikaMoonSun / 12);
+    if (system === "Purnimanta") {
+      return ((tithi + 14) % 30) + 1;
+    }
+    return tithi; // amanta system
   }
 
   // Tithi info objekt - grupe tithija sa specifičnim kvalitetama (phala – plodovima)
@@ -93,85 +97,39 @@ export default function Panchang(date, location) {
     return result;
   }
 
-  console.log(getTithiInfo(getTithi()));
+  console.log(getTithiInfo(getTithi("Purnimanta"))); // u radu, nije dobro radi purnimante vjerujem ..
 
   // Paksha - svijetla/tamna polovica mjeseca
-  function getPaksha() {
-    const tithi = getTithi();
+  function getPaksha(system = "") {
+    let tithi = getTithi(system);
+    if (system === "Purnimanta") {
+      tithi = ((tithi + 14) % 30) + 1;
+    }
     if (tithi <= 15) {
-      return `Shukla`;
-    } else if (tithi > 15) {
-      return `Kṛṣṇa`;
+      return "Śukla";
+    } else {
+      return "Kṛṣṇa";
     }
   }
 
   // lunarni mjesec u godini
-  function getMasa(system) {
-    // lunarni mjesec u godini
-    const delta = tropicalSunLongitude;
-    console.log(delta);
+  function getMasa(system = "") {
+    const { sunLongitude } = getSiderealLong();
+    // Masa prema sideralnoj dužini Sunca (Chaitra = 1)
+    let masaIndex = Math.floor(sunLongitude / 30) % 12; // 0-11
 
-    if (system === "Purnimanta") {
-      // Logika za Purnimanta
-      if (delta >= 0 && delta < 30) {
-        return "Caitra";
-      } else if (delta >= 30 && delta < 60) {
-        return "Vaiśākha";
-      } else if (delta >= 60 && delta < 90) {
-        return "Jyeṣṭha";
-      } else if (delta >= 90 && delta < 120) {
-        return "Āṣāḍha";
-      } else if (delta >= 120 && delta < 150) {
-        return "Śrāvaṇa";
-      } else if (delta >= 150 && delta < 180) {
-        return "Bhādrapada";
-      } else if (delta >= 180 && delta < 210) {
-        return "Aśvin";
-      } else if (delta >= 210 && delta < 240) {
-        return "Kārttika";
-      } else if (delta >= 240 && delta < 270) {
-        return "Mārgaśīrṣa";
-      } else if (delta >= 270 && delta < 300) {
-        return "Pauṣa";
-      } else if (delta >= 300 && delta < 330) {
-        return "Māgha";
-      } else if (delta >= 330 && delta < 360) {
-        return "Phālguna";
-      } else {
-        throw new Error("Invalid delta longitude for Purnimanta system: " + delta);
-      }
-    } else if (system === "Amanta") {
-      // Logika za Amanta
-      if (delta >= 0 && delta < 30) {
-        return "Phālguna";
-      } else if (delta >= 30 && delta < 60) {
-        return "Caitra";
-      } else if (delta >= 60 && delta < 90) {
-        return "Vaiśākha";
-      } else if (delta >= 90 && delta < 120) {
-        return "Jyeṣṭha";
-      } else if (delta >= 120 && delta < 150) {
-        return "Āṣāḍha";
-      } else if (delta >= 150 && delta < 180) {
-        return "Śrāvaṇa";
-      } else if (delta >= 180 && delta < 210) {
-        return "Bhādrapada";
-      } else if (delta >= 210 && delta < 240) {
-        return "Aśvin";
-      } else if (delta >= 240 && delta < 270) {
-        return "Kārttika";
-      } else if (delta >= 270 && delta < 300) {
-        return "Mārgaśīrṣa";
-      } else if (delta >= 300 && delta < 330) {
-        return "Pauṣa";
-      } else if (delta >= 330 && delta < 360) {
-        return "Māgha";
-      } else {
-        throw new Error("Invalid delta longitude for Amanta system: " + delta);
-      }
-    } else {
-      throw new Error("Invalid lunar month calculation system: " + system);
+    // Tithi na izlasku Sunca
+    const tithiToday = getTithi(false);
+
+    // Za Purnimanta: masa se mijenja na Purnimu (tithi 15)
+    // Za Amanta: masa se mijenja na Amavasya (tithi 30)
+    if ((system === "Purnimanta" && tithiToday > 15) || (system === "Amanta" && tithiToday === 30)) {
+      masaIndex = (masaIndex + 1) % 12;
     }
+
+    const masaNames = ["Chaitra", "Vaishakha", "Jyeshtha", "Ashadha", "Shravana", "Bhadrapada", "Ashwin", "Kartika", "Margashirsha", "Pausha", "Magha", "Phalguna"];
+
+    return masaNames[masaIndex];
   }
 
   // Lunarna godina (Vikram Samvat)
@@ -196,76 +154,49 @@ export default function Panchang(date, location) {
 
   // Nakshatra - mjesečeva trenutna konstelacija (kuća)
   function getNakshatra() {
-    const moonLongitude = getSiderealMoonLongitude();
-    console.log(moonLongitude);
+    const { moonLongitude } = getSiderealLong();
 
     // Kut od 13° 20′ (13 stupnjeva i 20 minuta) pretvoren u decimalni oblik stupnjeva = 13.3333
     // 360° / 27 nakšatra = 13.3333° po nakšatri
 
-    if (moonLongitude >= 0 && moonLongitude < 13.33) {
-      return "Aśvinī";
-    } else if (moonLongitude >= 13.33 && moonLongitude < 26.66) {
-      return "Bharani";
-    } else if (moonLongitude >= 26.66 && moonLongitude < 40) {
-      return "Kṛttikā";
-    } else if (moonLongitude >= 40 && moonLongitude < 53.33) {
-      return "Rohiṇī";
-    } else if (moonLongitude >= 53.33 && moonLongitude < 66.66) {
-      return "Mṛgaśīrṣa";
-    } else if (moonLongitude >= 66.66 && moonLongitude < 80) {
-      return "Ārdrā";
-    } else if (moonLongitude >= 80 && moonLongitude < 93.33) {
-      return "Punarvasu";
-    } else if (moonLongitude >= 93.33 && moonLongitude < 106.66) {
-      return "Puṣya";
-    } else if (moonLongitude >= 106.66 && moonLongitude < 120) {
-      return "Āśleṣā";
-    } else if (moonLongitude >= 120 && moonLongitude < 133.33) {
-      return "Maghā";
-    } else if (moonLongitude >= 133.33 && moonLongitude < 146.66) {
-      return "Pūrvaphalgunī";
-    } else if (moonLongitude >= 146.66 && moonLongitude < 160) {
-      return "Uttaraphalgunī";
-    } else if (moonLongitude >= 160 && moonLongitude < 173.33) {
-      return "Hasta";
-    } else if (moonLongitude >= 173.33 && moonLongitude < 186.66) {
-      return "Citrā";
-    } else if (moonLongitude >= 186.66 && moonLongitude < 200) {
-      return "Svātī";
-    } else if (moonLongitude >= 200 && moonLongitude < 213.33) {
-      return "Viśākhā";
-    } else if (moonLongitude >= 213.33 && moonLongitude < 226.66) {
-      return "Anurādhā";
-    } else if (moonLongitude >= 226.66 && moonLongitude < 240) {
-      return "Jyeṣṭhā";
-    } else if (moonLongitude >= 240 && moonLongitude < 253.33) {
-      return "Mūla";
-    } else if (moonLongitude >= 253.33 && moonLongitude < 266.66) {
-      return "Pūrvāṣāḍhā";
-    } else if (moonLongitude >= 266.66 && moonLongitude < 280) {
-      return "Uttarāṣāḍhā";
-    } else if (moonLongitude >= 280 && moonLongitude < 293.33) {
-      return "Śravaṇa";
-    } else if (moonLongitude >= 293.33 && moonLongitude < 306.66) {
-      return "Dhaniṣṭhā";
-    } else if (moonLongitude >= 306.66 && moonLongitude < 320) {
-      return "Śatabhiṣaja";
-    } else if (moonLongitude >= 320 && moonLongitude < 333.33) {
-      return "Pūrvabhādrapadā";
-    } else if (moonLongitude >= 333.33 && moonLongitude < 346.66) {
-      return "Uttarabhādrapadā";
-    } else if (moonLongitude >= 346.66 && moonLongitude < 360) {
-      return "Revatī";
-    } else {
-      throw new Error("Invalid moon longitude: " + moonLongitude);
-    }
+    const nakshatraIndex = Math.floor(moonLongitude / (360 / 27)); // 360° podijeljeno na 27
+
+    const nakshatraNames = [
+      "Ashwini",
+      "Bharani",
+      "Krittika",
+      "Rohini",
+      "Mrigashira",
+      "Ardra",
+      "Punarvasu",
+      "Pushya",
+      "Ashlesha",
+      "Magha",
+      "Purva Phalguni",
+      "Uttara Phalguni",
+      "Hasta",
+      "Chitra",
+      "Swati",
+      "Vishakha",
+      "Anuradha",
+      "Jyeshtha",
+      "Mula",
+      "Purva Ashadha",
+      "Uttara Ashadha",
+      "Shravana",
+      "Dhanishta",
+      "Shatabhisha",
+      "Purva Bhadrapada",
+      "Uttara Bhadrapada",
+      "Revati",
+    ];
+
+    return nakshatraNames[nakshatraIndex];
   }
 
   // Yoga - spajanje Mjeseca i Sunca
   function getYoga() {
-    const sunLongitude = getSiderealSunLongitude();
-    const moonLongitude = getSiderealMoonLongitude();
-
+    const { sunLongitude, moonLongitude } = getSiderealLong();
     const yogaDegreeSum = (sunLongitude + moonLongitude) % 360;
 
     if (yogaDegreeSum >= 0 && yogaDegreeSum < 13.333) {
@@ -329,27 +260,73 @@ export default function Panchang(date, location) {
 
   // Karana - polovina tithija
   function getKarana() {
-    const tithi = getTithi(); // Koristimo već izračunati tithi
+    const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
+    const tithi = Math.ceil(razlikaMoonSun / 12); // 1–30
+    const karanaNames = [
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+      "Bava",
+      "Balava",
+      "Kaulava",
+      "Taitila",
+      "Gara",
+      "Vanija",
+      "Vishti",
+    ]; // 56 ponavljanja
 
-    // Fiksni Karane za mlad i pun Mesec
-    if (tithi === 30) return "Kimstughna"; // Fiksni Karana za Amavasya (mlad Mesec)
-    if (tithi === 15) return "Shakuni"; // Fiksni Karana za Purnima (pun Mesec)
+    // Fiksne karane za kraj mjeseca
+    const fixedKaranas = ["Shakuni", "Chatushpada", "Naga", "Kimstughna"];
 
-    // Promenljivi Karane (ponavljaju se osam puta tokom meseca)
-    const movableKaranas = ["Bava", "Balava", "Kaulava", "Taitila", "Gara", "Vanija", "Vishti"];
+    // Odredi koja je polovina tithija (prva ili druga)
+    const razlomak = (razlikaMoonSun % 12) / 12;
+    const karanaIndex = (tithi - 1) * 2 + (razlomak >= 0.5 ? 1 : 0);
 
-    // Prva polovina tithija (1-14 i 16-29)
-    const karanaIndex = (tithi - 1) % 7; // Određujemo indeks za promenljive Karane
-    const isSecondHalf = tithi > 15; // Proveravamo da li je u Krishna Paksha (tamna polovina)
+    if (tithi === 30) return fixedKaranas[0]; // Shakuni
+    if (tithi === 29) return fixedKaranas[1]; // Chatushpada
+    if (tithi === 28) return fixedKaranas[2]; // Naga
+    if (tithi === 15) return fixedKaranas[3]; // Kimstughna
 
-    if (isSecondHalf) {
-      // Krishna Paksha (tamna polovina meseca)
-      if (tithi === 29) return "Chatushpada"; // Fiksni Karana za Krishna Paksha
-      if (tithi === 28) return "Naga"; // Fiksni Karana za Krishna Paksha
-    }
-
-    // Vraćamo odgovarajući promenljivi Karana
-    return movableKaranas[karanaIndex];
+    return karanaNames[karanaIndex % 56];
   }
 
   // Dan u tjednu
@@ -367,74 +344,16 @@ export default function Panchang(date, location) {
     throw new Error("Invalid day for Var calculation: " + dayOfWeek);
   }
 
-  function izracunajTithiInfo(date, location) {
-    function elongacijaZaVrijeme() {
-      const siderealSun = getSiderealSunLongitude();
-      const siderealMoon = getSiderealMoonLongitude();
-      const elongacija = (siderealMoon - siderealSun + 360) % 360;
-      return elongacija;
-    }
-
-    function binarnaPretragaPrijelaza(cilj, startDate, loc, smjer = +1, maxSec = 86400) {
-      let t1 = new Date(startDate.getTime());
-      let t2 = new Date(t1.getTime() + smjer * maxSec * 1000);
-      if (t2 < t1) [t1, t2] = [t2, t1];
-
-      const eps = 0.000001;
-
-      while (t2 - t1 > 1000) {
-        const tm = new Date((t1.getTime() + t2.getTime()) / 2);
-        const e = elongacijaZaVrijeme(tm, loc);
-        console.log(`Cilj: ${cilj}, Trenutna elongacija: ${e}, Vrijeme: ${tm}`);
-        if (e < cilj - eps) {
-          t1 = tm;
-        } else {
-          t2 = tm;
-        }
-      }
-
-      console.log(`Pronađeni prijelaz: ${t2}`);
-      return t2;
-    }
-
-    const eNow = elongacijaZaVrijeme(date, location);
-    console.log(`Trenutna elongacija: ${eNow}`);
-
-    const tithiIndex = Math.floor(eNow / 12); // 0–29 → Tithi 1–30
-    console.log(`Tithi indeks: ${tithiIndex}`);
-
-    const donjaGranica = tithiIndex * 12;
-    const gornjaGranica = (tithiIndex + 1) * 12;
-
-    console.log(`Donja granica: ${donjaGranica}, Gornja granica: ${gornjaGranica}`);
-
-    const pocetakTithija = binarnaPretragaPrijelaza(donjaGranica, new Date(date.getTime() - 36 * 3600 * 1000), location, -1);
-    let krajTithija;
-
-    try {
-      krajTithija = binarnaPretragaPrijelaza(gornjaGranica, date, location, +1);
-    } catch (e) {
-      console.error("Greška pri računanju kraja tithija:", e);
-      krajTithija = null; // tithi traje cijeli dan
-    }
-
-    const tithiTrajeCijeliDan = krajTithija === null || krajTithija.getDate() !== pocetakTithija.getDate();
-
-    console.log(`Početak tithija: ${pocetakTithija}`);
-    console.log(`Kraj tithija: ${krajTithija}`);
-    console.log(`Tithi traje cijeli dan: ${tithiTrajeCijeliDan}`);
-
-    return {
-      tithiIndex: tithiIndex + 1,
-      pocetakTithija,
-      krajTithija,
-      tithiTrajeCijeliDan,
-    };
-  }
-
-  console.log(izracunajTithiInfo(date, location));
-
-  return { Tithi: getTithi(), Paksha: getPaksha(), Masa: getMasa("Purnimanta"), Samvat: getSamvat(), Nakshatra: getNakshatra(), Yoga: getYoga(), Karana: getKarana(), Var: getVara() };
+  return {
+    Tithi: getTithi("Purnimanta"),
+    Paksha: getPaksha("Purnimanta"),
+    Masa: getMasa("Purnimanta"),
+    Samvat: getSamvat(),
+    Nakshatra: getNakshatra(),
+    Yoga: getYoga(),
+    Karana: getKarana(),
+    Var: getVara(),
+  };
 }
 
 /* 

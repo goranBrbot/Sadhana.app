@@ -3,26 +3,7 @@ import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
-export default function FastingCard({ sunrise, tithiDay }) {
-  function amavasya() {
-    const today = format(new Date(), "dd.MM.yyyy");
-    const newMoon = SearchMoonPhase(0, new Date(), 31);
-    const amavasya = format(newMoon.date, "dd.MM.yyyy");
-    if (amavasya == today) {
-      return `Amavasya is today at ${format(newMoon.date, "kk:mm")}h`;
-    } else return `Amavasya ${format(newMoon.date, "dd.MM.yyyy kk:mm")}h`;
-  }
-
-  /* function purnima() {
-    const today = format(new Date(), "dd.MM.yyyy");
-    const fullMoon = SearchMoonPhase(180, new Date(), 31);
-    const purnima = format(fullMoon.date, "dd.MM.yyyy");
-    if (purnima == today) {
-      return `Purnima is today at ${format(fullMoon.date, "kk:mm")}h`;
-    } else return `Purnima ${format(fullMoon.date, "dd.MM.yyyy kk:mm")}h`;
-  } */
-
-  // Izračunava trenutnu elongaciju Mjeseca od Sunca (0–360°)
+export default function FastingCard({ sunrise }) {
   function getElongation(date) {
     let elongation = EclipticLongitude("Moon", date);
     if (elongation < 0) {
@@ -60,37 +41,83 @@ export default function FastingCard({ sunrise, tithiDay }) {
     }
   }
 
+  function amavasya() {
+    const now = new Date();
+    const elong = getElongation(now);
+
+    let newMoonStart, newMoonEnd;
+
+    if (elong >= 348 || elong < 0) {
+      // Trenutno smo unutar Amavasya Tithija — traži početak unazad
+      newMoonStart = SearchMoonPhase(348, now, -31);
+      newMoonEnd = SearchMoonPhase(0, now, 31);
+    } else {
+      // Nismo u Amavasya — traži sledeću
+      newMoonStart = SearchMoonPhase(348, now, 31);
+      newMoonEnd = SearchMoonPhase(0, now, 31);
+    }
+
+    const isSameVedicDay = isSameDay(sunrise, newMoonEnd.date);
+    const isToday = now >= sunrise && now < newMoonEnd.date && isSameVedicDay;
+
+    const startStr = format(newMoonStart.date, "dd.MM. HH:mm");
+    const endStr = format(newMoonEnd.date, "dd.MM. HH:mm");
+
+    if (isToday) {
+      return `Amavasya is today till ${format(newMoonEnd.date, "HH:mm")}h`;
+    } else {
+      return `Amavasya ${startStr}h – ${endStr}h`;
+    }
+  }
+
   function ekadashi() {
-    const today = new Date();
-    const spEkadashiStart = SearchMoonPhase(120, today, 30);
-    const spEkadashiEnd = SearchMoonPhase(132, today, 30);
-    const kpEkadashiStart = SearchMoonPhase(300, today, 30);
-    const kpEkadashiEnd = SearchMoonPhase(312, today, 30);
+    const now = new Date();
+    const elong = getElongation(now);
 
-    if (tithiDay < 11 && tithiDay != 11 && spEkadashiStart != null && spEkadashiEnd != null) {
-      const spDate = `${format(spEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(spEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
-      return (
-        <div>
-          Ekadashi of Shukla Pakṣa
-          <br />
-          {spDate}
-        </div>
-      );
+    let ekadashiStart, ekadashiEnd, label;
+
+    // Shukla paksha Ekadashi (120°–132°)
+    if (elong >= 120 && elong < 132) {
+      ekadashiStart = SearchMoonPhase(120, now, -31);
+      ekadashiEnd = SearchMoonPhase(132, now, 31);
+      label = "Shukla Ekadashi";
+    }
+    // Krishna paksha Ekadashi (300°–312°)
+    else if (elong >= 300 && elong < 312) {
+      ekadashiStart = SearchMoonPhase(300, now, -31);
+      ekadashiEnd = SearchMoonPhase(312, now, 31);
+      label = "Krishna Ekadashi";
+    }
+    // Nismo trenutno u Ekadashiju — traži sljedeću
+    else {
+      // Pronađi sljedeću Shukla i Krishna Ekadashi
+      const nextShuklaStart = SearchMoonPhase(120, now, 31);
+      const nextShuklaEnd = SearchMoonPhase(132, now, 31);
+      const nextKrishnaStart = SearchMoonPhase(300, now, 31);
+      const nextKrishnaEnd = SearchMoonPhase(312, now, 31);
+
+      // Prikaži onu koja dolazi prva
+      if (nextShuklaStart.date < nextKrishnaStart.date) {
+        ekadashiStart = nextShuklaStart;
+        ekadashiEnd = nextShuklaEnd;
+        label = "Ekadashi"; // Shukla Ekadashi
+      } else {
+        ekadashiStart = nextKrishnaStart;
+        ekadashiEnd = nextKrishnaEnd;
+        label = "Ekadashi"; // Krishna Ekadashi
+      }
     }
 
-    if (tithiDay > 11 && tithiDay != 26 && kpEkadashiStart != null && kpEkadashiEnd != null) {
-      const kpDate = `${format(kpEkadashiStart.date, "dd.MM.yyyy kk:mm")}h - ${format(kpEkadashiEnd.date, "dd.MM.yyyy kk:mm")}h`;
-      return (
-        <div>
-          Ekadashi of Kṛṣṇa Pakṣa
-          <br />
-          {kpDate}
-        </div>
-      );
-    }
+    const isSameVedicDay = isSameDay(sunrise, ekadashiEnd.date);
+    const isToday = now >= sunrise && now < ekadashiEnd.date && isSameVedicDay;
 
-    if (tithiDay == 11 || tithiDay == 26) {
-      return <div>Ekadashi is today!</div>;
+    const startStr = format(ekadashiStart.date, "dd.MM. HH:mm");
+    const endStr = format(ekadashiEnd.date, "dd.MM. HH:mm");
+
+    if (isToday) {
+      return `${label} is today till ${format(ekadashiEnd.date, "HH:mm")}h`;
+    } else {
+      return `${label} ${startStr}h – ${endStr}h`;
     }
   }
 
@@ -130,5 +157,4 @@ export default function FastingCard({ sunrise, tithiDay }) {
 
 FastingCard.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
-  tithiDay: PropTypes.number,
 };

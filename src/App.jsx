@@ -71,12 +71,16 @@ function App() {
     setSunset(SunSet.date);
     console.log(SunRise.date, SunSet.date);
 
-    const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
-    const tithiPeriod = razlikaMoonSun / 12;
-    const calculatedTithiDay = Math.ceil(tithiPeriod);
-    setTithiDay(calculatedTithiDay);
-    console.log(calculatedTithiDay);
+    function getTithi(usePurnimanta = true) {
+      const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
+      const tithi = Math.ceil(razlikaMoonSun / 12);
+      if (usePurnimanta) {
+        return ((tithi + 14) % 30) + 1; // +14 jer je efikasnije (ekvivalent +15 -1)
+      }
+      return tithi; // Amanta (defaultni izračun)
+    }
 
+    setTithiDay(getTithi());
     setDataReady(true);
     // setLoader(true);
   };
@@ -208,7 +212,7 @@ function App() {
       <br />
       <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
       <br />
-      <div>{dataReady && <FastingCard sunrise={sunrise} tithiDay={tithiDay} />}</div>
+      <div>{dataReady && <FastingCard sunrise={sunrise} />}</div>
       <br />
       <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} />}</div>
     </div>

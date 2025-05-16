@@ -68,7 +68,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sunrise, tithiDay, setSwaraText]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (idaVremena.length > 0 || pingalaVremena.length > 0) {
       const sada = new Date();
       let nextChangeTime;
@@ -96,6 +96,36 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
       }, 1000); // Ažuriraj svake sekunde
 
       return () => clearInterval(interval); // Očisti interval prilikom unmounta
+    }
+  }, [idaVremena, pingalaVremena, sunrise]); */
+
+  useEffect(() => {
+    if (idaVremena.length > 0 || pingalaVremena.length > 0) {
+      const sada = new Date();
+      let firstInterval = idaVremena[0] || pingalaVremena[0];
+      let nextChangeTime;
+
+      if (firstInterval && sada < firstInterval.end) {
+        nextChangeTime = firstInterval.end;
+      } else {
+        // Ako je prošao prvi interval, odbrojavaj do sljedećeg izlaska sunca
+        nextChangeTime = add(sunrise, { hours: 24 });
+      }
+
+      setRemainingTime(calculateRemainingTime(sada, nextChangeTime));
+
+      const interval = setInterval(() => {
+        const now = new Date();
+        let changeTime;
+        if (firstInterval && now < firstInterval.end) {
+          changeTime = firstInterval.end;
+        } else {
+          changeTime = add(sunrise, { hours: 24 });
+        }
+        setRemainingTime(calculateRemainingTime(now, changeTime));
+      }, 1000);
+
+      return () => clearInterval(interval);
     }
   }, [idaVremena, pingalaVremena, sunrise]);
 
