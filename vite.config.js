@@ -17,7 +17,7 @@ export default defineConfig({
         name: "Yoga In Daily Life Sadhana",
         short_name: "Sadhana",
         description: "Sadhana is an application created for the purpose of easy and complete access to the necessary information for regular yoga sadhana.",
-        display: "standalone",
+        display: "fullscreen",
         orientation: "portrait",
         theme_color: "rgb(253, 250, 237)",
         background_color: "rgb(253, 250, 237)",
