@@ -116,40 +116,9 @@ export default function FestivalCard({ location, tithiDay }) {
     );
   };
 
-  function tithiCalc(day) {
-    const tithiNames = {
-      1: "Prathma",
-      2: "Dvitīya",
-      3: "Tritīya",
-      4: "Caturthi",
-      5: "Pañcami",
-      6: "Ṣaṣṭhi",
-      7: "Saptami",
-      8: "Ashtami",
-      9: "Navami",
-      10: "Dashami",
-      11: "Ekadashi",
-      12: "Dvādaśī",
-      13: "Trayodaśī",
-      14: "Caturdaśī",
-      15: "Purnima",
-      0: "Amavasya",
-    };
-
-    if (day === 0 || day === 30) {
-      return tithiNames[0];
-    }
-
-    const adjustedDay = day > 15 ? day - 15 : day;
-    return tithiNames[adjustedDay];
-  }
-
-  const brightDarkTithi = tithiCalc(tithiDay);
-
-  function getTithiImage(tithiDay) {
+  function getTithiMoonImage(tithiDay) {
     // Osigurava da je tithiDay između 1 i 30
     const validTithiDay = Math.max(1, Math.min(tithiDay, 30));
-
     return <img className='iconMoon' src={`icons/moon/${validTithiDay}.png`} alt={`Moon phase for Tithi ${validTithiDay}`} />;
   }
 
@@ -168,9 +137,9 @@ export default function FestivalCard({ location, tithiDay }) {
           <div>
             <div>
               <p>Purnimanta Panchanga</p>
-              <span>Tithi: {brightDarkTithi}</span>
+              <span>Tithi: {panchangData.TithiInfo.tithiName}</span>
               <br /> {/* lunar day */}
-              <span>Nakṣatra: {panchangData.Nakshatra}</span>
+              <span>Nakshatra: {panchangData.Nakshatra}</span>
               <br /> {/* lunar constelation (house) */}
               <span>Yoga: {panchangData.Yoga}</span>
               <br /> {/* Sun and Moon combination */}
@@ -180,15 +149,15 @@ export default function FestivalCard({ location, tithiDay }) {
               <br /> {/* day of the week */}
             </div>
             <div className='moonPhase'>
-              <div>{getTithiImage(tithiDay)}</div>
+              <div>{getTithiMoonImage(tithiDay)}</div>
               <div>
                 <span>
-                  {panchangData.Tithi} tithi {panchangData.Masa} masa
+                  {panchangData.Tithi} Tithi {panchangData.Masa} Masa
                 </span>
                 {/* lunar month, purnimanta system*/}
                 <br />
                 <span>
-                  {panchangData.Paksha} Pakṣa {brightDarkTithi}
+                  {panchangData.Paksha} Paksha {panchangData.TithiInfo.tithiName}
                 </span>
                 {/* lunar waxing or waning */}
                 <br />

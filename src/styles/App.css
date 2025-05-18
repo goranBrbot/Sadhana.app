@@ -56,17 +56,6 @@ html::-webkit-scrollbar {
   display: none; /* Chrome, Safari i Edge */
 }
 
-.statusbar-fix {
-  height: env(safe-area-inset-top, 24px); /* iOS safe area ili fallback */
-  background-color: var(--color-light-bkg); /* identično theme-coloru */
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05); /* suptilna linija koja maskira sistemsku crtu */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-}
-
 body {
   font-size: 1em/1.618;
   color: var(--color-black);
@@ -90,7 +79,6 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
-  padding-top: env(safe-area-inset-top, 24px);
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;

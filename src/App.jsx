@@ -19,6 +19,7 @@ function App() {
   const [notificationSent, setNotificationSent] = useState(false);
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
 
+  // Custom install prompt event
   useEffect(() => {
     const handler = (event) => {
       event.preventDefault();
@@ -71,13 +72,11 @@ function App() {
     setSunset(SunSet.date);
     console.log(SunRise.date, SunSet.date);
 
-    function getTithi(usePurnimanta = true) {
+    // Izračunavanje Tithi od 1-30
+    function getTithi() {
       const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
       const tithi = Math.ceil(razlikaMoonSun / 12);
-      if (usePurnimanta) {
-        return ((tithi + 14) % 30) + 1; // +14 jer je efikasnije (ekvivalent +15 -1)
-      }
-      return tithi; // Amanta (defaultni izračun)
+      return tithi;
     }
 
     setTithiDay(getTithi());

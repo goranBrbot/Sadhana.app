@@ -125,7 +125,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <span>
-            Brahma-muhūrta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
+            Brahma Muhurta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
           </span>
           <br />
           <br />

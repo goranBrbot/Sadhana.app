@@ -21,8 +21,15 @@ export default function Panchang(date, location) {
 
   // -------------------------------------------------------------------------------------------
 
-  // Tithi - lunarni dan
-  function getTithi(system = "") {
+  // Izračunavanje Tithi od 1-30
+  function getTithi() {
+    const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
+    const tithi = Math.ceil(razlikaMoonSun / 12);
+    return tithi;
+  }
+
+  // Paksha tithi - lunarni dan 1-15
+  function getPakshaTithi(system = "") {
     const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
     const tithi = Math.ceil(razlikaMoonSun / 12);
     if (system === "Purnimanta") {
@@ -34,7 +41,7 @@ export default function Panchang(date, location) {
   // Tithi info objekt - grupe tithija sa specifičnim kvalitetama (phala – plodovima)
   function getTithiInfo(tithiNumber) {
     const tithiNames = [
-      "Prathama",
+      "Prathma",
       "Dwitiya",
       "Tritiya",
       "Chaturthi",
@@ -97,18 +104,18 @@ export default function Panchang(date, location) {
     return result;
   }
 
-  console.log(getTithiInfo(getTithi("Purnimanta"))); // u radu, nije dobro radi purnimante vjerujem ..
+  console.log(getTithiInfo(getTithi()));
 
   // Paksha - svijetla/tamna polovica mjeseca
   function getPaksha(system = "") {
-    let tithi = getTithi(system);
+    let tithi = getPakshaTithi(system);
     if (system === "Purnimanta") {
       tithi = ((tithi + 14) % 30) + 1;
     }
     if (tithi <= 15) {
-      return "Śukla";
+      return "Shukla";
     } else {
-      return "Kṛṣṇa";
+      return "Krishna";
     }
   }
 
@@ -119,7 +126,7 @@ export default function Panchang(date, location) {
     let masaIndex = Math.floor(sunLongitude / 30) % 12; // 0-11
 
     // Tithi na izlasku Sunca
-    const tithiToday = getTithi(false);
+    const tithiToday = getPakshaTithi(false);
 
     // Za Purnimanta: masa se mijenja na Purnimu (tithi 15)
     // Za Amanta: masa se mijenja na Amavasya (tithi 30)
@@ -200,59 +207,59 @@ export default function Panchang(date, location) {
     const yogaDegreeSum = (sunLongitude + moonLongitude) % 360;
 
     if (yogaDegreeSum >= 0 && yogaDegreeSum < 13.333) {
-      return "Viṣkambha";
+      return "Viskambha";
     } else if (yogaDegreeSum >= 13.333 && yogaDegreeSum < 26.666) {
-      return "Prīti";
+      return "Priti";
     } else if (yogaDegreeSum >= 26.666 && yogaDegreeSum < 40) {
-      return "Āyuśmān";
+      return "Ayushman";
     } else if (yogaDegreeSum >= 40 && yogaDegreeSum < 53.333) {
-      return "Saubhāgya";
+      return "Saubhagya";
     } else if (yogaDegreeSum >= 53.333 && yogaDegreeSum < 66.666) {
-      return "Śobhana";
+      return "Shobhana";
     } else if (yogaDegreeSum >= 66.666 && yogaDegreeSum < 80) {
-      return "Atigaṇḍa";
+      return "Atiganda";
     } else if (yogaDegreeSum >= 80 && yogaDegreeSum < 93.333) {
       return "Sukarman";
     } else if (yogaDegreeSum >= 93.333 && yogaDegreeSum < 106.666) {
-      return "Dhṛti";
+      return "Dhriti";
     } else if (yogaDegreeSum >= 106.666 && yogaDegreeSum < 120) {
-      return "Śūla";
+      return "Shula";
     } else if (yogaDegreeSum >= 120 && yogaDegreeSum < 133.333) {
       return "Ganda";
     } else if (yogaDegreeSum >= 133.333 && yogaDegreeSum < 146.666) {
-      return "Vṛddhi";
+      return "Vriddhi";
     } else if (yogaDegreeSum >= 146.666 && yogaDegreeSum < 160) {
       return "Dhruva";
     } else if (yogaDegreeSum >= 160 && yogaDegreeSum < 173.333) {
-      return "Vyāghāta";
+      return "Vyaghata";
     } else if (yogaDegreeSum >= 173.333 && yogaDegreeSum < 186.666) {
-      return "Harṣaṇa";
+      return "Harshana";
     } else if (yogaDegreeSum >= 186.666 && yogaDegreeSum < 200) {
       return "Vajra";
     } else if (yogaDegreeSum >= 200 && yogaDegreeSum < 213.333) {
       return "Siddhi";
     } else if (yogaDegreeSum >= 213.333 && yogaDegreeSum < 226.666) {
-      return "Vyatīpāta";
+      return "Vyatipata";
     } else if (yogaDegreeSum >= 226.666 && yogaDegreeSum < 240) {
-      return "Varīgā";
+      return "Variga";
     } else if (yogaDegreeSum >= 240 && yogaDegreeSum < 253.333) {
       return "Parigha";
     } else if (yogaDegreeSum >= 253.333 && yogaDegreeSum < 266.666) {
-      return "Śiva";
+      return "Shiva";
     } else if (yogaDegreeSum >= 266.666 && yogaDegreeSum < 280) {
       return "Siddha";
     } else if (yogaDegreeSum >= 280 && yogaDegreeSum < 293.333) {
-      return "Sādhya";
+      return "Sadhya";
     } else if (yogaDegreeSum >= 293.333 && yogaDegreeSum < 306.666) {
-      return "Śubha";
+      return "Shubha";
     } else if (yogaDegreeSum >= 306.666 && yogaDegreeSum < 320) {
-      return "Śukla";
+      return "Shukla";
     } else if (yogaDegreeSum >= 320 && yogaDegreeSum < 333.333) {
       return "Brahma";
     } else if (yogaDegreeSum >= 333.333 && yogaDegreeSum < 346.666) {
       return "Indra";
     } else if (yogaDegreeSum >= 346.666 && yogaDegreeSum < 360) {
-      return "Vaidhṛti";
+      return "Vaidhriti";
     } else {
       throw new Error("Invalid Yoga calculation: " + yogaDegreeSum);
     }
@@ -333,19 +340,21 @@ export default function Panchang(date, location) {
   function getVara() {
     const dayOfWeek = date.getDay();
 
-    if (dayOfWeek === 0) return "Ravivāsaraḥ" /* (Nedjelja - Sunce) */;
-    else if (dayOfWeek === 1) return "Somavāsaraḥ" /* (Ponedjeljak - Mjesec) */;
-    else if (dayOfWeek === 2) return "Maṅgalavāsaraḥ" /* (Utorak - Mars) */;
-    else if (dayOfWeek === 3) return "Budhavāsaraḥ" /* (Srijeda - Merkur) */;
-    else if (dayOfWeek === 4) return "Guruvāsaraḥ" /* (Četvrtak - Jupiter) */;
-    else if (dayOfWeek === 5) return "Śukravāsaraḥ" /* (Petak - Venera) */;
-    else if (dayOfWeek === 6) return "Śanivāsaraḥ" /* (Subota - Saturn) */;
+    if (dayOfWeek === 0) return "Ravivara"; // Nedjelja - Sunce
+    else if (dayOfWeek === 1) return "Somavara"; // Ponedjeljak - Mjesec
+    else if (dayOfWeek === 2) return "Mangalavara"; // Utorak - Mars
+    else if (dayOfWeek === 3) return "Budhavara"; // Srijeda - Merkur
+    else if (dayOfWeek === 4) return "Guruvara"; // Četvrtak - Jupiter
+    else if (dayOfWeek === 5) return "Shukravara"; // Petak - Venera
+    else if (dayOfWeek === 6) return "Shanivara"; // Subota - Saturn
 
     throw new Error("Invalid day for Var calculation: " + dayOfWeek);
   }
 
   return {
-    Tithi: getTithi("Purnimanta"),
+    TithiNum: getTithi(),
+    TithiInfo: getTithiInfo(getTithi()),
+    Tithi: getPakshaTithi("Purnimanta"),
     Paksha: getPaksha("Purnimanta"),
     Masa: getMasa("Purnimanta"),
     Samvat: getSamvat(),
