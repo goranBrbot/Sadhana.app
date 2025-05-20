@@ -14,6 +14,49 @@ const CHOGHADIYA_MAP = {
   6: { dan: ["Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal"], noc: ["Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh"] },
 };
 
+const PLANETARY_MAP = {
+  0: {
+    // Nedjelja
+    dan: ["Sunce", "Mjesec", "Merkur", "Jupiter", "Saturn", "Venera", "Mars", "Sunce"],
+    noc: ["Venera", "Jupiter", "Mjesec", "Mars", "Saturn", "Merkur", "Sunce", "Venera"],
+  },
+  1: {
+    // Ponedjeljak
+    dan: ["Jupiter", "Saturn", "Venera", "Mars", "Sunce", "Mjesec", "Merkur", "Jupiter"],
+    noc: ["Mjesec", "Mars", "Saturn", "Merkur", "Sunce", "Venera", "Jupiter", "Mjesec"],
+  },
+  2: {
+    // Utorak
+    dan: ["Mars", "Sunce", "Mjesec", "Merkur", "Jupiter", "Saturn", "Venera", "Mars"],
+    noc: ["Saturn", "Merkur", "Sunce", "Venera", "Jupiter", "Mjesec", "Mars", "Saturn"],
+  },
+  3: {
+    // Srijeda
+    dan: ["Merkur", "Jupiter", "Saturn", "Venera", "Mars", "Sunce", "Mjesec", "Merkur"],
+    noc: ["Sunce", "Venera", "Jupiter", "Mjesec", "Mars", "Saturn", "Merkur", "Sunce"],
+  },
+  4: {
+    // Četvrtak
+    dan: ["Venera", "Mars", "Sunce", "Mjesec", "Merkur", "Jupiter", "Saturn", "Venera"],
+    noc: ["Jupiter", "Mjesec", "Mars", "Saturn", "Merkur", "Sunce", "Venera", "Jupiter"],
+  },
+  5: {
+    // Petak
+    dan: ["Mjesec", "Merkur", "Jupiter", "Saturn", "Venera", "Mars", "Sunce", "Mjesec"],
+    noc: ["Mars", "Saturn", "Merkur", "Sunce", "Venera", "Jupiter", "Mjesec", "Mars"],
+  },
+  6: {
+    // Subota
+    dan: ["Saturn", "Venera", "Mars", "Sunce", "Mjesec", "Merkur", "Jupiter", "Saturn"],
+    noc: ["Merkur", "Sunce", "Venera", "Jupiter", "Mjesec", "Mars", "Saturn", "Merkur"],
+  },
+};
+
+// Vaar Vela - nedjelja - Amrit, ponedjeljak - Labh, utorak - Udveg, srijeda - Rog, četvrtak - Shubh, petak - Amrit, subota - Labh
+// Kaal Vela is the Kaal Choghadiya or time period ruled by Saturn
+// Kaal Ratri is the Laabh Choghadiya ruled by Mercury
+// Rahu kaal is the inauspicious time period ruled by Rahu
+
 const CHOGHADIYA_TYPE = {
   Amrit: "Best",
   Shubh: "Good",
@@ -82,23 +125,110 @@ const Choghadiya = ({ sunrise, sunset }) => {
   const formatTime = (date) => date.toTimeString().slice(0, 5);
   const stilReda = (tip) => (["Rog", "Kaal", "Udveg"].includes(tip) ? "nepovoljno" : "povoljno");
 
-  const renderTablica = (podaci, naslov) => (
-    <div>
-      <p>{naslov}</p>
-      <table>
-        <tbody>
-          {podaci.map(({ chogh, start, end }, i) => (
-            <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`} title={CHOGHADIYA_TYPE[chogh]}>
-              <td>
-                {formatTime(start)} – {formatTime(end)}
-              </td>
-              <td>{chogh}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  function getInauspiciousPeriods(date, sunrise, sunset) {
+    const dayOfWeek = date.getDay(); // 0 = nedjelja, 1 = ponedjeljak, ...
+    const msPerMinute = 60000;
+    const msPerHour = 60 * msPerMinute;
+
+    const dayDurationMs = sunset - sunrise;
+    const nightDurationMs = 24 * msPerHour - dayDurationMs;
+
+    const oneEighthDay = dayDurationMs / 8;
+    const oneEighthNight = nightDurationMs / 8;
+
+    // Vaar Vela tipovi po danima
+    // Pronađi indeks segmenta u CHOGHADIYA_MAP koji odgovara vaarVelaType
+    const vaarVelaTypeMap = [
+      "Amrit", // Nedjelja
+      "Labh", // Ponedjeljak
+      "Udveg", // Utorak
+      "Rog", // Srijeda
+      "Shubh", // Četvrtak
+      "Amrit", // Petak
+      "Labh", // Subota
+    ];
+    const vaarVelaType = vaarVelaTypeMap[dayOfWeek];
+    const vaarVelaIdx = CHOGHADIYA_MAP[dayOfWeek].dan.findIndex((tip) => tip === vaarVelaType);
+    const vaarVelaStart = new Date(sunrise.getTime() + oneEighthDay * vaarVelaIdx);
+    const vaarVelaEnd = new Date(vaarVelaStart.getTime() + oneEighthDay);
+
+    // Kaal Vela: segment dana gdje je vladar "Saturn"
+    const planetaryDay = PLANETARY_MAP[dayOfWeek].dan;
+    const kaalVelaIdx = planetaryDay.findIndex((planet) => planet === "Saturn");
+    const kaalVelaStart = new Date(sunrise.getTime() + oneEighthDay * kaalVelaIdx);
+    const kaalVelaEnd = new Date(kaalVelaStart.getTime() + oneEighthDay);
+
+    // Kaal Ratri: segment noći gdje je vladar "Merkur"
+    const planetaryNight = PLANETARY_MAP[dayOfWeek].noc;
+    const kaalRatriIdx = planetaryNight.findIndex((planet) => planet === "Merkur");
+    const kaalRatriStart = new Date(sunset.getTime() + oneEighthNight * kaalRatriIdx);
+    const kaalRatriEnd = new Date(kaalRatriStart.getTime() + oneEighthNight);
+
+    // Rahu Kaal indeks po danima (0 = nedjelja, 1 = ponedjeljak, ...)
+    const rahuKaalSegmentArr = [8, 2, 7, 5, 6, 4, 3];
+    const rahuKaalSegment = rahuKaalSegmentArr[dayOfWeek]; // npr. 7 za nedjelju
+    const rahuKaalIdx = rahuKaalSegment - 1; // pretvori u 0-based indeks
+    const rahuKaalStart = new Date(sunrise.getTime() + oneEighthDay * rahuKaalIdx);
+    const rahuKaalEnd = new Date(rahuKaalStart.getTime() + oneEighthDay);
+
+    // Ikona za Rahu Kaal
+    const rahuImg = <img src='icons/rahu_kalam.svg' style={{ width: 18, height: 18, verticalAlign: "middle" }} alt='Rahu Kaal' />;
+
+    return {
+      VV: { label: "Vaar Vela", start: vaarVelaStart, end: vaarVelaEnd, mark: "VV" },
+      KV: { label: "Kaal Vela", start: kaalVelaStart, end: kaalVelaEnd, mark: "KV" },
+      KR: { label: "Kaal Ratri", start: kaalRatriStart, end: kaalRatriEnd, mark: "KR" },
+      RK: { label: "Rahu Kaal", start: rahuKaalStart, end: rahuKaalEnd, mark: rahuImg },
+    };
+  }
+  console.log(getInauspiciousPeriods(new Date(), sunrise, sunset));
+
+  // Funkcija za provjeru preklapanja intervala
+  const isOverlap = (start1, end1, start2, end2) => {
+    return start1 < end2 && start2 < end1;
+  };
+
+  const renderTablica = (podaci, naslov) => {
+    const inauspicious = getInauspiciousPeriods(new Date(), sunrise, sunset);
+
+    return (
+      <div>
+        <p>{naslov}</p>
+        <table>
+          <tbody>
+            {podaci.map(({ chogh, start, end }, i) => {
+              // Pronađi sve oznake koje se preklapaju s ovim intervalom
+              const marksArr = Object.entries(inauspicious)
+                .filter(([key, { start: s, end: e }]) => isOverlap(start, end, s, e))
+                .map(([key, val]) => val.mark);
+
+              return (
+                <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`}>
+                  <td className='choghadiyaRowFormat'>
+                    {chogh} - {CHOGHADIYA_TYPE[chogh]}{" "}
+                    <small style={{ color: "tomato", paddingInlineStart: "8px" }}>
+                      {marksArr.map((mark, idx) =>
+                        typeof mark === "string" ? (
+                          <span key={idx}>{mark} </span>
+                        ) : (
+                          <span key={idx} style={{ verticalAlign: "middle" }}>
+                            {mark}
+                          </span>
+                        )
+                      )}
+                    </small>
+                  </td>
+                  <td>
+                    {formatTime(start)} – {formatTime(end)}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
 
   if (!sunrise || !sunset) return <p>Loading data ..</p>;
 
