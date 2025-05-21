@@ -41,7 +41,7 @@ export default function Panchang(date, location) {
   // Tithi info objekt - grupe tithija sa specifičnim kvalitetama (phala – plodovima)
   function getTithiInfo(tithiNumber) {
     const tithiNames = [
-      "Prathma",
+      "Pratipat",
       "Dwitiya",
       "Tritiya",
       "Chaturthi",
@@ -59,11 +59,11 @@ export default function Panchang(date, location) {
     ];
 
     const groups = {
-      Nanda: [1, 6, 11],
-      Bhadra: [2, 7, 12],
-      Jaya: [3, 8, 13],
-      Riktha: [4, 9, 14],
-      Poorna: [5, 10, 15, 30], // 30 je Amavasya
+      Nanda: [1, 6, 11, 16, 21, 26],
+      Bhadra: [2, 7, 12, 17, 22, 27],
+      Jaya: [3, 8, 13, 18, 23, 28],
+      Riktha: [4, 9, 14, 19, 24, 29],
+      Poorna: [5, 10, 15, 20, 25, 30],
     };
 
     const meanings = {
@@ -267,73 +267,21 @@ export default function Panchang(date, location) {
 
   // Karana - polovina tithija
   function getKarana() {
-    const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
-    const tithi = Math.ceil(razlikaMoonSun / 12); // 1–30
-    const karanaNames = [
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-      "Bava",
-      "Balava",
-      "Kaulava",
-      "Taitila",
-      "Gara",
-      "Vanija",
-      "Vishti",
-    ]; // 56 ponavljanja
+    const razlikaMoonSun = PairLongitude("Moon", "Sun", new Date(date));
+    const karanaIndex = Math.floor(razlikaMoonSun / 6); // 60 karana u mjesecu
 
-    // Fiksne karane za kraj mjeseca
-    const fixedKaranas = ["Shakuni", "Chatushpada", "Naga", "Kimstughna"];
+    const karanaNames = ["Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti"];
+    const fixedKaranas = ["Kimstughna", "Shakuni", "Chatushpada", "Naga"];
 
-    // Odredi koja je polovina tithija (prva ili druga)
-    const razlomak = (razlikaMoonSun % 12) / 12;
-    const karanaIndex = (tithi - 1) * 2 + (razlomak >= 0.5 ? 1 : 0);
+    if (karanaIndex === 1) return fixedKaranas[0]; // Kimstughna
+    if (karanaIndex >= 2 && karanaIndex <= 57) {
+      return karanaNames[(karanaIndex - 1) % 7];
+    }
+    if (karanaIndex === 58) return fixedKaranas[1]; // Shakuni
+    if (karanaIndex === 59) return fixedKaranas[2]; // Chatushpada
+    if (karanaIndex === 60) return fixedKaranas[3]; // Naga
 
-    if (tithi === 30) return fixedKaranas[0]; // Shakuni
-    if (tithi === 29) return fixedKaranas[1]; // Chatushpada
-    if (tithi === 28) return fixedKaranas[2]; // Naga
-    if (tithi === 15) return fixedKaranas[3]; // Kimstughna
-
-    return karanaNames[karanaIndex % 56];
+    return "Nepoznata karana";
   }
 
   // Dan u tjednu

@@ -199,7 +199,9 @@ const Choghadiya = ({ sunrise, sunset }) => {
             {podaci.map(({ chogh, start, end }, i) => {
               // Pronađi sve oznake koje se preklapaju s ovim intervalom
               const marksArr = Object.entries(inauspicious)
+                // eslint-disable-next-line no-unused-vars
                 .filter(([key, { start: s, end: e }]) => isOverlap(start, end, s, e))
+                // eslint-disable-next-line no-unused-vars
                 .map(([key, val]) => val.mark);
 
               return (
