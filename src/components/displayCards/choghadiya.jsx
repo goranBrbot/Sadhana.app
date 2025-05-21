@@ -172,7 +172,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
     const rahuKaalEnd = new Date(rahuKaalStart.getTime() + oneEighthDay);
 
     // Ikona za Rahu Kaal
-    const rahuImg = <img src='icons/rahu_kalam.svg' style={{ width: 18, height: 18, verticalAlign: "middle" }} alt='Rahu Kaal' />;
+    const rahuImg = <img src='icons/rahu-kalam.png' style={{ float: "right", width: 20, height: 20, paddingTop: 3 }} alt='Rahu Kaal' />;
 
     return {
       VV: { label: "Vaar Vela", start: vaarVelaStart, end: vaarVelaEnd, mark: "VV" },
@@ -206,7 +206,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
               return (
                 <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`}>
-                  <td className='choghadiyaRowFormat'>
+                  <td style={{ width: "50%", textAlign: "left", paddingLeft: 15 }}>
                     {chogh} - {CHOGHADIYA_TYPE[chogh]}{" "}
                     <small style={{ color: "tomato", paddingInlineStart: "8px" }}>
                       {marksArr.map((mark, idx) =>
@@ -220,7 +220,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
                       )}
                     </small>
                   </td>
-                  <td>
+                  <td style={{ width: "40%" }}>
                     {formatTime(start)} – {formatTime(end)}
                   </td>
                 </tr>

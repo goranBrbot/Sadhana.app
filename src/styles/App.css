@@ -299,11 +299,6 @@ tfoot td:last-child {
   mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
 }
 
-.choghadiyaRowFormat {
-  text-align: left;
-  padding-left: 20px;
-}
-
 .aktivniInfo {
   position: absolute;
   top: 42px;
