@@ -4,16 +4,6 @@ import { format, addMinutes } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
-const CHOGHADIYA_MAP = {
-  0: { dan: ["Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg"], noc: ["Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh"] },
-  1: { dan: ["Amrit", "Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit"], noc: ["Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh", "Amrit", "Char"] },
-  2: { dan: ["Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog"], noc: ["Kaal", "Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal"] },
-  3: { dan: ["Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh"], noc: ["Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg"] },
-  4: { dan: ["Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh"], noc: ["Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh", "Amrit"] },
-  5: { dan: ["Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg", "Char"], noc: ["Rog", "Kaal", "Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog"] },
-  6: { dan: ["Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal"], noc: ["Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh"] },
-};
-
 const PLANETARY_MAP = {
   0: {
     // Nedjelja
@@ -52,10 +42,15 @@ const PLANETARY_MAP = {
   },
 };
 
-// Vaar Vela - nedjelja - Amrit, ponedjeljak - Labh, utorak - Udveg, srijeda - Rog, četvrtak - Shubh, petak - Amrit, subota - Labh
-// Kaal Vela is the Kaal Choghadiya or time period ruled by Saturn
-// Kaal Ratri is the Laabh Choghadiya ruled by Mercury
-// Rahu kaal is the inauspicious time period ruled by Rahu
+const CHOGHADIYA_MAP = {
+  0: { dan: ["Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg"], noc: ["Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh"] },
+  1: { dan: ["Amrit", "Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit"], noc: ["Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh", "Amrit", "Char"] },
+  2: { dan: ["Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog"], noc: ["Kaal", "Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal"] },
+  3: { dan: ["Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh"], noc: ["Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg"] },
+  4: { dan: ["Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal", "Shubh"], noc: ["Amrit", "Char", "Rog", "Kaal", "Labh", "Udveg", "Shubh", "Amrit"] },
+  5: { dan: ["Char", "Labh", "Amrit", "Kaal", "Shubh", "Rog", "Udveg", "Char"], noc: ["Rog", "Kaal", "Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog"] },
+  6: { dan: ["Kaal", "Shubh", "Rog", "Udveg", "Char", "Labh", "Amrit", "Kaal"], noc: ["Labh", "Udveg", "Shubh", "Amrit", "Char", "Rog", "Kaal", "Labh"] },
+};
 
 const CHOGHADIYA_TYPE = {
   Amrit: "Best",
@@ -65,6 +60,16 @@ const CHOGHADIYA_TYPE = {
   Rog: "Evil",
   Kaal: "Loss",
   Udveg: "Bad",
+};
+
+const CHOGHADIYA_INFO = {
+  Amrit: "Amrit is time for meditation, mantra chanting (japa), bhakti yoga and prayers.",
+  Shubh: "Shubh is time for teaching/learning, svadhyaya, satsanga, yajnas, and sankalpa-based practices.",
+  Labh: "Labh is time for pranayama, sanskrit recitation/chanting and sattvic communication.",
+  Char: "Char is time for bhajans, kirtan, pilgrimage, and walking meditations.",
+  Rog: "Rog is time for dynamic asanas, physical cleansing, and mental strength-building.",
+  Kaal: "Kaal is time for long fasting, self-reflection, difficult tapasya, and renunciation practices.",
+  Udveg: "Udveg is time for seva, leadership roles in sangha, or confronting ego through disciplined practice.",
 };
 
 const Choghadiya = ({ sunrise, sunset }) => {
@@ -124,6 +129,11 @@ const Choghadiya = ({ sunrise, sunset }) => {
   const sada = new Date();
   const formatTime = (date) => date.toTimeString().slice(0, 5);
   const stilReda = (tip) => (["Rog", "Kaal", "Udveg"].includes(tip) ? "nepovoljno" : "povoljno");
+
+  // Vaar Vela - nedjelja - Amrit, ponedjeljak - Labh, utorak - Udveg, srijeda - Rog, četvrtak - Shubh, petak - Amrit, subota - Labh
+  // Kaal Vela is the Kaal Choghadiya or time period ruled by Saturn
+  // Kaal Ratri is the Laabh Choghadiya ruled by Mercury
+  // Rahu kaal is the inauspicious time period ruled by Rahu
 
   function getInauspiciousPeriods(date, sunrise, sunset) {
     const dayOfWeek = date.getDay(); // 0 = nedjelja, 1 = ponedjeljak, ...
@@ -256,13 +266,12 @@ const Choghadiya = ({ sunrise, sunset }) => {
           )}
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <span>
+          <p>
             Brahma Muhurta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
-          </span>
-          <br />
-          <br />
-          {renderTablica(dnevnaTablica, "Choghadiya table from sunrise to sunset.")} <br />
-          {renderTablica(nocnaTablica, "Choghadiya table from sunset to sunrise.")}
+          </p>
+          <p>{CHOGHADIYA_INFO[aktivnaChoghadiya]}</p>
+          {renderTablica(dnevnaTablica, "Day choghadiya is from sunrise to sunset.")} <br />
+          {renderTablica(nocnaTablica, "Night choghadiya is from sunset to sunrise.")}
         </div>
       </div>
     </motion.div>
