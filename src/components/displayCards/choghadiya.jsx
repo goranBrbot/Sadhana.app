@@ -148,7 +148,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
       "Labh", // Subota
     ];
     const vaarVelaType = vaarVelaTypeMap[dayOfWeek];
-    const vaarVelaIdx = CHOGHADIYA_MAP[dayOfWeek].dan.findIndex((tip) => tip === vaarVelaType);
+    const vaarVelaIdx = CHOGHADIYA_MAP[dayOfWeek].dan.findLastIndex((tip) => tip === vaarVelaType);
     const vaarVelaStart = new Date(sunrise.getTime() + oneEighthDay * vaarVelaIdx);
     const vaarVelaEnd = new Date(vaarVelaStart.getTime() + oneEighthDay);
 
