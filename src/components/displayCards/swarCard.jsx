@@ -142,6 +142,9 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
           <img className='iconSwar' src='/backgrounds/gurudev.png' alt='Gurudev' />
         </div>
         <div className='container'>
+          <div>
+            <p>{idaDays.includes(tithiDay) ? `Left nostril active.` : pingalaDays.includes(tithiDay) ? `Right nostril active.` : "Swara"}</p>
+          </div>
           <ul>
             {idaVremena.map((item, index) => (
               <li key={index}>{`${item.sequence} at ${format(item.start, "kk:mm'h'")} - ${format(item.end, "kk:mm'h'")}`}</li>
@@ -154,7 +157,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
           </ul>
           {remainingTime && (
             <span>
-              Change for {remainingTime.hours}h {remainingTime.minutes}min
+              Changes for {remainingTime.hours}:{remainingTime.minutes}min
             </span>
           )}
         </div>
