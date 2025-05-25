@@ -63,13 +63,100 @@ const CHOGHADIYA_TYPE = {
 };
 
 const CHOGHADIYA_INFO = {
-  Amrit: "Amrit is time for meditation, mantra chanting (japa), bhakti yoga and prayers.",
-  Shubh: "Shubh is time for teaching/learning, svadhyaya, satsanga, yajnas, and sankalpa-based practices.",
-  Labh: "Labh is time for pranayama, sanskrit recitation/chanting and sattvic communication.",
-  Char: "Char is time for bhajans, kirtan, pilgrimage, and walking meditations.",
-  Rog: "Rog is time for dynamic asanas, physical cleansing, and mental strength-building.",
-  Kaal: "Kaal is time for long fasting, self-reflection, difficult tapasya, and renunciation practices.",
-  Udveg: "Udveg is time for seva, leadership roles in sangha, or confronting ego through disciplined practice.",
+  Amrit: {
+    ruler: "Chandra (Moon)",
+    rulerIcon: "☽",
+    guna: "Sattva",
+    title: "Amrit Choghadiya - Nectar",
+    description: "Best time for bhakti yoga, japa and meditation.",
+    quote: [
+      "God's Light is in every creature. To love and serve them is to love and serve God.",
+      "The perfect awakening of Self-realization takes place through love.",
+      "Love every living being at least as much as yourself.",
+      "Love God with a pure heart.",
+    ],
+  },
+  Shubh: {
+    ruler: "Guru (Jupiter)",
+    rulerIcon: "♃",
+    guna: "Sattva",
+    title: "Shubh Choghadiya - Auspicious",
+    description: "Best time for svadhyaya, satya and satsang.",
+    quote: [
+      "Always hold onto the Truth. Keep your word even if it costs your life.",
+      "Learn to control your desires. Do not abandon yourself to dependence on your senses.",
+      "Everyone has good and bad habits. Do not see the bad in others, rather discover their virtues and emulate them. Learn good from everyone and everything.",
+      "Do not praise yourself. Others may praise you but your greatness lies in modesty.",
+    ],
+  },
+  Labh: {
+    ruler: "Budha (Mercury)",
+    rulerIcon: "☿",
+    guna: "Sattva",
+    title: "Labh Choghadiya - Profitable",
+    description: "Best time for pranayama, chanting of mantras and tapasya.",
+    quote: [
+      "The success of your actions lies within the strength of your inner conviction and self-discipline. Do not lose your courage and never give up.",
+      "Outer purity alone is not enough. Pure consciousness needs both inner and outer purity.",
+      "Do not give up what you have already started. There will always be obstacles in the way, just like roses always have thorns. Remove those obstacles with self-confidence and by God's grace your path will lead you to the goal.",
+      "Whatever you plan to do, do it with firm determination and your success will be assured.",
+    ],
+  },
+  Char: {
+    ruler: "Shukra (Venus)",
+    rulerIcon: "♀",
+    guna: "Rajas",
+    title: "Char Choghadiya - Moving",
+    description: "Best time for seva, karma yoga, bhajans, and pilgrimage.",
+    quote: [
+      "The success of your actions lies within the strength of your inner conviction and self-discipline. Do not lose your courage and never give up.",
+      "Respect everyone equally. Always be ready to help. Without doing good, without right action, life lacks meaning.",
+      "Worldly things unnecessarily accumulated only become burdens and will bring sorrow. Material wealth is transient. Lakshmi, the Goddess of wealth, dislikes to be captured. The best possessions to handle are devotion, service and benefaction.",
+      "If one wears the robe of an order and turns away from worldly life, yet is still not purified within and adheres not to right action, then their renunciation is meaningless.",
+      "Avoid unnecessary quarrels and avoid bad company. Keep away from hazards. Associate with good and wise people.",
+    ],
+  },
+  Rog: {
+    ruler: "Mangala (Mars)",
+    rulerIcon: "♂",
+    guna: "Tamas",
+    title: "Rog Choghadiya - Disease",
+    description: "Best time for asanas, shatkarmas, and vairagya development.",
+    quote: [
+      "Rise before sunrise and practise your spiritual exercises. Their benefits will accompany you the whole day.",
+      "Be moderate with eating, as excessive craving for pleasure leads to laziness and disease.",
+      "Learn to control your desires. Do not abandon yourself to dependence on your senses.",
+      "Lethargy is one of your greatest enemies. Without effort you will not reach your aim. So give up your laziness.",
+    ],
+  },
+  Kaal: {
+    ruler: "Shani (Saturn)",
+    rulerIcon: "♄",
+    guna: "Tamas",
+    title: "Kal Choghadiya - Time|Death",
+    description: "Best time for mauna, pratyahara, upavasa.",
+    quote: [
+      "Avoid words which you may later regret. Do nothing that will give away your principles, cause loss of self respect or sow the seeds of discord.",
+      "When the waves are high one should not dive for pearls.",
+      "Avoid places where you are not welcome.",
+      "Your words and deeds should equal each other.",
+      "Only pass on what is important. Hollow talk and gossip is lost time.",
+    ],
+  },
+  Udveg: {
+    ruler: "Surya (Sun)",
+    rulerIcon: "☉",
+    guna: "Rajas",
+    title: "Udveg Choghadiya - Anxiety",
+    description: "Best time for seva, leadership roles in sangha, or confronting ego through disciplined practice.",
+    quote: [
+      "First impressions should never be the basis for your decisions. Wait until you have obtained further knowledge and in this way you will avoid unnecessary disappointments.",
+      "Treat others as you wish they should treat you. You will get back everything that you give.",
+      "Do not be dependent upon others. Stand on your own feet. Trust in your abilities and God will help you.",
+      "Debts between friends not settled in time jeopardise the friendship. Give with an open heart, but weigh exactly what to do.",
+      "Do not make enemies through thoughtless mistakes. Do not constantly complain about your problems.",
+    ],
+  },
 };
 
 const Choghadiya = ({ sunrise, sunset }) => {
@@ -83,28 +170,19 @@ const Choghadiya = ({ sunrise, sunset }) => {
   useEffect(() => {
     if (!sunrise || !sunset) return;
 
-    console.log("Sunrise:", sunrise);
-    console.log("Sunset:", sunset);
+    const sada = new Date();
+    // Ako je trenutno vrijeme prije izlaska sunca, koristi jučerašnji dan
+    const referentniDatum = sada < sunrise ? addDays(sunrise, -1) : sunrise;
+    const dayIdx = getDay(referentniDatum);
 
     const startDay = sunrise; // Početak dnevnog intervala
     const endDay = sunset; // Kraj dnevnog intervala
-
     const startNight = sunset; // Početak noćnog intervala
     const endNight = addDays(sunrise, 1); // Kraj noćnog intervala (sunrise sljedećeg dana)
-
-    console.log("Sunrise:", startDay);
-    console.log("Sunset:", endDay);
-    console.log("Start Night:", startNight);
-    console.log("End Night:", endNight);
 
     const generirajIntervale = (startDate, endDate, niz) => {
       const ukupnoTrajanje = differenceInMilliseconds(endDate, startDate);
       const trajanjeSegmenta = ukupnoTrajanje / 8;
-
-      console.log("Start Date:", startDate);
-      console.log("End Date:", endDate);
-      console.log("Ukupno Trajanje (ms):", ukupnoTrajanje);
-      console.log("Trajanje Segmenta (ms):", trajanjeSegmenta);
 
       return niz.map((chogh, i) => {
         const start = addMilliseconds(startDate, i * trajanjeSegmenta);
@@ -113,16 +191,14 @@ const Choghadiya = ({ sunrise, sunset }) => {
       });
     };
 
-    const dnevniRaspored = generirajIntervale(startDay, endDay, CHOGHADIYA_MAP[getDay(new Date())].dan);
-    const nocniRaspored = generirajIntervale(startNight, endNight, CHOGHADIYA_MAP[getDay(new Date())].noc);
+    const dnevniRaspored = generirajIntervale(startDay, endDay, CHOGHADIYA_MAP[dayIdx].dan);
+    const nocniRaspored = generirajIntervale(startNight, endNight, CHOGHADIYA_MAP[dayIdx].noc);
 
     setDnevnaTablica(dnevniRaspored);
     setNocnaTablica(nocniRaspored);
 
     // Pronađi aktivnu Choghadiya
-    const sada = new Date();
     const aktivna = dnevniRaspored.concat(nocniRaspored).find(({ start, end }) => sada >= start && sada < end) || null;
-
     setAktivnaChoghadiya(aktivna ? aktivna.chogh : null);
   }, [sunrise, sunset]);
 
@@ -147,7 +223,6 @@ const Choghadiya = ({ sunrise, sunset }) => {
     const oneEighthNight = nightDurationMs / 8;
 
     // Vaar Vela tipovi po danima
-    // Pronađi indeks segmenta u CHOGHADIYA_MAP koji odgovara vaarVelaType
     const vaarVelaTypeMap = [
       "Amrit", // Nedjelja
       "Labh", // Ponedjeljak
@@ -164,15 +239,23 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
     // Kaal Vela: segment dana gdje je vladar "Saturn"
     const planetaryDay = PLANETARY_MAP[dayOfWeek].dan;
-    const kaalVelaIdx = planetaryDay.findIndex((planet) => planet === "Saturn");
-    const kaalVelaStart = new Date(sunrise.getTime() + oneEighthDay * kaalVelaIdx);
-    const kaalVelaEnd = new Date(kaalVelaStart.getTime() + oneEighthDay);
+    const kaalVelaIndices = planetaryDay.map((planet, idx) => (planet === "Saturn" ? idx : -1)).filter((idx) => idx !== -1);
+    const kaalVelaSegments = kaalVelaIndices.map((idx) => ({
+      label: "Kaal Vela",
+      start: new Date(sunrise.getTime() + oneEighthDay * idx),
+      end: new Date(sunrise.getTime() + oneEighthDay * (idx + 1)),
+      mark: "KV",
+    }));
 
     // Kaal Ratri: segment noći gdje je vladar "Merkur"
     const planetaryNight = PLANETARY_MAP[dayOfWeek].noc;
-    const kaalRatriIdx = planetaryNight.findIndex((planet) => planet === "Merkur");
-    const kaalRatriStart = new Date(sunset.getTime() + oneEighthNight * kaalRatriIdx);
-    const kaalRatriEnd = new Date(kaalRatriStart.getTime() + oneEighthNight);
+    const kaalRatriIdx = planetaryNight.map((planet, idx) => (planet === "Merkur" ? idx : -1)).filter((idx) => idx !== -1);
+    const kaalRatriSegments = kaalRatriIdx.map((idx) => ({
+      label: "Kaal Ratri",
+      start: new Date(sunset.getTime() + oneEighthNight * idx),
+      end: new Date(sunset.getTime() + oneEighthNight * (idx + 1)),
+      mark: "KR",
+    }));
 
     // Rahu Kaal indeks po danima (0 = nedjelja, 1 = ponedjeljak, ...)
     const rahuKaalSegmentArr = [8, 2, 7, 5, 6, 4, 3];
@@ -180,14 +263,12 @@ const Choghadiya = ({ sunrise, sunset }) => {
     const rahuKaalIdx = rahuKaalSegment - 1; // pretvori u 0-based indeks
     const rahuKaalStart = new Date(sunrise.getTime() + oneEighthDay * rahuKaalIdx);
     const rahuKaalEnd = new Date(rahuKaalStart.getTime() + oneEighthDay);
-
-    // Ikona za Rahu Kaal
     const rahuImg = <img src='icons/rahu-kalam.png' style={{ float: "right", width: 20, height: 20, paddingTop: 3 }} alt='Rahu Kaal' />;
 
     return {
       VV: { label: "Vaar Vela", start: vaarVelaStart, end: vaarVelaEnd, mark: "VV" },
-      KV: { label: "Kaal Vela", start: kaalVelaStart, end: kaalVelaEnd, mark: "KV" },
-      KR: { label: "Kaal Ratri", start: kaalRatriStart, end: kaalRatriEnd, mark: "KR" },
+      KV: kaalVelaSegments, // Vraćamo više segmenata za Kaal Vela
+      KR: kaalRatriSegments, // Vraćamo više segmenata za Kaal Ratri
       RK: { label: "Rahu Kaal", start: rahuKaalStart, end: rahuKaalEnd, mark: rahuImg },
     };
   }
@@ -203,16 +284,27 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
     return (
       <div>
-        <p>{naslov}</p>
         <table>
           <tbody>
+            <tr>
+              <td colSpan={2} className='choghadiyaTableHeader'>
+                {naslov}
+              </td>
+            </tr>
+
             {podaci.map(({ chogh, start, end }, i) => {
               // Pronađi sve oznake koje se preklapaju s ovim intervalom
-              const marksArr = Object.entries(inauspicious)
-                // eslint-disable-next-line no-unused-vars
-                .filter(([key, { start: s, end: e }]) => isOverlap(start, end, s, e))
-                // eslint-disable-next-line no-unused-vars
-                .map(([key, val]) => val.mark);
+              // eslint-disable-next-line no-unused-vars
+              const marksArr = Object.entries(inauspicious).flatMap(([key, val]) => {
+                if (Array.isArray(val)) {
+                  // Ako je niz (npr. KV), provjeri svaki segment
+                  return val.filter(({ start: s, end: e }) => isOverlap(start, end, s, e)).map((seg) => seg.mark);
+                } else if (val && typeof val === "object" && "start" in val && "end" in val) {
+                  // Ako je objekt s start/end
+                  return isOverlap(start, end, val.start, val.end) ? [val.mark] : [];
+                }
+                return [];
+              });
 
               return (
                 <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`}>
@@ -249,6 +341,11 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
   console.log("Choghadiya data:", { dnevnaTablica, nocnaTablica });
 
+  function getRandomQuote(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return "";
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -269,9 +366,23 @@ const Choghadiya = ({ sunrise, sunset }) => {
           <p>
             Brahma Muhurta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
           </p>
-          <p>{CHOGHADIYA_INFO[aktivnaChoghadiya]}</p>
-          {renderTablica(dnevnaTablica, "Day choghadiya is from sunrise to sunset.")} <br />
-          {renderTablica(nocnaTablica, "Night choghadiya is from sunset to sunrise.")}
+          {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
+            <div>
+              <h4>
+                {CHOGHADIYA_INFO[aktivnaChoghadiya].title}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
+              </h4>
+              <span>
+                Influenced by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}.
+              </span>
+              <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p>
+              {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")}
+              <blockquote>
+                &quot;{getRandomQuote(CHOGHADIYA_INFO[aktivnaChoghadiya].quote)}&quot;
+                <cite>- Mahaprabhuji</cite>
+              </blockquote>
+              {renderTablica(nocnaTablica, "NIGHT CHOGHADIYA")}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
