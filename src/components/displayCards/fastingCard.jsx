@@ -130,7 +130,7 @@ export default function FastingCard({ sunrise }) {
         <div className='topBar' style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
-          <small className='dayFast'>
+          <small className='aktivniInfo'>
             {daysOfWeek.map((day, index) => (
               <span
                 key={day}
