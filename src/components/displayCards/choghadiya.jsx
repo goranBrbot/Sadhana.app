@@ -167,11 +167,10 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
   const toggleContainer = () => setContainerVisible(!containerVisible);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!sunrise || !sunset) return;
 
     const sada = new Date();
-    // Ako je trenutno vrijeme prije izlaska sunca, koristi jučerašnji dan
     const referentniDatum = sada < sunrise ? addDays(sunrise, -1) : sunrise;
     const dayIdx = getDay(referentniDatum);
 
@@ -200,6 +199,45 @@ const Choghadiya = ({ sunrise, sunset }) => {
     // Pronađi aktivnu Choghadiya
     const aktivna = dnevniRaspored.concat(nocniRaspored).find(({ start, end }) => sada >= start && sada < end) || null;
     setAktivnaChoghadiya(aktivna ? aktivna.chogh : null);
+  }, [sunrise, sunset]); */
+
+  useEffect(() => {
+    if (!sunrise || !sunset) return;
+
+    const izracunajChoghadiya = () => {
+      // Ako je trenutno vrijeme prije izlaska sunca, koristi jučerašnji dan
+      const sada = new Date();
+      const referentniDatum = sada < sunrise ? addDays(sunrise, -1) : sunrise;
+      const dayIdx = getDay(referentniDatum);
+
+      const startDay = sunrise;
+      const endDay = sunset;
+      const startNight = sunset;
+      const endNight = addDays(sunrise, 1);
+
+      const generirajIntervale = (startDate, endDate, niz) => {
+        const ukupnoTrajanje = differenceInMilliseconds(endDate, startDate);
+        const trajanjeSegmenta = ukupnoTrajanje / 8;
+        return niz.map((chogh, i) => {
+          const start = addMilliseconds(startDate, i * trajanjeSegmenta);
+          const end = addMilliseconds(start, trajanjeSegmenta);
+          return { chogh, start, end };
+        });
+      };
+
+      const dnevniRaspored = generirajIntervale(startDay, endDay, CHOGHADIYA_MAP[dayIdx].dan);
+      const nocniRaspored = generirajIntervale(startNight, endNight, CHOGHADIYA_MAP[dayIdx].noc);
+
+      setDnevnaTablica(dnevniRaspored);
+      setNocnaTablica(nocniRaspored);
+
+      const aktivna = dnevniRaspored.concat(nocniRaspored).find(({ start, end }) => sada >= start && sada < end) || null;
+      setAktivnaChoghadiya(aktivna ? aktivna.chogh : null);
+    };
+
+    izracunajChoghadiya();
+    const interval = setInterval(izracunajChoghadiya, 60 * 1000); // 1 minuta
+    return () => clearInterval(interval);
   }, [sunrise, sunset]);
 
   const sada = new Date();
@@ -212,7 +250,9 @@ const Choghadiya = ({ sunrise, sunset }) => {
   // Rahu kaal is the inauspicious time period ruled by Rahu
 
   function getInauspiciousPeriods(date, sunrise, sunset) {
-    const dayOfWeek = date.getDay(); // 0 = nedjelja, 1 = ponedjeljak, ...
+    // Ako je trenutno vrijeme prije izlaska sunca, koristi jučerašnji dan
+    const referentniDatum = date < sunrise ? addDays(sunrise, -1) : sunrise;
+    const dayOfWeek = getDay(referentniDatum); // 0 = nedjelja, 1 = ponedjeljak, ...
     const msPerMinute = 60000;
     const msPerHour = 60 * msPerMinute;
 

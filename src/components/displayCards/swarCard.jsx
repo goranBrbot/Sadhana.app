@@ -47,6 +47,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     return { hours, minutes };
   };
+  const twoDigits = new Intl.NumberFormat("en-US", { minimumIntegerDigits: 2 }).format;
 
   useEffect(() => {
     if (idaDays.includes(tithiDay)) {
@@ -100,34 +101,17 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
   }, [idaVremena, pingalaVremena, sunrise]); */
 
   useEffect(() => {
-    if (idaVremena.length > 0 || pingalaVremena.length > 0) {
-      const sada = new Date();
-      let firstInterval = idaVremena[0] || pingalaVremena[0];
-      let nextChangeTime;
-
-      if (firstInterval && sada < firstInterval.end) {
-        nextChangeTime = firstInterval.end;
-      } else {
-        // Ako je prošao prvi interval, odbrojavaj do sljedećeg izlaska sunca
-        nextChangeTime = add(sunrise, { hours: 24 });
-      }
-
-      setRemainingTime(calculateRemainingTime(sada, nextChangeTime));
-
-      const interval = setInterval(() => {
-        const now = new Date();
-        let changeTime;
-        if (firstInterval && now < firstInterval.end) {
-          changeTime = firstInterval.end;
-        } else {
-          changeTime = add(sunrise, { hours: 24 });
-        }
-        setRemainingTime(calculateRemainingTime(now, changeTime));
-      }, 1000);
-
+    if (sunrise) {
+      const nextSunrise = add(sunrise, { hours: 24 });
+      const updateRemaining = () => {
+        const sada = new Date();
+        setRemainingTime(calculateRemainingTime(sada, nextSunrise));
+      };
+      updateRemaining();
+      const interval = setInterval(updateRemaining, 60 * 1000);
       return () => clearInterval(interval);
     }
-  }, [idaVremena, pingalaVremena, sunrise]);
+  }, [sunrise]);
 
   return (
     <motion.div
@@ -157,7 +141,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
           </ul>
           {remainingTime && (
             <span>
-              Changes for {remainingTime.hours}:{remainingTime.minutes}min
+              Changes for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
             </span>
           )}
         </div>
