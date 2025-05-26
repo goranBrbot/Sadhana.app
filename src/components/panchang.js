@@ -268,14 +268,16 @@ export default function Panchang(date, location) {
   // Karana - polovina tithija
   function getKarana() {
     const razlikaMoonSun = PairLongitude("Moon", "Sun", new Date(date));
-    const karanaIndex = Math.floor(razlikaMoonSun / 6); // 60 karana u mjesecu
+    console.log(date, razlikaMoonSun);
+
+    const karanaIndex = Math.ceil(razlikaMoonSun / 6); // 60 karana u mjesecu - Math.ceil prebacuje na početak karane a floor na kraj
 
     const karanaNames = ["Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti"];
     const fixedKaranas = ["Kimstughna", "Shakuni", "Chatushpada", "Naga"];
 
     if (karanaIndex === 1) return fixedKaranas[0]; // Kimstughna
     if (karanaIndex >= 2 && karanaIndex <= 57) {
-      return karanaNames[(karanaIndex - 1) % 7];
+      return karanaNames[(karanaIndex - 2) % 7];
     }
     if (karanaIndex === 58) return fixedKaranas[1]; // Shakuni
     if (karanaIndex === 59) return fixedKaranas[2]; // Chatushpada
