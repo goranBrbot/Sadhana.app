@@ -136,7 +136,7 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <p>{vedicTime}</p> */}
           <div>
             <div>
-              <p>Purnimanta Panchanga</p>
+              <h4>Purnimanta Panchanga</h4>
               <span>Tithi: {panchangData.TithiInfo.tithiName}</span>
               <br /> {/* lunar day */}
               <span>Nakshatra: {panchangData.Nakshatra}</span>

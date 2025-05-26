@@ -35,6 +35,21 @@
   /* For mobile phones: */
   body {
     height: auto;
+    padding: 1em 0;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  /* For tablets and larger screens: */
+  body {
+    background-image: url("/backgrounds/appBack.jpg");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center; /* vertikalno centriranje */
+    padding: 0;
   }
 }
 
@@ -93,7 +108,6 @@ body {
   -ms-flex-align: center;
   align-items: center;
   margin: 0;
-  padding: 1em 0;
   overflow: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
