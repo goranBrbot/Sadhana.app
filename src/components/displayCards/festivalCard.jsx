@@ -195,9 +195,9 @@ export default function FestivalCard({ location, tithiDay }) {
   const favorability = getPanchangChart(panchangData);
 
   const getColor = (value) => {
-    if (value === 1) return "rgba(137, 174, 82, 0.5)"; // povoljno - zeleno
-    if (value === 0) return "rgba(88, 88, 88, 0.5)"; // neutralno - žuto
-    if (value === -1) return "rgba(253, 81, 33, 0.5)"; // nepovoljno - crveno
+    if (value === 1) return "rgba(137, 174, 82, 0.3)"; // povoljno - zeleno
+    if (value === 0) return "rgba(88, 88, 88, 0.3)"; // neutralno - žuto
+    if (value === -1) return "rgba(253, 81, 33, 0.3)"; // nepovoljno - crveno
     return "#fff"; // fallback
   };
 
@@ -372,16 +372,16 @@ export default function FestivalCard({ location, tithiDay }) {
                   })}
                 </defs>
                 {/* Graničnici */}
-                {/*                 {panchangLabels.map((_, i) => {
+                {panchangLabels.map((_, i) => {
                   const angle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
                   const x = 65 + 65 * Math.cos(angle);
                   const y = 65 + 65 * Math.sin(angle);
-                  return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='1' strokeDasharray='1' />;
+                  return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='2' strokeDasharray='2' />;
                 })}
- */}{" "}
+
                 {/* Tekst po kružnici */}
                 {panchangLabels.map((label, i) => (
-                  <text key={label} fontSize='9' fontWeight='bold' fill='#a68950' textAnchor='middle' dominantBaseline='middle'>
+                  <text key={label} fontSize='8' fontWeight='bold' fill='rgba(88, 88, 88, 0.5)' textAnchor='middle' dominantBaseline='middle'>
                     <textPath href={`#arc-path-${i}`} startOffset='50%' alignmentBaseline='middle'>
                       {label}
                     </textPath>
