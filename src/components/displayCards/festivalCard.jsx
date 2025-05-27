@@ -174,9 +174,9 @@ export default function FestivalCard({ location, tithiDay }) {
     };
 
     const varFavorability = {
-      Ravivar: -1,
+      Ravivar: 0,
       Somvar: 1,
-      Mangalavara: -1,
+      Mangalavara: 0,
       Budhvar: 1,
       Guruvar: 1,
       Sukarman: 1,
@@ -332,6 +332,21 @@ export default function FestivalCard({ location, tithiDay }) {
                   pointerEvents: "none",
                 }}>
                 <PolarArea data={polarData} options={polarOptions} />
+                {/* Transparentni krug u sredini */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "42.5px",
+                    left: "42.5px",
+                    width: "25px",
+                    height: "25px",
+                    borderRadius: "50%",
+                    background: "rgb(255,255,255)",
+                    zIndex: 10,
+                    pointerEvents: "none",
+                    boxShadow: "0 0 8px 2px rgba(255,255,255,0.7) inset",
+                  }}
+                />
               </div>
               {/* Svi graničnici u jednom SVG-u */}
               <svg
