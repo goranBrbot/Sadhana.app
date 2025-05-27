@@ -3,6 +3,9 @@ import { parse, isToday, isAfter, isWithinInterval, differenceInMilliseconds } f
 import { PropTypes } from "prop-types";
 import Panchang from "../panchang";
 import { motion } from "framer-motion";
+import { PolarArea, Doughnut } from "react-chartjs-2";
+import { Chart, RadialLinearScale, ArcElement, Tooltip, Legend } from "chart.js";
+Chart.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 //import GregorianToVedicTime from "../vedicTime";
 //import FindGregorianDateFromVedic from "../vedicToGregorian";
 
@@ -122,6 +125,164 @@ export default function FestivalCard({ location, tithiDay }) {
     return <img className='iconMoon' src={`icons/moon/${validTithiDay}.png`} alt={`Moon phase for Tithi ${validTithiDay}`} />;
   }
 
+  function getPanchangChart(panchangData) {
+    // Primjeri povoljnosti (prilagodi prema stvarnim pravilima)
+    const tithiFavorability = {
+      Pratipat: 1,
+      Dvitiya: 1,
+      Tritiya: 1,
+      Chaturthi: -1,
+      Panchami: 1,
+      Shashthi: 1,
+      Saptami: 1,
+      Ashtami: -1,
+      Navami: -1,
+      Dashami: 1,
+      Ekadashi: 1,
+      Dwadashi: 1,
+      Trayodashi: 1,
+      Chaturdashi: -1,
+      Purnima: 1,
+      Amavasya: -1, // Dodaj sve tithije prema potrebi
+    };
+
+    const nakshatraFavorability = {
+      Ashwini: 1,
+      Bharani: 1,
+      Krittika: -1,
+      Rohini: -1, // Dodaj sve nakshatre
+    };
+
+    const yogaFavorability = {
+      Vishkambha: 1,
+      Priti: 1,
+      Ayushman: 1,
+      Saubhagya: 1,
+      Shobhana: 1,
+      // Dodaj sve yoge
+    };
+
+    const karanaFavorability = {
+      Bava: 1,
+      Balava: 1,
+      Kaulava: 1,
+      Taitila: 1,
+      Garaja: 1,
+      Vanija: 1,
+      Vishti: -1,
+      // Dodaj sve karane
+    };
+
+    const varFavorability = {
+      Ravivar: -1,
+      Somvar: 1,
+      Mangalavara: -1,
+      Budhvar: 1,
+      Guruvar: 1,
+      Sukarman: 1,
+      Shanivar: -1,
+    };
+
+    return {
+      Tithi: tithiFavorability[panchangData.TithiInfo.tithiName] ?? 0,
+      Nakshatra: nakshatraFavorability[panchangData.Nakshatra] ?? 0,
+      Yoga: yogaFavorability[panchangData.Yoga] ?? 0,
+      Karana: karanaFavorability[panchangData.Karana] ?? 0,
+      Var: varFavorability[panchangData.Var] ?? 0,
+    };
+  }
+
+  const favorability = getPanchangChart(panchangData);
+
+  const getColor = (value) => {
+    if (value === 1) return "rgba(137, 174, 82, 0.5)"; // povoljno - zeleno
+    if (value === 0) return "rgba(88, 88, 88, 0.5)"; // neutralno - žuto
+    if (value === -1) return "rgba(253, 81, 33, 0.5)"; // nepovoljno - crveno
+    return "#fff"; // fallback
+  };
+
+  // Mapiranje povoljnosti na prikazivu vrijednost
+  const mapFavorability = (value) => {
+    if (value === 1) return 1; // povoljno - puni radijus
+    if (value === 0) return 0.66; // neutralno - srednji radijus
+    if (value === -1) return 0.33; // nepovoljno - mali radijus
+    return 0.1; // fallback
+  };
+
+  const polarData = {
+    labels: ["Tithi", "Nakshatra", "Yoga", "Karana", "Vara"],
+    datasets: [
+      {
+        label: "Panchang Chart",
+        data: [
+          mapFavorability(favorability.Tithi),
+          mapFavorability(favorability.Nakshatra),
+          mapFavorability(favorability.Yoga),
+          mapFavorability(favorability.Karana),
+          mapFavorability(favorability.Var),
+        ],
+        borderWidth: 0,
+        borderColor: "#fff",
+        backgroundColor: [getColor(favorability.Tithi), getColor(favorability.Nakshatra), getColor(favorability.Yoga), getColor(favorability.Karana), getColor(favorability.Var)],
+      },
+    ],
+  };
+
+  const polarOptions = {
+    scales: {
+      r: {
+        min: 0,
+        max: 1,
+        ticks: {
+          display: false, // <--- OVO SAKRIVA NUMERACIJU I VERTIKALU
+          stepSize: 0.33,
+          callback: (value) => (value === 1 ? "" : value === 0.66 ? "" : value === 0.33 ? "" : ""),
+        },
+        grid: {
+          color: "#fff", // boja kružnih linija (grid circles)
+          lineWidth: 0, // debljina kružnih linija
+          circular: true, // koristi kružne linije (ne poligonalne)
+        },
+        angleLines: {
+          color: "#fff", // boja radijalnih linija (angle lines)
+          lineWidth: 0, // debljina radijalnih linija
+          borderDash: [4, 2], // crtkanje (npr. [4,2] za isprekidano, [] za puno)
+        },
+        pointLabels: {
+          color: "#fff", // boja labela na rubu
+          font: { size: 10, weight: "bold" },
+        },
+      },
+    },
+    plugins: {
+      legend: { display: false },
+    },
+    animation: false,
+  };
+
+  const doughnutData = {
+    labels: ["Tithi", "Nakshatra", "Yoga", "Karana", "Vara"],
+    datasets: [
+      {
+        data: [1, 1, 1, 1, 1],
+        backgroundColor: ["#ffffff00", "#ffffff00", "#ffffff00", "#ffffff00", "#ffffff00"],
+        borderColor: "#fff",
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const doughnutOptions = {
+    cutout: "74%",
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: false },
+    },
+    animation: false,
+  };
+
+  const panchangLabels = ["TITHI", "NAKSHATRA", "YOGA", "KARANA", "VARA"];
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
@@ -148,6 +309,87 @@ export default function FestivalCard({ location, tithiDay }) {
               <span>Vara: {panchangData.Var}</span>
               <br /> {/* day of the week */}
             </div>
+            <div className='panchangChart' style={{ width: "130px", height: "130px" }}>
+              {/* Doughnut kao tanki prsten */}
+              <Doughnut
+                data={doughnutData}
+                options={doughnutOptions}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "130px",
+                  height: "130px",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                }}
+              />
+              {/* PolarArea u sredini */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  left: "10px",
+                  width: "110px",
+                  height: "110px",
+                  zIndex: 2,
+                  pointerEvents: "none",
+                }}>
+                <PolarArea data={polarData} options={polarOptions} />
+              </div>
+              {/* Svi graničnici u jednom SVG-u */}
+              <svg
+                width='130'
+                height='130'
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  pointerEvents: "none",
+                  zIndex: 4,
+                }}>
+                <defs>
+                  {panchangLabels.map((label, i) => {
+                    // Parametri kružnice
+                    const r = 48; // polumjer za tekst (unutar donata)
+                    const cx = 65;
+                    const cy = 65;
+                    // Kutovi za segment
+                    const startAngle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
+                    const endAngle = ((i + 1) / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
+                    // Početna i završna točka luka
+                    const x1 = cx + r * Math.cos(startAngle);
+                    const y1 = cy + r * Math.sin(startAngle);
+                    const x2 = cx + r * Math.cos(endAngle);
+                    const y2 = cy + r * Math.sin(endAngle);
+                    // Veliki luk (always 0 jer je <180deg)
+                    const largeArcFlag = 0;
+                    // Sweep flag (1 = "naprijed")
+                    const sweepFlag = 1;
+                    // Jedinstveni ID za svaki path
+                    const pathId = `arc-path-${i}`;
+                    return <path key={pathId} id={pathId} d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} ${sweepFlag} ${x2} ${y2}`} fill='none' />;
+                  })}
+                </defs>
+                {/* Graničnici */}
+                {/*                 {panchangLabels.map((_, i) => {
+                  const angle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
+                  const x = 65 + 65 * Math.cos(angle);
+                  const y = 65 + 65 * Math.sin(angle);
+                  return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='1' strokeDasharray='1' />;
+                })}
+ */}{" "}
+                {/* Tekst po kružnici */}
+                {panchangLabels.map((label, i) => (
+                  <text key={label} fontSize='9' fontWeight='bold' fill='#a68950' textAnchor='middle' dominantBaseline='middle'>
+                    <textPath href={`#arc-path-${i}`} startOffset='50%' alignmentBaseline='middle'>
+                      {label}
+                    </textPath>
+                  </text>
+                ))}
+              </svg>
+            </div>
+
             <div className='moonPhase'>
               <div>{getTithiMoonImage(tithiDay)}</div>
               <div>

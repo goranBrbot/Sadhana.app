@@ -127,7 +127,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
         </div>
         <div className='container'>
           <div>
-            <p>{idaDays.includes(tithiDay) ? `Left nostril active.` : pingalaDays.includes(tithiDay) ? `Right nostril active.` : "Swara"}</p>
+            <p>{idaDays.includes(tithiDay) ? `Day start with left nostril.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril.` : "Swara"}</p>
           </div>
           <ul>
             {idaVremena.map((item, index) => (

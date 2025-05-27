@@ -123,7 +123,7 @@ export default function Panchang(date, location) {
   function getMasa(system = "") {
     const { sunLongitude } = getSiderealLong();
     // Masa prema sideralnoj dužini Sunca (Chaitra = 1)
-    let masaIndex = Math.floor(sunLongitude / 30) % 12; // 0-11
+    let masaIndex = Math.ceil(sunLongitude / 30) % 12; // 0-11
 
     // Tithi na izlasku Sunca
     const tithiToday = getPakshaTithi(false);
