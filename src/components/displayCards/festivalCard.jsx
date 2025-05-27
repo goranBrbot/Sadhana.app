@@ -195,17 +195,17 @@ export default function FestivalCard({ location, tithiDay }) {
   const favorability = getPanchangChart(panchangData);
 
   const getColor = (value) => {
-    if (value === 1) return "rgba(137, 174, 82, 0.3)"; // povoljno - zeleno
-    if (value === 0) return "rgba(88, 88, 88, 0.3)"; // neutralno - žuto
-    if (value === -1) return "rgba(253, 81, 33, 0.3)"; // nepovoljno - crveno
+    if (value === 1) return "rgba(255, 211, 71, 0.8)";
+    if (value === 0) return "rgba(248, 105, 0, 0.6)";
+    if (value === -1) return "rgba(189, 67, 62, 0.4)";
     return "#fff"; // fallback
   };
 
   // Mapiranje povoljnosti na prikazivu vrijednost
   const mapFavorability = (value) => {
     if (value === 1) return 1; // povoljno - puni radijus
-    if (value === 0) return 0.66; // neutralno - srednji radijus
-    if (value === -1) return 0.33; // nepovoljno - mali radijus
+    if (value === 0) return 0.78; // neutralno - srednji radijus
+    if (value === -1) return 0.58; // nepovoljno - mali radijus
     return 0.1; // fallback
   };
 
@@ -236,7 +236,7 @@ export default function FestivalCard({ location, tithiDay }) {
         ticks: {
           display: false, // <--- OVO SAKRIVA NUMERACIJU I VERTIKALU
           stepSize: 0.33,
-          callback: (value) => (value === 1 ? "" : value === 0.66 ? "" : value === 0.33 ? "" : ""),
+          callback: (value) => (value === 1 ? "" : value === 0.78 ? "" : value === 0.58 ? "" : ""),
         },
         grid: {
           color: "#fff", // boja kružnih linija (grid circles)
@@ -247,10 +247,6 @@ export default function FestivalCard({ location, tithiDay }) {
           color: "#fff", // boja radijalnih linija (angle lines)
           lineWidth: 0, // debljina radijalnih linija
           borderDash: [4, 2], // crtkanje (npr. [4,2] za isprekidano, [] za puno)
-        },
-        pointLabels: {
-          color: "#fff", // boja labela na rubu
-          font: { size: 10, weight: "bold" },
         },
       },
     },
@@ -376,7 +372,7 @@ export default function FestivalCard({ location, tithiDay }) {
                   const angle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
                   const x = 65 + 65 * Math.cos(angle);
                   const y = 65 + 65 * Math.sin(angle);
-                  return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='2' strokeDasharray='2' />;
+                  return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='2' strokeDasharray='0' />;
                 })}
 
                 {/* Tekst po kružnici */}
