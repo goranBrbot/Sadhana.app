@@ -300,7 +300,7 @@ export default function FestivalCard({ location, tithiDay }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
-        <div className='topBar' onClick={toggleContainer} style={{ cursor: "pointer" }}>
+        <div className='topBar' onClick={toggleContainer} >
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & CALENDAR</small>
           <small className='aktivniInfo'>in {nextFestivalInfo.daysRemaining}</small>

@@ -453,7 +453,7 @@ tfoot td:last-child {
 }
 
 .festivalButton {
-  cursor: pointer;
+  /* cursor: pointer; */
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
@@ -461,10 +461,9 @@ tfoot td:last-child {
   border-radius: 15px;
   padding: 10px;
   margin-bottom: 8px;
-  transition: background 0.2s, box-shadow 0.2s;
 }
 
-.festivalButton:hover,
+/* .festivalButton:hover,
 .festivalButton:focus {
   background: rgba(195, 226, 246, 0.8);
   box-shadow: 0 2px 8px #bfe6fa55;
@@ -476,7 +475,7 @@ tfoot td:last-child {
 }
 .festivalButton.open {
   background: rgba(195, 226, 246, 1);
-}
+} */
 
 .iconMap {
   height: 40px;
