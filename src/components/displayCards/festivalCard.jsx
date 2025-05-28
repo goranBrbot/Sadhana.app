@@ -231,7 +231,7 @@ export default function FestivalCard({ location, tithiDay }) {
 
   const polarOptions = {
     maintainAspectRatio: true,
-    responsive: false,
+    responsive: true,
     layout: {
       padding: 3, // radi buga kod prikaza savršene kružnice
     },
@@ -295,16 +295,25 @@ export default function FestivalCard({ location, tithiDay }) {
           <div>
             <div>
               <h4>Purnimanta Panchanga</h4>
-              <span>Tithi: {panchangData.TithiInfo.tithiName}</span>
-              <span className='chartMarks'> •</span>
+              <span>
+                Tithi<span className='chartMarks'> •</span> {panchangData.TithiInfo.tithiName}
+              </span>
               <br /> {/* lunar day */}
-              <span>Nakshatra: {panchangData.Nakshatra}</span>
+              <span>
+                Nakshatra<span className='chartMarks'> •</span> {panchangData.Nakshatra}
+              </span>
               <br /> {/* lunar constelation (house) */}
-              <span>Yoga: {panchangData.Yoga}</span>
+              <span>
+                Yoga<span className='chartMarks'> •</span> {panchangData.Yoga}
+              </span>
               <br /> {/* Sun and Moon combination */}
-              <span>Karana: {panchangData.Karana}</span>
+              <span>
+                Karana<span className='chartMarks'> •</span> {panchangData.Karana}
+              </span>
               <br /> {/* half of tithi */}
-              <span>Vara: {panchangData.Var}</span>
+              <span>
+                Vara<span className='chartMarks'> •</span> {panchangData.Var}
+              </span>
               <br /> {/* day of the week */}
             </div>
             <div className='panchangChart' style={{ width: "130px", height: "130px" }}>
