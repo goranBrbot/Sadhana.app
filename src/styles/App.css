@@ -128,6 +128,12 @@ footer {
   display: none;
 }
 
+hr {
+  margin: 0;
+  border: none;
+  border-top: 2px solid rgb(255, 255, 255);
+}
+
 h3 {
   margin: 0;
   font-weight: 700;
@@ -417,7 +423,7 @@ tfoot td:last-child {
 .moonPhase {
   display: flex;
   flex-direction: row;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .moonPhase > :first-child {
@@ -430,15 +436,9 @@ tfoot td:last-child {
 
 .panchangChart {
   position: absolute;
-  top: 95px;
+  top: 100px;
   right: 15px;
-  transform: scale(0.8)
-}
-
-.chartMarks {
-  font-weight: 900;
-  vertical-align: middle;
-  color: var(--color-main);
+  transform: scale(0.7);
 }
 
 .iconMap {

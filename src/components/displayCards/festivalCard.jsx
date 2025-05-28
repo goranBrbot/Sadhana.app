@@ -196,9 +196,9 @@ export default function FestivalCard({ location, tithiDay }) {
   const favorability = getPanchangChart(panchangData);
 
   const getColor = (value) => {
-    if (value === 1) return "rgba(195, 226, 246, 0.8)";
-    if (value === 0) return "rgb(154, 179, 195, 0.8)"; // rgba(255, 211, 71, 0.8)
-    if (value === -1) return "rgb(93, 108, 118, 0.8)"; // rgba(248, 105, 0, 0.6)
+    if (value === 1) return "rgba(195, 226, 246, 1)";
+    if (value === 0) return "rgba(154, 179, 195, 1)"; // rgba(255, 211, 71, 0.8)
+    if (value === -1) return "rgba(93, 108, 118, 1)"; // rgba(248, 105, 0, 0.6)
     return "#fff"; // fallback
   };
 
@@ -222,7 +222,7 @@ export default function FestivalCard({ location, tithiDay }) {
           mapFavorability(favorability.Karana),
           mapFavorability(favorability.Var),
         ],
-        borderWidth: 0,
+        borderWidth: 2,
         borderColor: "#fff",
         backgroundColor: [getColor(favorability.Tithi), getColor(favorability.Nakshatra), getColor(favorability.Yoga), getColor(favorability.Karana), getColor(favorability.Var)],
       },
@@ -262,7 +262,7 @@ export default function FestivalCard({ location, tithiDay }) {
     datasets: [
       {
         data: [1, 1, 1, 1, 1],
-        backgroundColor: ["rgb(195, 226, 246)", "rgb(255, 211, 71)", "rgb(242, 142, 65)", "rgb(93, 108, 118)", "rgb(154, 179, 195)"],
+        backgroundColor: ["rgb(152, 202, 246)", "rgb(255, 211, 71)", "rgb(242, 142, 65)", "rgb(56, 76, 92)", "rgb(104, 139, 169)"],
         borderColor: "#fff",
         borderWidth: 0,
       },
@@ -271,6 +271,9 @@ export default function FestivalCard({ location, tithiDay }) {
 
   const doughnutOptions = {
     cutout: "90%",
+    layout: {
+      padding: 1, // radi buga kod prikaza savršene kružnice
+    },
     plugins: {
       legend: { display: false },
       tooltip: { enabled: false },
@@ -296,23 +299,23 @@ export default function FestivalCard({ location, tithiDay }) {
             <div>
               <h4>Purnimanta Panchanga</h4>
               <span>
-                Tithi<span className='chartMarks'> •</span> {panchangData.TithiInfo.tithiName}
+                Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}
               </span>
               <br /> {/* lunar day */}
               <span>
-                Nakshatra<span className='chartMarks'> •</span> {panchangData.Nakshatra}
+                Nakshatra<span style={{ fontWeight: 900, color: "rgb(255, 211, 71)" }}> •</span> {panchangData.Nakshatra}
               </span>
               <br /> {/* lunar constelation (house) */}
               <span>
-                Yoga<span className='chartMarks'> •</span> {panchangData.Yoga}
+                Yoga<span style={{ fontWeight: 900, color: "rgb(242, 142, 65)" }}> •</span> {panchangData.Yoga}
               </span>
               <br /> {/* Sun and Moon combination */}
               <span>
-                Karana<span className='chartMarks'> •</span> {panchangData.Karana}
+                Karana<span style={{ fontWeight: 900, color: "rgb(56, 76, 92)" }}> •</span> {panchangData.Karana}
               </span>
               <br /> {/* half of tithi */}
               <span>
-                Vara<span className='chartMarks'> •</span> {panchangData.Var}
+                Vara<span style={{ fontWeight: 900, color: "rgb(104, 139, 169)" }}> •</span> {panchangData.Var}
               </span>
               <br /> {/* day of the week */}
             </div>
@@ -411,7 +414,8 @@ export default function FestivalCard({ location, tithiDay }) {
  */}{" "}
               </svg>
             </div>
-
+            <br />
+            <hr />
             <div className='moonPhase'>
               <div>{getTithiMoonImage(tithiDay)}</div>
               <div>
@@ -430,6 +434,7 @@ export default function FestivalCard({ location, tithiDay }) {
               </div>
             </div>
             <br />
+            <hr />
           </div>
           {nextFestivalInfo.name && (
             <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
