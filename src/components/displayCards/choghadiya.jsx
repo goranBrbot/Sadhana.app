@@ -393,7 +393,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
       <div className='card choghadiyaCard'>
-        <div className='topBar' onClick={toggleContainer}>
+        <div className='topBar' onClick={toggleContainer} style={{ cursor: "pointer" }}>
           <h3>Best daily timings</h3>
           <small>CHOGHADIYA MUHURTA</small>
           {aktivnaChoghadiya && (

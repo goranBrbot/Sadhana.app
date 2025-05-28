@@ -44,6 +44,7 @@ export default function FestivalCard({ location, tithiDay }) {
   //const obljetnicaMahasamadhi = FindGregorianDateFromVedic("Pauṣa", "Kṛṣṇa Pakṣa", "Caturthī", "Purnimanta", location);
 
   const [containerVisible, setContainerVisible] = useState(false);
+  const [showTable, setShowTable] = useState(false);
   const [nextFestivalInfo, setNextFestivalInfo] = useState({
     name: "",
     daysRemaining: "",
@@ -98,26 +99,48 @@ export default function FestivalCard({ location, tithiDay }) {
     });
   }, []);
 
-  const festivalTable = () => {
-    return (
-      <table style={{ marginTop: "30px" }}>
-        <tbody>
-          {FESTIVALS.map(([name, date], index) => (
-            <tr key={index}>
-              <td
-                style={{
-                  textAlign: "left",
-                  fontWeight: name === nextFestivalInfo.name ? "bold" : "normal",
-                }}>
-                {name}
-              </td>
-              <td style={{ textAlign: "right", fontWeight: name === nextFestivalInfo.name ? "bold" : "normal" }}>{date}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
+  const festivalTable = () => (
+    <div style={{ marginTop: "30px" }}>
+      <div
+        onClick={() => setShowTable((prev) => !prev)}
+        style={{
+          cursor: "pointer",
+          fontWeight: "bold",
+          textAlign: "center",
+          verticalAlign: "middle",
+          background: "rgba(195, 226, 246, 0.5)",
+          borderRadius: "15px",
+          padding: "10px",
+          marginBottom: "8px",
+        }}>
+        <h4>Festivals</h4>
+      </div>
+      {showTable && (
+        <table>
+          <tbody>
+            {FESTIVALS.map(([name, date], index) => (
+              <tr key={index}>
+                <td
+                  style={{
+                    textAlign: "left",
+                    fontWeight: name === nextFestivalInfo.name ? "bold" : "normal",
+                  }}>
+                  {name}
+                </td>
+                <td
+                  style={{
+                    textAlign: "right",
+                    fontWeight: name === nextFestivalInfo.name ? "bold" : "normal",
+                  }}>
+                  {date}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 
   function getTithiMoonImage(tithiDay) {
     // Osigurava da je tithiDay između 1 i 30
@@ -286,7 +309,7 @@ export default function FestivalCard({ location, tithiDay }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
-        <div className='topBar' onClick={toggleContainer}>
+        <div className='topBar' onClick={toggleContainer} style={{ cursor: "pointer" }}>
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & CALENDAR</small>
           <small className='aktivniInfo'>in {nextFestivalInfo.daysRemaining}</small>
@@ -295,7 +318,7 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
           {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
           {/* <p>{vedicTime}</p> */}
-          <div>
+          <div className='panchangContainer'>
             <div>
               <h4>Purnimanta Panchanga</h4>
               <span>
@@ -410,31 +433,26 @@ export default function FestivalCard({ location, tithiDay }) {
                       {label}
                     </textPath>
                   </text>
-                ))}
- */}{" "}
+                ))} */}
               </svg>
             </div>
-            <br />
-            <hr />
-            <div className='moonPhase'>
-              <div>{getTithiMoonImage(tithiDay)}</div>
-              <div>
-                <span>
-                  {panchangData.Tithi} Tithi {panchangData.Masa} Masa
-                </span>
-                {/* lunar month, purnimanta system*/}
-                <br />
-                <span>
-                  {panchangData.Paksha} Paksha {panchangData.TithiInfo.tithiName}
-                </span>
-                {/* lunar waxing or waning */}
-                <br />
-                <span>{panchangData.Samvat} Vikrama Samvata</span>
-                {/* lunar year */}
-              </div>
+          </div>
+          <div className='moonPhase'>
+            <div>{getTithiMoonImage(tithiDay)}</div>
+            <div>
+              <span>
+                {panchangData.Tithi} Tithi {panchangData.Masa} Masa
+              </span>
+              {/* lunar month, purnimanta system*/}
+              <br />
+              <span>
+                {panchangData.Paksha} Paksha {panchangData.TithiInfo.tithiName}
+              </span>
+              {/* lunar waxing or waning */}
+              <br />
+              <span>{panchangData.Samvat} Vikrama Samvata</span>
+              {/* lunar year */}
             </div>
-            <br />
-            <hr />
           </div>
           {nextFestivalInfo.name && (
             <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
