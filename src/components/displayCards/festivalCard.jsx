@@ -195,17 +195,17 @@ export default function FestivalCard({ location, tithiDay }) {
   const favorability = getPanchangChart(panchangData);
 
   const getColor = (value) => {
-    if (value === 1) return "rgba(255, 211, 71, 0.8)";
-    if (value === 0) return "rgba(248, 105, 0, 0.6)";
-    if (value === -1) return "rgba(189, 67, 62, 0.4)";
+    if (value === 1) return "rgba(195, 226, 246, 1)";
+    if (value === 0) return "rgba(255, 211, 71, 0.8)";
+    if (value === -1) return "rgba(248, 105, 0, 0.6)";
     return "#fff"; // fallback
   };
 
   // Mapiranje povoljnosti na prikazivu vrijednost
   const mapFavorability = (value) => {
     if (value === 1) return 1; // povoljno - puni radijus
-    if (value === 0) return 0.78; // neutralno - srednji radijus
-    if (value === -1) return 0.58; // nepovoljno - mali radijus
+    if (value === 0) return 0.66; // neutralno - srednji radijus
+    if (value === -1) return 0.33; // nepovoljno - mali radijus
     return 0.1; // fallback
   };
 
@@ -236,7 +236,7 @@ export default function FestivalCard({ location, tithiDay }) {
         ticks: {
           display: false, // <--- OVO SAKRIVA NUMERACIJU I VERTIKALU
           stepSize: 0.33,
-          callback: (value) => (value === 1 ? "" : value === 0.78 ? "" : value === 0.58 ? "" : ""),
+          callback: (value) => (value === 1 ? "" : value === 0.66 ? "" : value === 0.33 ? "" : ""),
         },
         grid: {
           color: "#fff", // boja kružnih linija (grid circles)
@@ -245,7 +245,7 @@ export default function FestivalCard({ location, tithiDay }) {
         },
         angleLines: {
           color: "#fff", // boja radijalnih linija (angle lines)
-          lineWidth: 0, // debljina radijalnih linija
+          lineWidth: 1, // debljina radijalnih linija
           borderDash: [4, 2], // crtkanje (npr. [4,2] za isprekidano, [] za puno)
         },
       },
@@ -261,7 +261,7 @@ export default function FestivalCard({ location, tithiDay }) {
     datasets: [
       {
         data: [1, 1, 1, 1, 1],
-        backgroundColor: ["#ffffff00", "#ffffff00", "#ffffff00", "#ffffff00", "#ffffff00"],
+        backgroundColor: ["rgb(195, 226, 246)", "rgb(154, 179, 195)", "rgb(93, 108, 118)", "rgb(242, 142, 65)", "rgb(255, 211, 71)"],
         borderColor: "#fff",
         borderWidth: 0,
       },
@@ -269,7 +269,7 @@ export default function FestivalCard({ location, tithiDay }) {
   };
 
   const doughnutOptions = {
-    cutout: "74%",
+    cutout: "90%",
     plugins: {
       legend: { display: false },
       tooltip: { enabled: false },
@@ -362,7 +362,7 @@ export default function FestivalCard({ location, tithiDay }) {
                 <defs>
                   {panchangLabels.map((label, i) => {
                     // Parametri kružnice
-                    const r = 48; // polumjer za tekst (unutar donata)
+                    const r = 47; // polumjer za tekst (unutar donata)
                     const cx = 65;
                     const cy = 65;
                     // Kutovi za segment
