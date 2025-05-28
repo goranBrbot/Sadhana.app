@@ -435,6 +435,12 @@ tfoot td:last-child {
   transform: scale(0.8)
 }
 
+.chartMarks {
+  font-weight: 900;
+  vertical-align: middle;
+  color: var(--color-main);
+}
+
 .iconMap {
   height: 40px;
   margin-bottom: 15px;

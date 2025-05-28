@@ -151,6 +151,7 @@ export default function FestivalCard({ location, tithiDay }) {
       Bharani: 1,
       Krittika: -1,
       Rohini: -1, // Dodaj sve nakshatre
+      Mrigashira: -1,
     };
 
     const yogaFavorability = {
@@ -195,17 +196,17 @@ export default function FestivalCard({ location, tithiDay }) {
   const favorability = getPanchangChart(panchangData);
 
   const getColor = (value) => {
-    if (value === 1) return "rgba(195, 226, 246, 1)";
-    if (value === 0) return "rgba(255, 211, 71, 0.8)";
-    if (value === -1) return "rgba(248, 105, 0, 0.6)";
+    if (value === 1) return "rgba(195, 226, 246, 0.8)";
+    if (value === 0) return "rgb(154, 179, 195, 0.8)"; // rgba(255, 211, 71, 0.8)
+    if (value === -1) return "rgb(93, 108, 118, 0.8)"; // rgba(248, 105, 0, 0.6)
     return "#fff"; // fallback
   };
 
   // Mapiranje povoljnosti na prikazivu vrijednost
   const mapFavorability = (value) => {
     if (value === 1) return 1; // povoljno - puni radijus
-    if (value === 0) return 0.66; // neutralno - srednji radijus
-    if (value === -1) return 0.33; // nepovoljno - mali radijus
+    if (value === 0) return 0.75; // neutralno - srednji radijus
+    if (value === -1) return 0.5; // nepovoljno - mali radijus
     return 0.1; // fallback
   };
 
@@ -229,24 +230,24 @@ export default function FestivalCard({ location, tithiDay }) {
   };
 
   const polarOptions = {
+    maintainAspectRatio: true,
+    responsive: false,
+    layout: {
+      padding: 3, // radi buga kod prikaza savršene kružnice
+    },
     scales: {
       r: {
         min: 0,
         max: 1,
         ticks: {
           display: false, // <--- OVO SAKRIVA NUMERACIJU I VERTIKALU
-          stepSize: 0.33,
+          stepSize: 0.25,
           callback: (value) => (value === 1 ? "" : value === 0.66 ? "" : value === 0.33 ? "" : ""),
         },
         grid: {
           color: "#fff", // boja kružnih linija (grid circles)
-          lineWidth: 0, // debljina kružnih linija
+          lineWidth: 1, // debljina kružnih linija
           circular: true, // koristi kružne linije (ne poligonalne)
-        },
-        angleLines: {
-          color: "#fff", // boja radijalnih linija (angle lines)
-          lineWidth: 1, // debljina radijalnih linija
-          borderDash: [4, 2], // crtkanje (npr. [4,2] za isprekidano, [] za puno)
         },
       },
     },
@@ -261,7 +262,7 @@ export default function FestivalCard({ location, tithiDay }) {
     datasets: [
       {
         data: [1, 1, 1, 1, 1],
-        backgroundColor: ["rgb(195, 226, 246)", "rgb(154, 179, 195)", "rgb(93, 108, 118)", "rgb(242, 142, 65)", "rgb(255, 211, 71)"],
+        backgroundColor: ["rgb(195, 226, 246)", "rgb(255, 211, 71)", "rgb(242, 142, 65)", "rgb(93, 108, 118)", "rgb(154, 179, 195)"],
         borderColor: "#fff",
         borderWidth: 0,
       },
@@ -295,6 +296,7 @@ export default function FestivalCard({ location, tithiDay }) {
             <div>
               <h4>Purnimanta Panchanga</h4>
               <span>Tithi: {panchangData.TithiInfo.tithiName}</span>
+              <span className='chartMarks'> •</span>
               <br /> {/* lunar day */}
               <span>Nakshatra: {panchangData.Nakshatra}</span>
               <br /> {/* lunar constelation (house) */}
@@ -336,10 +338,10 @@ export default function FestivalCard({ location, tithiDay }) {
                 <div
                   style={{
                     position: "absolute",
-                    top: "42.5px",
-                    left: "42.5px",
-                    width: "25px",
-                    height: "25px",
+                    top: "47.5px",
+                    left: "47.5px",
+                    width: "15px",
+                    height: "15px",
                     borderRadius: "50%",
                     background: "rgb(255,255,255)",
                     zIndex: 10,
@@ -389,15 +391,15 @@ export default function FestivalCard({ location, tithiDay }) {
                   const y = 65 + 65 * Math.sin(angle);
                   return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='2' strokeDasharray='0' />;
                 })}
-
                 {/* Tekst po kružnici */}
-                {panchangLabels.map((label, i) => (
+                {/*                 {panchangLabels.map((label, i) => (
                   <text key={label} fontSize='8' fontWeight='bold' fill='rgba(88, 88, 88, 0.5)' textAnchor='middle' dominantBaseline='middle'>
                     <textPath href={`#arc-path-${i}`} startOffset='50%' alignmentBaseline='middle'>
                       {label}
                     </textPath>
                   </text>
                 ))}
+ */}{" "}
               </svg>
             </div>
 
