@@ -101,18 +101,9 @@ export default function FestivalCard({ location, tithiDay }) {
 
   const festivalTable = () => (
     <div style={{ marginTop: "30px" }}>
-      <div
+      <div className="festivalButton"
         onClick={() => setShowTable((prev) => !prev)}
-        style={{
-          cursor: "pointer",
-          fontWeight: "bold",
-          textAlign: "center",
-          verticalAlign: "middle",
-          background: "rgba(195, 226, 246, 0.5)",
-          borderRadius: "15px",
-          padding: "10px",
-          marginBottom: "8px",
-        }}>
+        >
         <h4>Festivals</h4>
       </div>
       {showTable && (
