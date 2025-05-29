@@ -101,10 +101,8 @@ export default function FestivalCard({ location, tithiDay }) {
 
   const festivalTable = () => (
     <div style={{ marginTop: "30px" }}>
-      <div className="festivalButton"
-        onClick={() => setShowTable((prev) => !prev)}
-        >
-        <h4>Festivals</h4>
+      <div className='festivalButton' onClick={() => setShowTable((prev) => !prev)}>
+        <h4>All festivals</h4>
       </div>
       {showTable && (
         <table>
@@ -140,62 +138,108 @@ export default function FestivalCard({ location, tithiDay }) {
   }
 
   function getPanchangChart(panchangData) {
-    // Primjeri povoljnosti (prilagodi prema stvarnim pravilima)
+    // Primjeri povoljnosti (1-povoljno, 0-neutralno, -1-nepovoljno) od ChatGPT-a !!!!!!!
     const tithiFavorability = {
-      Pratipat: 1,
-      Dvitiya: 1,
-      Tritiya: 1,
-      Chaturthi: -1,
-      Panchami: 1,
-      Shashthi: 1,
-      Saptami: 1,
-      Ashtami: -1,
-      Navami: -1,
-      Dashami: 1,
-      Ekadashi: 1,
-      Dwadashi: 1,
-      Trayodashi: 1,
-      Chaturdashi: -1,
-      Purnima: 1,
-      Amavasya: -1, // Dodaj sve tithije prema potrebi
+      Pratipadā: 0, // neutralno za sadhanu
+      Dvitīyā: 1, // povoljno za duhovne početke
+      Tṛtīyā: 1, // povoljno za rituale
+      Caturthī: -1, // nepovoljno za duhovnu praksu
+      Pañcamī: 0, // neutralno
+      Ṣaṣṭhī: -1, // nepovoljno
+      Saptamī: 0, // neutralno
+      Aṣṭamī: -1, // nepovoljno
+      Navamī: 0, // neutralno
+      Daśamī: 1, // povoljno za duhovne aktivnosti
+      Ekādaśī: 1, // vrlo povoljno za sadhanu
+      Dvādaśī: 1, // povoljno
+      Trayodaśī: 0, // neutralno
+      Caturdaśī: -1, // nepovoljno
+      Pūrṇimā: 1, // vrlo povoljno, puni mjesec donosi energiju
+      Amāvasyā: -1, // nepovoljno, noć nove lune nije idealna za sadhanu
     };
 
     const nakshatraFavorability = {
-      Ashwini: 1,
-      Bharani: 1,
-      Krittika: -1,
-      Rohini: -1, // Dodaj sve nakshatre
-      Mrigashira: -1,
+      Aśvinī: 1, // povoljno za početke i energiju
+      Bhraṇī: -1, // nepovoljno za meditaciju, izaziva nemir
+      Kṛttikā: 0, // neutralno, može biti i izazovno
+      Rohiṇī: 1, // povoljno, donosi stabilnost i plodnost
+      Mṛgaśirā: 1, // povoljno, povoljno za um i intuiciju
+      Ārdrā: -1, // nepovoljno, može donijeti tjeskobu
+      Punarvasu: 1, // povoljno, donosi obnovu i čistoću
+      Pūṣya: 1, // vrlo povoljno, povoljno za sadhanu i rituale
+      Aśleśā: -1, // nepovoljno, može donijeti emotivne smetnje
+      Maghā: 0, // neutralno, više za ceremonijalne svrhe
+      Pūrvāphālgunī: 1, // povoljno, za kreativnost i mir
+      Uttarāphālgunī: 1, // povoljno, stabilno i podržavajuće
+      Hasta: 1, // povoljno, povoljno za rad i meditaciju
+      Citrā: 0, // neutralno, dinamično i izazovno
+      Svātī: 1, // povoljno, sloboda i lakoća
+      Viśākhā: 0, // neutralno, ambiciozno
+      Anurādhā: 1, // povoljno, za posvećenost i snagu
+      Jyeṣṭhā: -1, // nepovoljno, donosi unutarnju borbu
+      Mūla: -1, // nepovoljno, destruktivni aspekti
+      Pūrvāṣāḍhā: 1, // povoljno, za pobjede i uspjehe
+      Uttarāṣāḍhā: 1, // povoljno, stabilnost i moć
+      Śravaṇa: 1, // povoljno, dobra komunikacija i učenje
+      Dhaniṣṭhā: 0, // neutralno, muzikalnost i ritam
+      Śatabhiṣā: 1, // povoljno, iscjeljenje i zaštita
+      Pūrvābhādrapadā: 0, // neutralno, mistično i duboko
+      Uttarābhādrapadā: 1, // povoljno, mir i duhovna snaga
+      Revatī: 1, // vrlo povoljno, duhovni kraj i ispunjenje
     };
 
     const yogaFavorability = {
-      Vishkambha: 1,
-      Priti: 1,
-      Ayushman: 1,
-      Saubhagya: 1,
-      Shobhana: 1,
-      // Dodaj sve yoge
+      Viṣkaṃbha: -1, // nepovoljno, ometa mir i koncentraciju
+      Prīti: 1, // povoljno, donosi radost i harmoniju
+      Āyuṣmān: 1, // povoljno, dobar za zdravlje i dugovječnost
+      Saubhāgya: 1, // povoljno, povoljno za sreću i uspjeh
+      Śobhana: 1, // povoljno, blagoslov i prosperitet
+      Atigaṇḑa: -1, // nepovoljno, donosi prepreke i nelagodu
+      Sukarmā: 1, // povoljno, dobar za dobre radnje i sadhanu
+      Dhṛti: 1, // povoljno, stabilnost i snaga
+      Śūla: -1, // nepovoljno, može donijeti stres i probleme
+      Gaṇḑa: -1, // nepovoljno, izazovi i teškoće
+      Vṛddhi: 1, // povoljno, rast i razvoj
+      Dhruva: 1, // povoljno, stabilnost i sigurnost
+      Vyāghāta: -1, // nepovoljno, sukobi i nesuglasice
+      Harṣaṇa: 1, // povoljno, radost i zadovoljstvo
+      Vajra: 1, // povoljno, snaga i izdržljivost
+      Siddhi: 1, // povoljno, uspjeh i ostvarenje
+      Vyatīpāta: -1, // nepovoljno, nesreće i nesklad
+      Varīyān: 1, // povoljno, uspjeh i zadovoljstvo
+      Parigha: -1, // nepovoljno, prepreke i frustracije
+      Śiva: 1, // povoljno, zaštita i blagoslov
+      Siddha: 1, // povoljno, postignuće i moć
+      Sādhya: 1, // povoljno, ostvarenje ciljeva
+      Śubha: 1, // povoljno, povoljno u svakom pogledu
+      Śukla: 1, // povoljno, svjetlost i jasnoća
+      Brahma: 1, // povoljno, kreativnost i snaga
+      Indra: 1, // povoljno, moć i autoritet
+      Vaidhṛta: -1, // nepovoljno, problemi i prepreke
     };
 
     const karanaFavorability = {
-      Bava: 1,
-      Balava: 1,
-      Kaulava: 1,
-      Taitila: 1,
-      Garaja: 1,
-      Vanija: 1,
-      Vishti: -1,
-      // Dodaj sve karane
+      Kimstughna: 1, // povoljno, donosi uspjeh i blagostanje
+      Bava: 1, // povoljno, stabilnost i mir
+      Bālava: 1, // povoljno, snaga i energija
+      Kaulava: -1, // nepovoljno, može donijeti nemir
+      Taitila: -1, // nepovoljno, smetnje i prepreke
+      Gara: -1, // nepovoljno, izazovi i napetosti
+      Vaṇija: 1, // povoljno, blagostanje i uspjeh
+      Vṛṣṭi: -1, // nepovoljno, nepovoljno za bilo kakvu praksu
+      Śakuni: -1, // nepovoljno, sukobi i nesuglasice
+      Catuṣpāda: 1, // povoljno, stabilnost i snaga
+      Nāga: 1, // povoljno, zaštita i podrška
     };
 
     const varFavorability = {
-      Ravivar: 0,
-      Somvar: 1,
-      Mangalavara: 0,
-      Budhvar: 1,
-      Guruvar: 1,
-      Sukarman: 1,
-      Shanivar: -1,
+      Ravivār: -1, // nedjelja, nepovoljno za intenzivnu sadhanu zbog previše aktivnosti i vanjskih utjecaja
+      Somvār: 1, // ponedjeljak, vrlo povoljno za meditaciju i duhovnu praksu
+      Mangaḷvār: 0, // utorak, neutralno, energično, ali može biti izazovno
+      Budhvār: 1, // srijeda, povoljno za učenje i intelektualnu praksu
+      Guruvār: 1, // četvrtak, vrlo povoljno za duhovni rast i blagoslove
+      Shukravār: 0, // petak, neutralno, povoljno za rituale, ali manje za duboku meditaciju
+      Shanivār: -1, // subota, nepovoljno zbog teže energije i prepreka
     };
 
     return {
@@ -297,10 +341,48 @@ export default function FestivalCard({ location, tithiDay }) {
 
   const panchangLabels = ["TITHI", "NAKSHATRA", "YOGA", "KARANA", "VARA"];
 
+  // Definiraj ponderirane vrijednosti za svaki element
+  const ponderiSadhana = {
+    Nakshatra: 0.35,
+    Tithi: 0.3,
+    Yoga: 0.2,
+    Karana: 0.1,
+    Vara: 0.05,
+  };
+
+  /**
+   * Izračunava ukupnu povoljnost trenutka s ponderiranjem
+   * @param {number} tithi - vrijednost Tithija (1, 0, -1)
+   * @param {number} nakshatra - vrijednost Nakshatre (1, 0, -1)
+   * @param {number} yoga - vrijednost Yoge (1, 0, -1)
+   * @param {number} karana - vrijednost Karane (1, 0, -1)
+   * @param {number} vara - vrijednost Vare (1, 0, -1)
+   * @returns {object} rezultat s ukupnom ocjenom i opisom
+   */
+  function postotakPovoljnosti(tithi, nakshatra, yoga, karana, vara) {
+    const ukupno = tithi * ponderiSadhana.Tithi + nakshatra * ponderiSadhana.Nakshatra + yoga * ponderiSadhana.Yoga + karana * ponderiSadhana.Karana + vara * ponderiSadhana.Vara;
+
+    let opis;
+    const prag = ponderiSadhana.Tithi + ponderiSadhana.Nakshatra; // 0.65 ili 0.85 (tithi i nakshatra ili tithi, nakshatra i yoga)
+    if (ukupno >= prag) {
+      opis = "Auspicious time";
+    } else if (ukupno <= -prag) {
+      opis = "Inauspicious time";
+    } else {
+      opis = "Neutral time";
+    }
+
+    return {
+      opis,
+    };
+  }
+
+  const povoljnost = postotakPovoljnosti(favorability.Tithi, favorability.Nakshatra, favorability.Yoga, favorability.Karana, favorability.Var);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
-        <div className='topBar' onClick={toggleContainer} >
+        <div className='topBar' onClick={toggleContainer}>
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & CALENDAR</small>
           <small className='aktivniInfo'>in {nextFestivalInfo.daysRemaining}</small>
@@ -311,7 +393,8 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <p>{vedicTime}</p> */}
           <div className='panchangContainer'>
             <div>
-              <h4>Purnimanta Panchanga</h4>
+              <h4>Purnimanta Panchang | {povoljnost.opis}</h4>
+              <br />
               <span>
                 Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}
               </span>
@@ -333,7 +416,7 @@ export default function FestivalCard({ location, tithiDay }) {
               </span>
               <br /> {/* day of the week */}
             </div>
-            <div className='panchangChart' style={{ width: "130px", height: "130px" }}>
+            <div className='panchangChart' style={{ width: "130px", height: "130px", backdropFilter: "blur(3px)" }}>
               {/* Doughnut kao tanki prsten */}
               <Doughnut
                 data={doughnutData}
@@ -432,14 +515,14 @@ export default function FestivalCard({ location, tithiDay }) {
             <div>{getTithiMoonImage(tithiDay)}</div>
             <div>
               <span>
-                {panchangData.Tithi} Tithi {panchangData.Masa} Masa
-              </span>
-              {/* lunar month, purnimanta system*/}
-              <br />
-              <span>
-                {panchangData.Paksha} Paksha {panchangData.TithiInfo.tithiName}
+                {panchangData.Paksha} Pakṣa {panchangData.TithiInfo.tithiName}
               </span>
               {/* lunar waxing or waning */}
+              <br />
+              <span>
+                {panchangData.Tithi} {panchangData.Masa} Māsa Tithi
+              </span>
+              {/* lunar month, purnimanta system*/}
               <br />
               <span>{panchangData.Samvat} Vikrama Samvata</span>
               {/* lunar year */}

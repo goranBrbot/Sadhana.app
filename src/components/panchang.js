@@ -41,21 +41,21 @@ export default function Panchang(date, location) {
   // Tithi info objekt - grupe tithija sa specifičnim kvalitetama (phala – plodovima)
   function getTithiInfo(tithiNumber) {
     const tithiNames = [
-      "Pratipat",
-      "Dwitiya",
-      "Tritiya",
-      "Chaturthi",
-      "Panchami",
-      "Shashti",
-      "Saptami",
-      "Ashtami",
-      "Navami",
-      "Dashami",
-      "Ekadashi",
-      "Dwadashi",
-      "Trayodashi",
-      "Chaturdashi",
-      "Purnima / Amavasya",
+      "Pratipadā",
+      "Dvitīyā",
+      "Tṛtīyā",
+      "Caturthī",
+      "Pañcamī",
+      "Ṣaṣṭhī",
+      "Saptamī",
+      "Aṣṭamī",
+      "Navamī",
+      "Daśamī",
+      "Ekādaśī",
+      "Dvādaśī",
+      "Trayodaśī",
+      "Caturdaśī",
+      "Pūrṇimā / Amāvasyā",
     ];
 
     const groups = {
@@ -113,9 +113,9 @@ export default function Panchang(date, location) {
       tithi = ((tithi + 14) % 30) + 1;
     }
     if (tithi <= 15) {
-      return "Shukla";
+      return "Śukla";
     } else {
-      return "Krishna";
+      return "Kṛṣṇa";
     }
   }
 
@@ -134,7 +134,7 @@ export default function Panchang(date, location) {
       masaIndex = (masaIndex + 1) % 12;
     }
 
-    const masaNames = ["Chaitra", "Vaishakha", "Jyeshtha", "Ashadha", "Shravana", "Bhadrapada", "Ashwin", "Kartika", "Margashirsha", "Pausha", "Magha", "Phalguna"];
+    const masaNames = ["Caitraḥ", "Vaiśākhaḥ", "Jyeṣṭhaḥ", "Āṣāḍhaḥ", "Śrāvaṇaḥ", "Bhādrapadaḥ", "Āśvinaḥ", "Kārtikaḥ", "Mārgaśīrṣaḥ", "Pauṣaḥ", "Māghaḥ", "Phālgunaḥ"];
 
     return masaNames[masaIndex];
   }
@@ -169,33 +169,33 @@ export default function Panchang(date, location) {
     const nakshatraIndex = Math.floor(moonLongitude / (360 / 27)); // 360° podijeljeno na 27
 
     const nakshatraNames = [
-      "Ashwini",
-      "Bharani",
-      "Krittika",
-      "Rohini",
-      "Mrigashira",
-      "Ardra",
+      "Aśvinī",
+      "Bhraṇī",
+      "Kṛttikā",
+      "Rohiṇī",
+      "Mṛgaśirā",
+      "Ārdrā",
       "Punarvasu",
-      "Pushya",
-      "Ashlesha",
-      "Magha",
-      "Purva Phalguni",
-      "Uttara Phalguni",
+      "Pūṣya",
+      "Aśleśā",
+      "Maghā",
+      "Pūrvāphālgunī",
+      "Uttarāphālgunī",
       "Hasta",
-      "Chitra",
-      "Swati",
-      "Vishakha",
-      "Anuradha",
-      "Jyeshtha",
-      "Mula",
-      "Purva Ashadha",
-      "Uttara Ashadha",
-      "Shravana",
-      "Dhanishta",
-      "Shatabhisha",
-      "Purva Bhadrapada",
-      "Uttara Bhadrapada",
-      "Revati",
+      "Citrā",
+      "Svātī",
+      "Viśākhā",
+      "Anurādhā",
+      "Jyeṣṭhā",
+      "Mūla",
+      "Pūrvāṣāḍhā",
+      "Uttarāṣāḍhā",
+      "Śravaṇa",
+      "Dhaniṣṭhā",
+      "Śatabhiṣā",
+      "Pūrvābhādrapadā",
+      "Uttarābhādrapadā",
+      "Revatī",
     ];
 
     return nakshatraNames[nakshatraIndex];
@@ -207,59 +207,59 @@ export default function Panchang(date, location) {
     const yogaDegreeSum = (sunLongitude + moonLongitude) % 360;
 
     if (yogaDegreeSum >= 0 && yogaDegreeSum < 13.333) {
-      return "Viskambha";
+      return "Viṣkaṃbha";
     } else if (yogaDegreeSum >= 13.333 && yogaDegreeSum < 26.666) {
-      return "Priti";
+      return "Prīti";
     } else if (yogaDegreeSum >= 26.666 && yogaDegreeSum < 40) {
-      return "Ayushman";
+      return "Āyuṣmān";
     } else if (yogaDegreeSum >= 40 && yogaDegreeSum < 53.333) {
-      return "Saubhagya";
+      return "Saubhāgya";
     } else if (yogaDegreeSum >= 53.333 && yogaDegreeSum < 66.666) {
-      return "Shobhana";
+      return "Śobhana";
     } else if (yogaDegreeSum >= 66.666 && yogaDegreeSum < 80) {
-      return "Atiganda";
+      return "Atigaṇḑa";
     } else if (yogaDegreeSum >= 80 && yogaDegreeSum < 93.333) {
-      return "Sukarman";
+      return "Sukarmā";
     } else if (yogaDegreeSum >= 93.333 && yogaDegreeSum < 106.666) {
-      return "Dhriti";
+      return "Dhṛti";
     } else if (yogaDegreeSum >= 106.666 && yogaDegreeSum < 120) {
-      return "Shula";
+      return "Śūla";
     } else if (yogaDegreeSum >= 120 && yogaDegreeSum < 133.333) {
-      return "Ganda";
+      return "Gaṇḑa";
     } else if (yogaDegreeSum >= 133.333 && yogaDegreeSum < 146.666) {
-      return "Vriddhi";
+      return "Vṛddhi";
     } else if (yogaDegreeSum >= 146.666 && yogaDegreeSum < 160) {
       return "Dhruva";
     } else if (yogaDegreeSum >= 160 && yogaDegreeSum < 173.333) {
-      return "Vyaghata";
+      return "Vyāghāta";
     } else if (yogaDegreeSum >= 173.333 && yogaDegreeSum < 186.666) {
-      return "Harshana";
+      return "Harṣaṇa";
     } else if (yogaDegreeSum >= 186.666 && yogaDegreeSum < 200) {
       return "Vajra";
     } else if (yogaDegreeSum >= 200 && yogaDegreeSum < 213.333) {
       return "Siddhi";
     } else if (yogaDegreeSum >= 213.333 && yogaDegreeSum < 226.666) {
-      return "Vyatipata";
+      return "Vyatīpāta";
     } else if (yogaDegreeSum >= 226.666 && yogaDegreeSum < 240) {
-      return "Variga";
+      return "Varīyān";
     } else if (yogaDegreeSum >= 240 && yogaDegreeSum < 253.333) {
       return "Parigha";
     } else if (yogaDegreeSum >= 253.333 && yogaDegreeSum < 266.666) {
-      return "Shiva";
+      return "Śiva";
     } else if (yogaDegreeSum >= 266.666 && yogaDegreeSum < 280) {
       return "Siddha";
     } else if (yogaDegreeSum >= 280 && yogaDegreeSum < 293.333) {
-      return "Sadhya";
+      return "Sādhya";
     } else if (yogaDegreeSum >= 293.333 && yogaDegreeSum < 306.666) {
-      return "Shubha";
+      return "Śubha";
     } else if (yogaDegreeSum >= 306.666 && yogaDegreeSum < 320) {
-      return "Shukla";
+      return "Śukla";
     } else if (yogaDegreeSum >= 320 && yogaDegreeSum < 333.333) {
       return "Brahma";
     } else if (yogaDegreeSum >= 333.333 && yogaDegreeSum < 346.666) {
       return "Indra";
     } else if (yogaDegreeSum >= 346.666 && yogaDegreeSum < 360) {
-      return "Vaidhriti";
+      return "Vaidhṛta";
     } else {
       throw new Error("Invalid Yoga calculation: " + yogaDegreeSum);
     }
@@ -272,8 +272,8 @@ export default function Panchang(date, location) {
 
     const karanaIndex = Math.ceil(razlikaMoonSun / 6); // 60 karana u mjesecu - Math.ceil prebacuje na početak karane a floor na kraj
 
-    const karanaNames = ["Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti"];
-    const fixedKaranas = ["Kimstughna", "Shakuni", "Chatushpada", "Naga"];
+    const karanaNames = ["Bava", "Bālava", "Kaulava", "Taitila", "Gara", "Vaṇija", "Vṛṣṭi"];
+    const fixedKaranas = ["Kimstughna", "Śakuni", "Catuṣpāda", "Nāga"];
 
     if (karanaIndex === 1) return fixedKaranas[0]; // Kimstughna
     if (karanaIndex >= 2 && karanaIndex <= 57) {
@@ -290,13 +290,13 @@ export default function Panchang(date, location) {
   function getVara() {
     const dayOfWeek = date.getDay();
 
-    if (dayOfWeek === 0) return "Ravivara"; // Nedjelja - Sunce
-    else if (dayOfWeek === 1) return "Somavara"; // Ponedjeljak - Mjesec
-    else if (dayOfWeek === 2) return "Mangalavara"; // Utorak - Mars
-    else if (dayOfWeek === 3) return "Budhavara"; // Srijeda - Merkur
-    else if (dayOfWeek === 4) return "Guruvara"; // Četvrtak - Jupiter
-    else if (dayOfWeek === 5) return "Shukravara"; // Petak - Venera
-    else if (dayOfWeek === 6) return "Shanivara"; // Subota - Saturn
+    if (dayOfWeek === 0) return "Ravivār"; // Nedjelja - Sunce
+    else if (dayOfWeek === 1) return "Somvār"; // Ponedjeljak - Mjesec
+    else if (dayOfWeek === 2) return "Mangaḷvār"; // Utorak - Mars
+    else if (dayOfWeek === 3) return "Budhvār"; // Srijeda - Merkur
+    else if (dayOfWeek === 4) return "Guruvār"; // Četvrtak - Jupiter
+    else if (dayOfWeek === 5) return "Shukravār"; // Petak - Venera
+    else if (dayOfWeek === 6) return "Shanivār"; // Subota - Saturn
 
     throw new Error("Invalid day for Var calculation: " + dayOfWeek);
   }

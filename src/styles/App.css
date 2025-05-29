@@ -72,8 +72,7 @@
   --color-white: #ffffff;
 
   color-scheme: only light; /* only light onemogućuje dark mode by OS */
-
-  font-family: "Roboto";
+  font-family: "Roboto", "DejaVu Sans", sans-serif; /* fallback za IAST transliteraciju */
   font-style: normal;
   line-height: 1.5;
   font-weight: 400;
@@ -220,23 +219,14 @@ td {
   height: 30px;
 }
 
-/* Zaobljeni kutovi na gornjim ćelijama */
-thead th:first-child {
-  padding-top: 5px;
-  border-top-left-radius: 15px;
+tr:first-child th,
+tr:first-child td {
+  padding-top: 3px;
 }
 
-thead th:last-child {
-  border-top-right-radius: 15px;
-}
-
-/* Zaobljeni kutovi na donjim ćelijama */
-tfoot td:first-child {
-  border-bottom-left-radius: 15px;
-}
-
-tfoot td:last-child {
-  border-bottom-right-radius: 15px;
+tr:last-child th,
+tr:last-child td {
+  padding-bottom: 3px;
 }
 
 /* Stil za boje ćelija */
@@ -373,10 +363,7 @@ tfoot td:last-child {
 }
 
 .choghadiyaTableHeader {
-  background-color: #d5efff;
-  background-image: url("/backgrounds/choghadiya_table.png");
-  background-size: cover;
-  background-blend-mode: lighten;
+  background-color: #e1f0f9;
   text-align: center;
   font-weight: bold;
   font-size: 0.8rem;
@@ -447,13 +434,14 @@ tfoot td:last-child {
 
 .panchangChart {
   position: absolute;
-  top: 100px;
+  top: 127px;
   right: 15px;
   transform: scale(0.7);
+  border-radius: 100px;
+  border: 0px solid rgba(255, 255, 255, 1);
 }
 
 .festivalButton {
-  /* cursor: pointer; */
   font-weight: bold;
   text-align: center;
   vertical-align: middle;
@@ -462,20 +450,6 @@ tfoot td:last-child {
   padding: 10px;
   margin-bottom: 8px;
 }
-
-/* .festivalButton:hover,
-.festivalButton:focus {
-  background: rgba(195, 226, 246, 0.8);
-  box-shadow: 0 2px 8px #bfe6fa55;
-}
-
-.festivalButton:active {
-  background: rgba(195, 226, 246, 1);
-  box-shadow: 0 1px 4px #bfe6fa55;
-}
-.festivalButton.open {
-  background: rgba(195, 226, 246, 1);
-} */
 
 .iconMap {
   height: 40px;
