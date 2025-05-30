@@ -342,7 +342,7 @@ export default function FestivalCard({ location, tithiDay }) {
   const panchangLabels = ["TITHI", "NAKSHATRA", "YOGA", "KARANA", "VARA"];
 
   // Definiraj ponderirane vrijednosti za svaki element
-  const ponderiSadhana = {
+  const ponderi = {
     Nakshatra: 0.35,
     Tithi: 0.3,
     Yoga: 0.2,
@@ -350,26 +350,19 @@ export default function FestivalCard({ location, tithiDay }) {
     Vara: 0.05,
   };
 
-  /**
-   * Izračunava ukupnu povoljnost trenutka s ponderiranjem
-   * @param {number} tithi - vrijednost Tithija (1, 0, -1)
-   * @param {number} nakshatra - vrijednost Nakshatre (1, 0, -1)
-   * @param {number} yoga - vrijednost Yoge (1, 0, -1)
-   * @param {number} karana - vrijednost Karane (1, 0, -1)
-   * @param {number} vara - vrijednost Vare (1, 0, -1)
-   * @returns {object} rezultat s ukupnom ocjenom i opisom
-   */
   function postotakPovoljnosti(tithi, nakshatra, yoga, karana, vara) {
-    const ukupno = tithi * ponderiSadhana.Tithi + nakshatra * ponderiSadhana.Nakshatra + yoga * ponderiSadhana.Yoga + karana * ponderiSadhana.Karana + vara * ponderiSadhana.Vara;
+    const ukupno = tithi * ponderi.Tithi + nakshatra * ponderi.Nakshatra + yoga * ponderi.Yoga + karana * ponderi.Karana + vara * ponderi.Vara;
+    console.log(`Ukupno povoljnosti: ${ukupno} (Tithi: ${tithi}, Nakshatra: ${nakshatra}, Yoga: ${yoga}, Karana: ${karana}, Vara: ${vara})`);
+    console.log(ukupno);
 
     let opis;
-    const prag = ponderiSadhana.Tithi + ponderiSadhana.Nakshatra; // 0.65 ili 0.85 (tithi i nakshatra ili tithi, nakshatra i yoga)
+    const prag = ponderi.Tithi + ponderi.Nakshatra; // 0.65 ili 0.85 (tithi i nakshatra ili tithi, nakshatra i yoga)
     if (ukupno >= prag) {
-      opis = "Auspicious time";
+      opis = "auspicious";
     } else if (ukupno <= -prag) {
-      opis = "Inauspicious time";
+      opis = "inauspicious";
     } else {
-      opis = "Neutral time";
+      opis = "neutral";
     }
 
     return {
@@ -393,8 +386,8 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <p>{vedicTime}</p> */}
           <div className='panchangContainer'>
             <div>
-              <h4>Purnimanta Panchang | {povoljnost.opis}</h4>
-              <br />
+              <p>According to the panchang, this moment is {povoljnost.opis} for your practice (sadhana).</p>
+              <h4>Purnimanta Panchang</h4>
               <span>
                 Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}
               </span>

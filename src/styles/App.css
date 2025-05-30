@@ -434,7 +434,7 @@ tr:last-child td {
 
 .panchangChart {
   position: absolute;
-  top: 127px;
+  top: 170px;
   right: 15px;
   transform: scale(0.7);
   border-radius: 100px;

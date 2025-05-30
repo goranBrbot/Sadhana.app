@@ -62,13 +62,15 @@ const CHOGHADIYA_TYPE = {
   Udveg: "Bad",
 };
 
+// parashara - grahas (benefic-malefic), internally-externally represented qualities, guna (sattva, rajas, tamas), and their effects on human life
 const CHOGHADIYA_INFO = {
   Amrit: {
-    ruler: "Chandra (Moon)",
+    ruler: "Chandra (Moon)", // parashara - manas (mind), thoughts (imagination), emotions (empathy), support, royal, motherly (nurturing), Water, Satwic,
     rulerIcon: "☽",
     guna: "Sattva",
-    title: "Amrit Choghadiya - Nectar",
-    description: "Best time for bhakti yoga, japa and meditation.",
+    tatva: "Water",
+    title: "Amrit Choghadiya | Nectar",
+    description: "Best time for bhakti, japa and meditation.",
     quote: [
       "God's Light is in every creature. To love and serve them is to love and serve God.",
       "The perfect awakening of Self-realization takes place through love.",
@@ -77,11 +79,12 @@ const CHOGHADIYA_INFO = {
     ],
   },
   Shubh: {
-    ruler: "Guru (Jupiter)",
+    ruler: "Guru (Jupiter)", // parashara - knowledge, wisdom (spirituality), growth, spread, prosperity, optimism, happiness, teacher (learning-teaching), Ether, Satwic,
     rulerIcon: "♃",
     guna: "Sattva",
-    title: "Shubh Choghadiya - Auspicious",
-    description: "Best time for svadhyaya, satya and satsang.",
+    tatva: "Ether",
+    title: "Shubh Choghadiya | Auspicious",
+    description: "Best time for svadhyaya or spread of wisdom.",
     quote: [
       "Always hold onto the Truth. Keep your word even if it costs your life.",
       "Learn to control your desires. Do not abandon yourself to dependence on your senses.",
@@ -90,11 +93,12 @@ const CHOGHADIYA_INFO = {
     ],
   },
   Labh: {
-    ruler: "Budha (Mercury)",
+    ruler: "Budha (Mercury)", // parashara - speech (communication), buddhi (intellect), logic, clarity, adaptability, diplomat, Earth, Rajasik
     rulerIcon: "☿",
-    guna: "Sattva",
-    title: "Labh Choghadiya - Profitable",
-    description: "Best time for pranayama, chanting of mantras and tapasya.",
+    guna: "Rajas",
+    tatva: "Earth",
+    title: "Labh Choghadiya | Profitable",
+    description: "Best time for chanting of mantras.*",
     quote: [
       "The success of your actions lies within the strength of your inner conviction and self-discipline. Do not lose your courage and never give up.",
       "Outer purity alone is not enough. Pure consciousness needs both inner and outer purity.",
@@ -103,11 +107,12 @@ const CHOGHADIYA_INFO = {
     ],
   },
   Char: {
-    ruler: "Shukra (Venus)",
+    ruler: "Shukra (Venus)", // parashara - reproduction (semen), relationships (pleasures), harmony (balance), comforts (desires), beauty (art), advisor, Water, Rajasik
     rulerIcon: "♀",
     guna: "Rajas",
-    title: "Char Choghadiya - Moving",
-    description: "Best time for seva, karma yoga, bhajans, and pilgrimage.",
+    tatva: "Water",
+    title: "Char Choghadiya | Moving",
+    description: "Best time for bhajans, kirtans, and sangha.",
     quote: [
       "The success of your actions lies within the strength of your inner conviction and self-discipline. Do not lose your courage and never give up.",
       "Respect everyone equally. Always be ready to help. Without doing good, without right action, life lacks meaning.",
@@ -117,11 +122,12 @@ const CHOGHADIYA_INFO = {
     ],
   },
   Rog: {
-    ruler: "Mangala (Mars)",
+    ruler: "Mangala (Mars)", // parashara - energy, strength, protecting (aggression), action, focus, motivation (will), CEO (commanding), Fire, Tamasic,
     rulerIcon: "♂",
     guna: "Tamas",
-    title: "Rog Choghadiya - Disease",
-    description: "Best time for asanas, shatkarmas, and vairagya development.",
+    tatva: "Fire",
+    title: "Rog Choghadiya | Disease",
+    description: "Best time for asanas, pranayama, and physical exercise.",
     quote: [
       "Rise before sunrise and practise your spiritual exercises. Their benefits will accompany you the whole day.",
       "Be moderate with eating, as excessive craving for pleasure leads to laziness and disease.",
@@ -130,11 +136,12 @@ const CHOGHADIYA_INFO = {
     ],
   },
   Kaal: {
-    ruler: "Shani (Saturn)",
+    ruler: "Shani (Saturn)", // parashara - grief, deep (profound), serious (cold), eternal (slow but steady), long term values, responsibility, commitment, stability, employee (servants) and introverts (researchers, monks) Air, Tamasik
     rulerIcon: "♄",
     guna: "Tamas",
-    title: "Kal Choghadiya - Time|Death",
-    description: "Best time for mauna, pratyahara, upavasa.",
+    tatva: "Air",
+    title: "Kal Choghadiya | Time",
+    description: "Best time for mauna or pratyahara.",
     quote: [
       "Avoid words which you may later regret. Do nothing that will give away your principles, cause loss of self respect or sow the seeds of discord.",
       "When the waves are high one should not dive for pearls.",
@@ -144,11 +151,12 @@ const CHOGHADIYA_INFO = {
     ],
   },
   Udveg: {
-    ruler: "Surya (Sun)",
+    ruler: "Surya (Sun)", // parashara - atma (soul), ego, power, identity, self-confidence, royal, fatherly(leadership), Fire, Satwic,
     rulerIcon: "☉",
-    guna: "Rajas",
-    title: "Udveg Choghadiya - Anxiety",
-    description: "Best time for seva, leadership roles in sangha, or confronting ego through disciplined practice.",
+    guna: "Sattva",
+    tatva: "Fire",
+    title: "Udveg Choghadiya | Anxiety",
+    description: "Best time for karma yoga or confronting ego through disciplined practice.",
     quote: [
       "First impressions should never be the basis for your decisions. Wait until you have obtained further knowledge and in this way you will avoid unnecessary disappointments.",
       "Treat others as you wish they should treat you. You will get back everything that you give.",
@@ -156,6 +164,15 @@ const CHOGHADIYA_INFO = {
       "Debts between friends not settled in time jeopardise the friendship. Give with an open heart, but weigh exactly what to do.",
       "Do not make enemies through thoughtless mistakes. Do not constantly complain about your problems.",
     ],
+  },
+  // Rahu Kaal is a period of time considered inauspicious in Hindu astrology.
+  RahuKaal: {
+    ruler: "Rahu", // parashara - outsiders (excentric), unexpected (unpredictable), passionate, impulsive, wild (tricky, fake), illusionary
+    rulerIcon: "☊",
+    guna: "",
+    title: "Rahu Kaal | Inauspicious",
+    description: "Rahu Kaal is considered very inauspicious and is avoided for important activities.",
+    quote: [],
   },
 };
 
@@ -408,11 +425,9 @@ const Choghadiya = ({ sunrise, sunset }) => {
           </p>
           {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
             <div>
-              <h4>
-                {CHOGHADIYA_INFO[aktivnaChoghadiya].title}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
-              </h4>
+              <h4>{CHOGHADIYA_INFO[aktivnaChoghadiya].title}</h4>
               <span>
-                Influenced by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}.
+                Ruled by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}.
               </span>
               <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p>
               {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")}
