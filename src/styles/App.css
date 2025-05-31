@@ -416,9 +416,9 @@ tr:last-child td {
 
 .bird {
   position: absolute;
-  top: 10px;
-  left: 110px;
-  width: 100px;
+  top: 15px;
+  left: 120px;
+  width: 80px;
   height: 100px;
   background-image: url("/backgrounds/bird.gif");
   background-size: 100% 100%;
