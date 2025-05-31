@@ -418,12 +418,12 @@ tr:last-child td {
   position: absolute;
   top: 15px;
   left: 120px;
-  width: 80px;
-  height: 100px;
+  width: 6.3em;
+  height: 7em;
   background-image: url("/backgrounds/bird.gif");
   background-size: 100% 100%;
   z-index: 2;
-  animation: birdFly 60s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: birdFly 30s cubic-bezier(0.42, 0, 0.58, 1) infinite;
   pointer-events: none;
 }
 
@@ -432,16 +432,15 @@ tr:last-child td {
     opacity: 0;
     transform: scale(0) translateX(0) translateY(0);
   }
-  30% {
+  35% {
     opacity: 1;
   }
   50% {
     opacity: 1;
-    transform: scale(1) translateX(100vw) translateY(-80px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateX(100vw) translateY(-180px);
+    transform: scale(1) translateX(120vw) translateY(-50px);
   }
 }
 
