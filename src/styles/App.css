@@ -414,6 +414,37 @@ tr:last-child td {
   display: none;
 }
 
+.bird {
+  position: absolute;
+  top: 45px;
+  left: 110px;
+  width: 3em;
+  height: 3em;
+  background-image: url("/backgrounds/bird.gif");
+  background-size: 100% 100%;
+  z-index: 2;
+  animation: birdFly 60s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes birdFly {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateX(0) translateY(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translateX(100vw) translateY(-80px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(100vw) translateY(-180px);
+  }
+}
+
 .moonPhase {
   display: flex;
   flex-direction: row;

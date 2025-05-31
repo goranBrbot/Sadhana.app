@@ -55,7 +55,22 @@ export default function Panchang(date, location) {
       "Dvādaśī",
       "Trayodaśī",
       "Caturdaśī",
-      "Pūrṇimā / Amāvasyā",
+      "Pūrṇimā",
+      "Pratipadā",
+      "Dvitīyā",
+      "Tṛtīyā",
+      "Caturthī",
+      "Pañcamī",
+      "Ṣaṣṭhī",
+      "Saptamī",
+      "Aṣṭamī",
+      "Navamī",
+      "Daśamī",
+      "Ekādaśī",
+      "Dvādaśī",
+      "Trayodaśī",
+      "Caturdaśī",
+      "Amāvasyā",
     ];
 
     const groups = {

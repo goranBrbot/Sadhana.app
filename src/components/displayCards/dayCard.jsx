@@ -142,9 +142,8 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
                     <Typography>
                       <p>
                         In Vedic tradition, time is not just a flow it is a conscious force. Each part of the day carries a specific vibration based on the ruling planet. The system of Choghadiya,
-                        which divides day and night into eight parts each, helps us align our actions with supportive energies. While some Choghadiyas are favorable for all types of
-                        sadhana, others may carry restlessness or heaviness. Understanding their quality can help yogis deepen their connection, minimize obstacles, and tune in with
-                        cosmic rhythms.
+                        which divides day and night into eight parts each, helps us align our actions with supportive energies. While some Choghadiyas are favorable for all types of sadhana, others
+                        may carry restlessness or heaviness. Understanding their quality can help yogis deepen their connection, minimize obstacles, and tune in with cosmic rhythms.
                       </p>
                       <hr />
                       <br />
@@ -154,13 +153,13 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
                         <p>These time periods are supportive for meditation, mantra, puja, study of shastra, and devotional activities.</p>
                         <p>
                           <strong>Amrit Choghadiya (Ruled by Moon)</strong>
-                          <br /> This time carries a gentle, nourishing, and sattvic vibration. Ideal for all kinds of inner work.
-                          Best for: meditation, bhakti yoga, mantra chanting (japa) and night prayers. 
+                          <br /> This time carries a gentle, nourishing, and sattvic vibration. Ideal for all kinds of inner work. Best for: meditation, bhakti yoga, mantra chanting (japa) and night
+                          prayers.
                         </p>
                         <p>
                           <strong>Shubh Choghadiya (Ruled by Jupiter)</strong>
-                          <br /> Time under Jupiter is infused with wisdom, expansion, and divine grace. It supports learning, deeper understanding, and spiritual initiation. 
-                          Best for: Scriptural study (svadhyaya), satsanga, teaching/learning sessions, yajnas, and sankalpa-based practices.
+                          <br /> Time under Jupiter is infused with wisdom, expansion, and divine grace. It supports learning, deeper understanding, and spiritual initiation. Best for: Scriptural
+                          study (svadhyaya), satsanga, teaching/learning sessions, yajnas, and sankalpa-based practices.
                         </p>
                         <p>
                           <strong>Labh Choghadiya (Ruled by Mercury)</strong>
@@ -378,6 +377,7 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
           <small>BY YOUR LOCATION</small>
         </div>
         <div className='container'>
+          <div className='bird'></div>
           <span>{todayDayDate}</span>
           <br />
           <span>

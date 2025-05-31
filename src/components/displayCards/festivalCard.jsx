@@ -356,13 +356,17 @@ export default function FestivalCard({ location, tithiDay }) {
     console.log(ukupno);
 
     let opis;
-    const prag = ponderi.Tithi + ponderi.Nakshatra; // 0.65 ili 0.85 (tithi i nakshatra ili tithi, nakshatra i yoga)
-    if (ukupno >= prag) {
-      opis = "auspicious";
-    } else if (ukupno <= -prag) {
-      opis = "inauspicious";
+    // 0.65 ili 0.85 (tithi i nakshatra ili tithi, nakshatra i yoga) tradicionalno gledani za duhovnost
+    if (ukupno >= 0.65) {
+      opis = "very auspicious"; // 0.65 - 1
+    } else if (ukupno >= 0.35) {
+      opis = "auspicious"; // 0.35 - 0.65
+    } else if (ukupno >= -0.35) {
+      opis = "neutral"; // -0.35 - 0.35
+    } else if (ukupno >= -0.65) {
+      opis = "inauspicious"; // -0.65 - -0.35
     } else {
-      opis = "neutral";
+      opis = "very inauspicious"; // -1 - -0.65
     }
 
     return {
@@ -386,7 +390,7 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <p>{vedicTime}</p> */}
           <div className='panchangContainer'>
             <div>
-              <p>According to the panchang, this moment is {povoljnost.opis} for your practice (sadhana).</p>
+              <p>According to the panchang, this moment is {povoljnost.opis} for your sadhana.</p>
               <h4>Purnimanta Panchang</h4>
               <span>
                 Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}
