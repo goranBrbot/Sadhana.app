@@ -429,7 +429,8 @@ const Choghadiya = ({ sunrise, sunset }) => {
               <span>
                 Ruled by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}.
               </span>
-              <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p>
+              <p></p>
+              {/* <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p> */}
               {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")}
               <blockquote>
                 &quot;{getRandomQuote(CHOGHADIYA_INFO[aktivnaChoghadiya].quote)}&quot;

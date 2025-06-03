@@ -414,7 +414,7 @@ tr:last-child td {
   display: none;
 }
 
-.bird {
+/* .bird {
   position: absolute;
   top: 15px;
   left: 120px;
@@ -423,7 +423,7 @@ tr:last-child td {
   background-image: url("/backgrounds/bird.gif");
   background-size: 100% 100%;
   z-index: 2;
-  animation: birdFly 30s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: birdFly 17s cubic-bezier(0.99, 0, 1, 1) infinite;
   pointer-events: none;
 }
 
@@ -435,14 +435,11 @@ tr:last-child td {
   35% {
     opacity: 1;
   }
-  50% {
-    opacity: 1;
-  }
   100% {
     opacity: 1;
-    transform: scale(1) translateX(120vw) translateY(-50px);
+    transform: scale(1) translateX(100vw) translateY(-50px);
   }
-}
+} */
 
 .moonPhase {
   display: flex;
