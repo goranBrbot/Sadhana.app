@@ -34,7 +34,7 @@ const FESTIVALS = [
   ["Duhssera (Vijaya Dashami)", "2.10."],
   ["Sharad Purnima", "6.10."],
   ["Diwali", "20.10."],
-  ["Holy Guruji's Mahasamadhi", "28.10."],
+  ["Holy Guruji Mahasamadhi", "28.10."],
   ["UN World Meditation Day", "21.12."],
 ];
 
@@ -102,7 +102,7 @@ export default function FestivalCard({ location, tithiDay }) {
   const festivalTable = () => (
     <div style={{ marginTop: "30px" }}>
       <div className='festivalButton' onClick={() => setShowTable((prev) => !prev)}>
-        <h4>All festivals</h4>
+        <h4>All festival dates in 2025</h4>
       </div>
       {showTable && (
         <table>

@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function DailyInspiration() {
+  const [containerVisible, setContainerVisible] = useState(false);
+  const toggleContainer = () => setContainerVisible(!containerVisible);
+
   const quotes = [
     { quote: "Love God with a pure heart.", author: "Bhagavan Sri Deep Narayan Mahaprabhuji" },
     {
@@ -126,12 +130,12 @@ export default function DailyInspiration() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card dailyInspirationCard'>
-        <div className='topBar' style={{ position: "relative" }}>
+        <div className='topBar' onClick={toggleContainer} style={{ position: "relative" }}>
           <h3>Daily inspiration</h3>
           <small>QUOTES & MANTRAS</small>
           <small className='aktivniInfo'>Quote</small>
         </div>
-        <div className={`container`}>
+        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <blockquote>
             <span className='quoteMark'>&quot;</span>
             <span> {q.quote} </span>

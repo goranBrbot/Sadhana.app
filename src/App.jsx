@@ -208,6 +208,8 @@ function App() {
         )}
       </div>
       <br />
+      <div>{dataReady && <DailyInspiration />}</div>
+      <br />
       <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} />}</div>
       <br />
       <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} />}</div>
@@ -215,8 +217,6 @@ function App() {
       <div>{dataReady && <FastingCard sunrise={sunrise} />}</div>
       <br />
       <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
-      <br />
-      <div>{dataReady && <DailyInspiration />}</div>
       {/* <footer>
         <small>Made with&nbsp;</small>
         <svg className='heart' viewBox='0 0 24 24' fill='tomato' xmlns='http://www.w3.org/2000/svg'>
