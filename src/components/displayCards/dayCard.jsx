@@ -377,7 +377,7 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
           <small>BY YOUR LOCATION</small>
         </div>
         <div className='container'>
-          <div className='bird'></div>
+          {/* <div className='bird'></div> */}
           <span>{todayDayDate}</span>
           <br />
           <span>

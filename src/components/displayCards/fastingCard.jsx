@@ -1,9 +1,15 @@
+import { useState } from "react";
+
 import { format, isSameDay } from "date-fns";
 import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
 export default function FastingCard({ sunrise }) {
+  const [containerVisible, setContainerVisible] = useState(false);
+
+  const toggleContainer = () => setContainerVisible(!containerVisible);
+
   function getElongation(date) {
     let elongation = EclipticLongitude("Moon", date);
     if (elongation < 0) {
@@ -127,7 +133,7 @@ export default function FastingCard({ sunrise }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card fastingCard'>
-        <div className='topBar' style={{ position: "relative" }}>
+        <div className='topBar' onClick={toggleContainer} style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
           <small className='aktivniInfo'>
@@ -143,7 +149,7 @@ export default function FastingCard({ sunrise }) {
             ))}
           </small>
         </div>
-        <div className='container'>
+        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <span>{purnima()}</span>
           <br />
           <span>{amavasya()}</span>

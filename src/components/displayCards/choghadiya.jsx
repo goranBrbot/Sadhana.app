@@ -53,13 +53,13 @@ const CHOGHADIYA_MAP = {
 };
 
 const CHOGHADIYA_TYPE = {
-  Amrit: "Best",
-  Shubh: "Good",
-  Labh: "Gain",
-  Char: "Neutral",
-  Rog: "Evil",
-  Kaal: "Loss",
-  Udveg: "Bad",
+  Amrit: "",
+  Shubh: "",
+  Labh: "",
+  Char: "",
+  Rog: "",
+  Kaal: "",
+  Udveg: "",
 };
 
 // parashara - grahas (benefic-malefic), internally-externally represented qualities, guna (sattva, rajas, tamas), and their effects on human life
@@ -71,12 +71,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Water",
     title: "Amrit Choghadiya | Nectar",
     description: "Best time for bhakti, japa and meditation.",
-    quote: [
-      "God's Light is in every creature. To love and serve them is to love and serve God.",
-      "The perfect awakening of Self-realization takes place through love.",
-      "Love every living being at least as much as yourself.",
-      "Love God with a pure heart.",
-    ],
   },
   Shubh: {
     ruler: "Guru (Jupiter)", // parashara - knowledge, wisdom (spirituality), growth, spread, prosperity, optimism, happiness, teacher (learning-teaching), Ether, Satwic,
@@ -85,12 +79,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Ether",
     title: "Shubh Choghadiya | Auspicious",
     description: "Best time for svadhyaya or spread of wisdom.",
-    quote: [
-      "Always hold onto the Truth. Keep your word even if it costs your life.",
-      "Learn to control your desires. Do not abandon yourself to dependence on your senses.",
-      "Everyone has good and bad habits. Do not see the bad in others, rather discover their virtues and emulate them. Learn good from everyone and everything.",
-      "Do not praise yourself. Others may praise you but your greatness lies in modesty.",
-    ],
   },
   Labh: {
     ruler: "Budha (Mercury)", // parashara - speech (communication), buddhi (intellect), logic, clarity, adaptability, diplomat, Earth, Rajasik
@@ -99,12 +87,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Earth",
     title: "Labh Choghadiya | Profitable",
     description: "Best time for chanting of mantras.*",
-    quote: [
-      "The success of your actions lies within the strength of your inner conviction and self-discipline. Do not lose your courage and never give up.",
-      "Outer purity alone is not enough. Pure consciousness needs both inner and outer purity.",
-      "Do not give up what you have already started. There will always be obstacles in the way, just like roses always have thorns. Remove those obstacles with self-confidence and by God's grace your path will lead you to the goal.",
-      "Whatever you plan to do, do it with firm determination and your success will be assured.",
-    ],
   },
   Char: {
     ruler: "Shukra (Venus)", // parashara - reproduction (semen), relationships (pleasures), harmony (balance), comforts (desires), beauty (art), advisor, Water, Rajasik
@@ -113,13 +95,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Water",
     title: "Char Choghadiya | Moving",
     description: "Best time for bhajans, kirtans, and sangha.",
-    quote: [
-      "The success of your actions lies within the strength of your inner conviction and self-discipline. Do not lose your courage and never give up.",
-      "Respect everyone equally. Always be ready to help. Without doing good, without right action, life lacks meaning.",
-      "Worldly things unnecessarily accumulated only become burdens and will bring sorrow. Material wealth is transient. Lakshmi, the Goddess of wealth, dislikes to be captured. The best possessions to handle are devotion, service and benefaction.",
-      "If one wears the robe of an order and turns away from worldly life, yet is still not purified within and adheres not to right action, then their renunciation is meaningless.",
-      "Avoid unnecessary quarrels and avoid bad company. Keep away from hazards. Associate with good and wise people.",
-    ],
   },
   Rog: {
     ruler: "Mangala (Mars)", // parashara - energy, strength, protecting (aggression), action, focus, motivation (will), CEO (commanding), Fire, Tamasic,
@@ -128,12 +103,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Fire",
     title: "Rog Choghadiya | Disease",
     description: "Best time for asanas, pranayama, and physical exercise.",
-    quote: [
-      "Rise before sunrise and practise your spiritual exercises. Their benefits will accompany you the whole day.",
-      "Be moderate with eating, as excessive craving for pleasure leads to laziness and disease.",
-      "Learn to control your desires. Do not abandon yourself to dependence on your senses.",
-      "Lethargy is one of your greatest enemies. Without effort you will not reach your aim. So give up your laziness.",
-    ],
   },
   Kaal: {
     ruler: "Shani (Saturn)", // parashara - grief, deep (profound), serious (cold), eternal (slow but steady), long term values, responsibility, commitment, stability, employee (servants) and introverts (researchers, monks) Air, Tamasik
@@ -142,13 +111,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Air",
     title: "Kal Choghadiya | Time",
     description: "Best time for mauna or pratyahara.",
-    quote: [
-      "Avoid words which you may later regret. Do nothing that will give away your principles, cause loss of self respect or sow the seeds of discord.",
-      "When the waves are high one should not dive for pearls.",
-      "Avoid places where you are not welcome.",
-      "Your words and deeds should equal each other.",
-      "Only pass on what is important. Hollow talk and gossip is lost time.",
-    ],
   },
   Udveg: {
     ruler: "Surya (Sun)", // parashara - atma (soul), ego, power, identity, self-confidence, royal, fatherly(leadership), Fire, Satwic,
@@ -157,13 +119,6 @@ const CHOGHADIYA_INFO = {
     tatva: "Fire",
     title: "Udveg Choghadiya | Anxiety",
     description: "Best time for karma yoga or confronting ego through disciplined practice.",
-    quote: [
-      "First impressions should never be the basis for your decisions. Wait until you have obtained further knowledge and in this way you will avoid unnecessary disappointments.",
-      "Treat others as you wish they should treat you. You will get back everything that you give.",
-      "Do not be dependent upon others. Stand on your own feet. Trust in your abilities and God will help you.",
-      "Debts between friends not settled in time jeopardise the friendship. Give with an open heart, but weigh exactly what to do.",
-      "Do not make enemies through thoughtless mistakes. Do not constantly complain about your problems.",
-    ],
   },
   // Rahu Kaal is a period of time considered inauspicious in Hindu astrology.
   RahuKaal: {
@@ -172,7 +127,6 @@ const CHOGHADIYA_INFO = {
     guna: "",
     title: "Rahu Kaal | Inauspicious",
     description: "Rahu Kaal is considered very inauspicious and is avoided for important activities.",
-    quote: [],
   },
 };
 
@@ -365,8 +319,8 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
               return (
                 <tr key={i} className={`${stilReda(chogh)} ${sada >= start && sada < end ? "aktivni" : ""}`}>
-                  <td style={{ width: "50%", textAlign: "left", paddingLeft: 15 }}>
-                    {chogh} - {CHOGHADIYA_TYPE[chogh]}{" "}
+                  <td style={{ width: "40%", textAlign: "left", paddingLeft: 35 }}>
+                    {chogh} {CHOGHADIYA_TYPE[chogh]}{" "}
                     <small style={{ color: "tomato", paddingInlineStart: "8px" }}>
                       {marksArr.map((mark, idx) =>
                         typeof mark === "string" ? (
@@ -398,11 +352,6 @@ const Choghadiya = ({ sunrise, sunset }) => {
 
   console.log("Choghadiya data:", { dnevnaTablica, nocnaTablica });
 
-  function getRandomQuote(arr) {
-    if (!Array.isArray(arr) || arr.length === 0) return "";
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -415,7 +364,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
           <small>CHOGHADIYA MUHURTA</small>
           {aktivnaChoghadiya && (
             <small className='aktivniInfo'>
-              {aktivnaChoghadiya} - {CHOGHADIYA_TYPE[aktivnaChoghadiya]}
+              {aktivnaChoghadiya} {CHOGHADIYA_TYPE[aktivnaChoghadiya]}
             </small>
           )}
         </div>
@@ -426,16 +375,14 @@ const Choghadiya = ({ sunrise, sunset }) => {
           {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
             <div>
               <h4>{CHOGHADIYA_INFO[aktivnaChoghadiya].title}</h4>
-              <span>
-                Ruled by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}.
-              </span>
-              <p></p>
+              <div>
+                <span>
+                  Ruled by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}.
+                </span>
+              </div>
+              <br />
               {/* <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p> */}
-              {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")}
-              <blockquote>
-                &quot;{getRandomQuote(CHOGHADIYA_INFO[aktivnaChoghadiya].quote)}&quot;
-                <cite>- Mahaprabhuji</cite>
-              </blockquote>
+              {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")} <br />
               {renderTablica(nocnaTablica, "NIGHT CHOGHADIYA")}
             </div>
           )}

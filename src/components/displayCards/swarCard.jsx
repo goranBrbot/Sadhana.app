@@ -10,6 +10,9 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
   const [idaVremena, setIdaVremena] = useState([]);
   const [pingalaVremena, setPingalaVremena] = useState([]);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [containerVisible, setContainerVisible] = useState(false);
+
+  const toggleContainer = () => setContainerVisible(!containerVisible);
 
   const swarVrijeme = (dan, lista, startVrijeme, trajanjeMinuta, brojElemenata) => {
     const rezultat = [];
@@ -113,6 +116,21 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
     }
   }, [sunrise]);
 
+  const getCurrentSwara = () => {
+    const now = new Date();
+    for (const item of idaVremena) {
+      if (now >= item.start && now < item.end) {
+        return item.sequence; // "Ida"
+      }
+    }
+    for (const item of pingalaVremena) {
+      if (now >= item.start && now < item.end) {
+        return item.sequence; // "Pingala"
+      }
+    }
+    return "--";
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }} // Initial state (invisible)
@@ -120,12 +138,14 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
       <div className='card swarCard'>
-        <div className='topBar'>
+        <div className='topBar' onClick={toggleContainer}>
           <h3>Active nostril</h3>
           <small>SWARA YOGA</small>
-          <img className='iconSwar' src='/backgrounds/gurudev.png' alt='Gurudev' />
+          <small className='aktivniInfo'>{getCurrentSwara()}</small>
+          {/* <img className='gurudevIcon' src='/backgrounds/gurudev.png' alt='Gurudev' /> */}
+          {/* <img className='iconSwar' src='/icons/hinduism.png' alt='Air flow' /> */}
         </div>
-        <div className='container'>
+        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <div>
             <p>{idaDays.includes(tithiDay) ? `Day start with left nostril.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril.` : "Swara"}</p>
           </div>

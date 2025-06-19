@@ -171,7 +171,7 @@ p:not(:last-child) {
 }
 
 blockquote {
-  margin: 2em 0em;
+  margin: 0;
   color: var(--color-black);
   font-style: italic;
   text-align: center;
@@ -189,6 +189,7 @@ ul {
   list-style-type: none;
 }
 
+/* swara day list hide */
 li {
   display: none;
 }
@@ -284,6 +285,25 @@ tr:last-child td {
   pointer-events: none;
   z-index: -1;
   mask-image: linear-gradient(200deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+.dailyInspirationCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/backgrounds/dailyinspirationcard.png");
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 8px;
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 1) 100%);
 }
 
 .card.swarCard::before {
@@ -504,7 +524,7 @@ tr:last-child td {
   animation: rotateAndPulse 27s cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
 
-.iconSwar {
+.gurudevIcon {
   height: 225px;
   position: absolute;
   top: 27px;
@@ -513,6 +533,21 @@ tr:last-child td {
   z-index: 1;
   pointer-events: none;
   filter: drop-shadow(0 0 0 white) drop-shadow(0 0 8px rgb(253, 250, 237));
+}
+
+.iconSwar {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(3px);
+  border-radius: 50px;
+  padding: 0.8em;
+  height: 70px;
+  position: absolute;
+  top: 50px;
+  right: 30px;
+  filter: drop-shadow(0 0 0 white) drop-shadow(0 0 8px rgb(253, 250, 237));
+  z-index: 1;
+  pointer-events: none;
 }
 
 .iconFood {
@@ -578,34 +613,8 @@ tr:last-child td {
   z-index: -1;
 }
 
-/* #loaderSadhana {
-  font-size: 2em;
+.quoteMark {
   font-weight: 700;
-  color: #fff;
-  margin-inline-start: 20px;
-  text-wrap: wrap;
+  font-style: bold;
+  font-size: 1.2rem;
 }
-
-.loader {
-  display: flex;
-  place-content: center;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  background: rgb(255, 232, 124);
-  border-radius: 30px;
-  border: 2px solid rgb(255, 249, 229);
-  backdrop-filter: blur(15px);
-  box-shadow: -1px -1px 2px 0 rgba(248, 103, 0, 0.5);
-}
-
-.item {
-  position: absolute;
-  z-index: 1;
-  overflow: visible;
-  stroke: rgb(248, 105, 0);
-  stroke-width: 3;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
- */
