@@ -381,7 +381,7 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
           <span>{todayDayDate}</span>
           <br />
           <span>
-            Sunrise: {todaySunriseTime} - Sunset: {todaySunsetTime}
+            Sunrise {todaySunriseTime} - Sunset: {todaySunsetTime}
           </span>
           <br />
           <span>{locationName}</span>

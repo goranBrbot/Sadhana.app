@@ -477,22 +477,12 @@ tr:last-child td {
   }
 } */
 
-.moonPhase {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
+.muhurtaContainer {
   border: 1px solid rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(3px);
   border-radius: 25px;
   padding: 1em;
-}
-
-.moonPhase > :first-child {
-  flex: 0 0 20%;
-}
-
-.moonPhase > :last-child {
-  flex: 0 0 auto;
+  margin-bottom: 1.5em;
 }
 
 .panchangContainer {
@@ -510,6 +500,25 @@ tr:last-child td {
   transform: scale(0.6);
   border-radius: 100px;
   border: 0px solid rgba(255, 255, 255, 1);
+}
+
+.moonPhase {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.moonPhase > :first-child {
+  flex: 0 0 20%;
+}
+
+.moonPhase > :last-child {
+  flex: 0 0 auto;
+}
+
+.calendarContainer {
+  margin-top: 15px;
+  padding: 1em;
 }
 
 .festivalButton {

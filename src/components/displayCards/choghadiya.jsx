@@ -369,18 +369,19 @@ const Choghadiya = ({ sunrise, sunset }) => {
           )}
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <p>
-            Brahma Muhurta: {brahmamuhurtaStart} - {brahmamuhurtaEnd}
-          </p>
+          {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
+            <div className='muhurtaContainer'>
+              <p>
+                Brahmamuhurta {brahmamuhurtaStart} - {brahmamuhurtaEnd}
+              </p>
+              <span className='aktivni'>Active muhurta | {CHOGHADIYA_INFO[aktivnaChoghadiya].title}</span> <br />
+              <span>
+                {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler} | {CHOGHADIYA_INFO[aktivnaChoghadiya].tatva} | {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
+              </span>
+            </div>
+          )}
           {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
             <div>
-              <h4>{CHOGHADIYA_INFO[aktivnaChoghadiya].title}</h4>
-              <div>
-                <span>
-                  {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler} | {CHOGHADIYA_INFO[aktivnaChoghadiya].tatva} | {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
-                </span>
-              </div>
-              <br />
               {/* <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p> */}
               {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")} <br />
               {renderTablica(nocnaTablica, "NIGHT CHOGHADIYA")}

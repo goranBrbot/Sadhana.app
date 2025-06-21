@@ -10,32 +10,32 @@ Chart.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 //import FindGregorianDateFromVedic from "../vedicToGregorian";
 
 const FESTIVALS = [
-  ["Makar Sankranti", "14.1."],
-  ["Vasant Panchami", "2.2."],
-  ["Om Ashram Anniversary", "19.2."],
-  ["Maha Shivaratri", "26.2."],
-  ["Holi", "14.3."],
-  ["Spring Navaratri", "30.3.-6.4."],
-  ["Ramnavami", "6.4."],
-  ["Hanuman Đajanti", "12.4."],
-  ["International Day of Yoga", "21.6."],
-  ["Mataji's Mahasamadhi", "27.6."],
-  ["Guru Purnima", "10.7."],
-  ["Sri Devpuriji Mahasamadhi", "26.7."],
-  ["Vishwaguruji's Birthday", "27.7."],
-  ["Raksha Bandhan", "9.8."],
-  ["Janmashthami", "16.8."],
-  ["Holy Guruji's Birthday", "24.8."],
-  ["Ganesh Chaturthi", "26.8."],
-  ["Pitr Purnima", "7.9."],
-  ["UN Peace Day", "21.9."],
-  ["Autumn Navaratri", "22.9.-2.10."],
-  ["UN Non-Violence Day", "2.10."],
-  ["Duhssera (Vijaya Dashami)", "2.10."],
-  ["Sharad Purnima", "6.10."],
-  ["Diwali", "20.10."],
-  ["Holy Guruji Mahasamadhi", "28.10."],
-  ["UN World Meditation Day", "21.12."],
+  ["Makar Sankranti", "14.1.", "Marks the Sun's transition into Capricorn (Makara Rāshi), symbolizing spiritual ascent and the awakening of inner light."],
+  ["Vasant Panchami", "2.2.", "Dedicated to Devi Saraswati, the goddess of wisdom and divine speech, invoking clarity and inner knowledge."],
+  ["Om Ashram Anniversary", "19.2.", "Commemorates the founding of Om Ashram, a center of spiritual practice (Sadhana), Seva, and divine wisdom."],
+  ["Maha Shivaratri", "26.2.", "A sacred night of worship to Lord Shiva, observed with fasting, Japa, and meditation, invoking inner transformation."],
+  ["Holi", "14.3.", "Festival of divine joy and renewal, celebrating the triumph of Dharma through surrender and devotion (Bhakti)."],
+  ["Spring Navaratri", "30.3.-6.4.", "Nine nights of worship to Divine Mother Durga, invoking Shakti to overcome inner tamas and awaken purity."],
+  ["Ramnavami", "6.4.", "Celebrates the divine birth of Lord Rama, embodiment of Dharma, righteousness, and ideal kingly virtue."],
+  ["Hanuman Jayanti", "12.4.", "Honors the birth of Lord Hanuman, symbol of strength, humility, and unwavering devotion (Bhakti) to the Divine."],
+  ["International Day of Yoga", "21.6.", "A UN day to reaffirm the path of Yoga as a means to Self-realization, inner peace, and global unity."],
+  ["Mataji's Mahasamadhi", "27.6.", "Sacred remembrance of Mataji final liberation (Mahasamadhi), honoring a life of service and spiritual attainment."],
+  ["Guru Purnima", "10.7.", "Day of reverence to the Satguru, whose light dispels darkness and reveals the Self (Atma Jñāna)."],
+  ["Sri Devpuriji Mahasamadhi", "26.7.", "Honors the Mahasamadhi of Sri Devpuriji, revered yogi and realized Master of transcendental consciousness."],
+  ["Vishwaguruji's Birthday", "27.7.", "Celebration of the divine birth of Vishwaguruji, embodiment of Jñāna, Bhakti and compassion in action."],
+  ["Raksha Bandhan", "9.8.", "Symbolizes sacred protection and unity of spirit among siblings and all beings as one divine family."],
+  ["Janmashtami", "16.8.", "Divine birth of Lord Krishna, the avatar of love (Prema), wisdom (Jñāna), and the eternal witness (Sākṣin)."],
+  ["Holy Guruji's Birthday", "24.8.", "Celebrates the birth of Holy Guruji, source of divine guidance, Seva, and spiritual upliftment."],
+  ["Ganesh Chaturthi", "26.8.", "Worship of Lord Ganesha, remover of obstacles and symbol of auspicious beginnings in spiritual life."],
+  ["Pitr Purnima", "7.9.", "Day to honor ancestors through prayer and offerings, expressing gratitude and continuing the flow of blessings."],
+  ["UN Peace Day", "21.9.", "Affirms the yogic ideal of Ahimsa (non-violence), promoting harmony through inner peace and conscious living."],
+  ["Autumn Navaratri", "22.9.-2.10.", "Nine nights of Devi worship to invoke courage, purity, and victory over ego and ignorance."],
+  ["UN Non-Violence Day", "2.10.", "Commemorates Ahimsa as the highest Dharma, aligned with the yogic path of compassion and truth."],
+  ["Dussehra (Vijaya Dashami)", "2.10.", "Celebrates the victory of light over darkness, Dharma over adharma, and the conquest of ego through divine grace."],
+  ["Sharad Purnima", "6.10.", "Full moon festival of divine love and abundance, celebrated in devotion to Lord Krishna and the universal Mother."],
+  ["Diwali", "20.10.", "Festival of lights symbolizing the victory of inner light over ignorance, and awakening of the Self (Atman)."],
+  ["Holy Guruji Mahasamadhi", "28.10.", "Remembrance of Holy Guruji Mahasamadhi, reflecting eternal presence through his teachings and divine service."],
+  ["UN World Meditation Day", "21.12.", "Global observance encouraging Dhyana (meditation) as a universal path to inner peace and spiritual awakening."],
 ];
 
 export default function FestivalCard({ location, tithiDay }) {
@@ -133,7 +133,7 @@ export default function FestivalCard({ location, tithiDay }) {
   }
 
   const festivalTable = () => (
-    <div style={{ marginTop: "30px" }}>
+    <div style={{ marginTop: "10px" }}>
       <div className='festivalButton' onClick={() => setShowTable((prev) => !prev)}>
         <h4>All festival dates in 2025</h4>
       </div>
@@ -541,30 +541,41 @@ export default function FestivalCard({ location, tithiDay }) {
               </svg>
             </div>
           </div>
-          <div className='moonPhase'>
-            <div>{getTithiMoonImage(tithiDay)}</div>
-            <div>
-              <span>
-                {panchangData.Paksha} Pakṣa {panchangData.TithiInfo.tithiName}
-              </span>
-              {/* lunar waxing or waning */}
-              <br />
-              <span>
-                {panchangData.Tithi} {panchangData.Masa} Māsa Tithi
-              </span>
-              {/* lunar month, purnimanta system*/}
-              <br />
-              <span>{panchangData.Samvat} Vikrama Samvata</span>
-              {/* lunar year */}
+          <div className='calendarContainer'>
+            <div className='moonPhase'>
+              <div>{getTithiMoonImage(tithiDay)}</div>
+              <div>
+                <span>
+                  {panchangData.Paksha} Pakṣa {panchangData.TithiInfo.tithiName}
+                </span>
+                {/* lunar waxing or waning */}
+                <br />
+                <span>
+                  {panchangData.Tithi} {panchangData.Masa} Māsa Tithi
+                </span>
+                {/* lunar month, purnimanta system*/}
+                <br />
+                <span>{panchangData.Samvat} Vikrama Samvata</span>
+                {/* lunar year */}
+              </div>
             </div>
+            {nextFestivalInfo.name && (
+              <div>
+                <div style={{ marginTop: "35px", textAlign: "center", fontWeight: "500" }}>
+                  <span>{`${nextFestivalInfo.name}`}</span>
+                  <br />
+                  <span>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</span>
+                </div>
+                <br />
+                <div>
+                  {(() => {
+                    const fest = FESTIVALS.find((f) => f[0] === nextFestivalInfo.name);
+                    return fest ? fest[2] : "";
+                  })()}
+                </div>
+              </div>
+            )}
           </div>
-          {nextFestivalInfo.name && (
-            <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
-              <span>{`${nextFestivalInfo.name}`}</span>
-              <br />
-              <span>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</span>
-            </div>
-          )}
           {festivalTable()}
         </div>
       </div>
