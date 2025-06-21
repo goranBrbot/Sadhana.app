@@ -72,38 +72,28 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sunrise, tithiDay, setSwaraText]);
 
-  /* useEffect(() => {
-    if (idaVremena.length > 0 || pingalaVremena.length > 0) {
-      const sada = new Date();
-      let nextChangeTime;
+  function getNextSwaraChange(sunrise, tithiDay) {
+    const daysUntilChange = 3 - ((tithiDay - 1) % 3);
+    const nextChangeDay = daysUntilChange === 0 ? 3 : daysUntilChange;
+    return add(sunrise, { days: nextChangeDay });
+  }
 
-      // Provjeri je li trenutni interval posljednji u nizu
-      if (idaVremena.length > 0) {
-        nextChangeTime = idaVremena[0].end > sada ? idaVremena[0].end : sunrise;
-      } else if (pingalaVremena.length > 0) {
-        nextChangeTime = pingalaVremena[0].end > sada ? pingalaVremena[0].end : sunrise;
-      }
-
-      // Ako je nextChangeTime prije trenutnog vremena, koristi sunrise za sljedeći dan
-      if (nextChangeTime <= sada) {
-        nextChangeTime = add(sunrise, { hours: 24 }); // Dodaj 24 sata na sunrise
-      }
-
-      // Inicijalni izračun preostalog vremena
-      const initialRemaining = calculateRemainingTime(sada, nextChangeTime);
-      setRemainingTime(initialRemaining);
-
-      // Postavljanje intervala za ažuriranje preostalog vremena
-      const interval = setInterval(() => {
-        const remaining = calculateRemainingTime(new Date(), nextChangeTime);
-        setRemainingTime(remaining);
-      }, 1000); // Ažuriraj svake sekunde
-
-      return () => clearInterval(interval); // Očisti interval prilikom unmounta
-    }
-  }, [idaVremena, pingalaVremena, sunrise]); */
-
+  // računa do slijedeće promjene sware u sunrise
   useEffect(() => {
+    if (sunrise && tithiDay) {
+      const nextChange = getNextSwaraChange(sunrise, tithiDay);
+      const updateRemaining = () => {
+        const sada = new Date();
+        setRemainingTime(calculateRemainingTime(sada, nextChange));
+      };
+      updateRemaining();
+      const interval = setInterval(updateRemaining, 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [sunrise, tithiDay]);
+
+  // računa do slijedećeg sunrisea!
+  /* useEffect(() => {
     if (sunrise) {
       const nextSunrise = add(sunrise, { hours: 24 });
       const updateRemaining = () => {
@@ -114,7 +104,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
       const interval = setInterval(updateRemaining, 60 * 1000);
       return () => clearInterval(interval);
     }
-  }, [sunrise]);
+  }, [sunrise]); */
 
   const getCurrentSwara = () => {
     const now = new Date();

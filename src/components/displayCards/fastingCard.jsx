@@ -76,7 +76,8 @@ export default function FastingCard({ sunrise }) {
     }
   }
 
-  function ekadashi() {
+  // prethodna verzija koja ne prikazuje string na dan ekadashija ali točno računa
+  /* function ekadashi() {
     const now = new Date();
     const elong = getElongation(now);
 
@@ -125,6 +126,43 @@ export default function FastingCard({ sunrise }) {
     } else {
       return `${label} ${startStr}h – ${endStr}h`;
     }
+  } */
+
+  function ekadashi() {
+    const now = new Date();
+    // Pronađi prethodni Shukla Ekadashi
+    const prevShuklaStart = SearchMoonPhase(120, now, -31);
+    const prevShuklaEnd = SearchMoonPhase(132, prevShuklaStart.date, 31);
+    // Pronađi prethodni Krishna Ekadashi
+    const prevKrishnaStart = SearchMoonPhase(300, now, -31);
+    const prevKrishnaEnd = SearchMoonPhase(312, prevKrishnaStart.date, 31);
+
+    // Ako je sada unutar Shukla Ekadashija
+    if (now >= prevShuklaStart.date && now < prevShuklaEnd.date) {
+      return `Shukla Ekadashi is today till ${format(prevShuklaEnd.date, "HH:mm")}h`;
+    }
+    // Ako je sada unutar Krishna Ekadashija
+    if (now >= prevKrishnaStart.date && now < prevKrishnaEnd.date) {
+      return `Krishna Ekadashi is today till ${format(prevKrishnaEnd.date, "HH:mm")}h`;
+    }
+    // Inače, prikaži sljedeći ekadashi (onaj koji dolazi prije)
+    const nextShuklaStart = SearchMoonPhase(120, now, 31);
+    const nextShuklaEnd = SearchMoonPhase(132, nextShuklaStart.date, 31);
+    const nextKrishnaStart = SearchMoonPhase(300, now, 31);
+    const nextKrishnaEnd = SearchMoonPhase(312, nextKrishnaStart.date, 31);
+    let nextStart, nextEnd, label;
+    if (nextShuklaStart.date < nextKrishnaStart.date) {
+      nextStart = nextShuklaStart;
+      nextEnd = nextShuklaEnd;
+      label = "Shukla Ekadashi";
+    } else {
+      nextStart = nextKrishnaStart;
+      nextEnd = nextKrishnaEnd;
+      label = "Krishna Ekadashi";
+    }
+    const startStr = format(nextStart.date, "dd.MM. HH:mm");
+    const endStr = format(nextEnd.date, "dd.MM. HH:mm");
+    return `${label} ${startStr}h – ${endStr}h`;
   }
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
