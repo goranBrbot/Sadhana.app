@@ -183,6 +183,21 @@ cite {
   font-weight: 700;
 }
 
+.quote {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(3px);
+  will-change: opacity;
+  border-radius: 25px;
+  padding: 1em;
+  margin-bottom: 0.5em;
+}
+
+.quoteMark {
+  font-weight: 700;
+  font-style: bold;
+  font-size: 1.2rem;
+}
+
 ul {
   margin: 0;
   padding-left: 0;
@@ -428,10 +443,11 @@ tr:last-child td {
 }
 
 .container.hidden {
-  padding-top: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
   height: 0;
-  /* visibility: hidden; */
-  display: none;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 /* .bird {
@@ -477,14 +493,6 @@ tr:last-child td {
 
 .moonPhase > :last-child {
   flex: 0 0 auto;
-}
-
-.quote {
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(3px);
-  border-radius: 25px;
-  padding: 1em;
-  margin-bottom: 0.5em;
 }
 
 .panchangChart {
@@ -619,10 +627,4 @@ tr:last-child td {
   -webkit-filter: drop-shadow(0 0 0.3em #a5a5a5);
   filter: drop-shadow(0 0 0.3em #a5a5a5);
   z-index: -1;
-}
-
-.quoteMark {
-  font-weight: 700;
-  font-style: bold;
-  font-size: 1.2rem;
 }

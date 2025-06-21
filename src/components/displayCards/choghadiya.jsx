@@ -69,7 +69,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "☽",
     guna: "Sattva",
     tatva: "Water",
-    title: "Amrit (Nectar) Choghadiya",
+    title: "Amrit Choghadiya", // Nectar
     description: "Best time for bhakti, japa and meditation.",
   },
   Shubh: {
@@ -77,7 +77,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♃",
     guna: "Sattva",
     tatva: "Ether",
-    title: "Shubh (Auspicious) Choghadiya",
+    title: "Shubh Choghadiya", // Auspicious
     description: "Best time for svadhyaya or spread of wisdom.",
   },
   Labh: {
@@ -85,7 +85,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "☿",
     guna: "Rajas",
     tatva: "Earth",
-    title: "Labh (Profitable) Choghadiya",
+    title: "Labh Choghadiya", // Profitable
     description: "Best time for chanting of mantras.*",
   },
   Char: {
@@ -93,7 +93,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♀",
     guna: "Rajas",
     tatva: "Water",
-    title: "Char (Moving) Choghadiya",
+    title: "Char Choghadiya", // Moving
     description: "Best time for bhajans, kirtans, and sangha.",
   },
   Rog: {
@@ -101,7 +101,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♂",
     guna: "Tamas",
     tatva: "Fire",
-    title: "Rog (Disease) Choghadiya",
+    title: "Rog Choghadiya", // Disease
     description: "Best time for asanas, pranayama, and physical exercise.",
   },
   Kaal: {
@@ -109,7 +109,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♄",
     guna: "Tamas",
     tatva: "Air",
-    title: "Kal (Time) Choghadiya",
+    title: "Kal Choghadiya", // Time
     description: "Best time for mauna or pratyahara.",
   },
   Udveg: {
@@ -117,7 +117,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "☉",
     guna: "Sattva",
     tatva: "Fire",
-    title: "Udveg (Anxiety) Choghadiya",
+    title: "Udveg Choghadiya", // Anxiety
     description: "Best time for karma yoga or confronting ego through disciplined practice.",
   },
   // Rahu Kaal is a period of time considered inauspicious in Hindu astrology.
@@ -125,7 +125,7 @@ const CHOGHADIYA_INFO = {
     ruler: "Rahu", // parashara - outsiders (excentric), unexpected (unpredictable), passionate, impulsive, wild (tricky, fake), illusionary
     rulerIcon: "☊",
     guna: "",
-    title: "Rahu Kaal | Inauspicious",
+    title: "Rahu Kaal",
     description: "Rahu Kaal is considered very inauspicious and is avoided for important activities.",
   },
 };
@@ -377,7 +377,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
               <h4>{CHOGHADIYA_INFO[aktivnaChoghadiya].title}</h4>
               <div>
                 <span>
-                  Ruled by {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler}, {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}.
+                  {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler} | {CHOGHADIYA_INFO[aktivnaChoghadiya].tatva} | {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
                 </span>
               </div>
               <br />

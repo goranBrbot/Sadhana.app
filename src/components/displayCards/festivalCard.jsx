@@ -85,7 +85,7 @@ export default function FestivalCard({ location, tithiDay }) {
         name: activeFestival[0],
         daysRemaining: null,
         timeRemaining: "",
-        message: "is today",
+        message: "Is today",
       });
       return;
     }

@@ -2,9 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function DailyInspiration() {
-  const [containerVisible, setContainerVisible] = useState(false);
-  const toggleContainer = () => setContainerVisible(!containerVisible);
-
   const quotes = [
     { quote: "Love God with a pure heart.", author: "Sri Deep Narayan Mahaprabhuji" },
     {
@@ -511,7 +508,11 @@ export default function DailyInspiration() {
     if (!Array.isArray(quotes) || quotes.length === 0) return { quote: "", author: "" };
     return quotes[Math.floor(Math.random() * quotes.length)];
   }
-  const q = getRandomQuote();
+
+  const [selectedQuote, setSelectedQuote] = useState(() => getRandomQuote());
+  const [containerVisible, setContainerVisible] = useState(false);
+
+  const toggleContainer = () => setContainerVisible(!containerVisible);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
@@ -522,12 +523,13 @@ export default function DailyInspiration() {
           <small className='aktivniInfo'>Quote</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <blockquote className='quote'>
-            <span className='quoteMark'>&quot;</span>
-            <span> {q.quote} </span>
-            <span className='quoteMark'>&quot;</span>
-            <br />
-            <cite>- {q.author}</cite>
+          <blockquote className='quote' onClick={() => setSelectedQuote(getRandomQuote())}>
+            <div>
+              <span className='quoteMark'>&quot;</span>
+              <span> {selectedQuote.quote} </span>
+              <span className='quoteMark'>&quot;</span>
+            </div>
+            <cite>- {selectedQuote.author}</cite>
           </blockquote>
         </div>
       </div>
