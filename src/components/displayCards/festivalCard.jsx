@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { parse, isToday, isAfter, isWithinInterval, differenceInMilliseconds } from "date-fns";
+import { DateTime, Interval } from "luxon";
 import { PropTypes } from "prop-types";
 import Panchang from "../panchang";
 import { motion } from "framer-motion";
@@ -49,55 +49,88 @@ export default function FestivalCard({ location, tithiDay }) {
     name: "",
     daysRemaining: "",
     timeRemaining: "",
+    message: "",
   });
 
   const toggleContainer = () => setContainerVisible(!containerVisible);
 
-  useEffect(() => {
-    const today = new Date();
-    const currentYear = today.getFullYear();
-
-    let nextIndex = -1;
-    let nextFestivalDate = null;
-
-    for (let i = 0; i < FESTIVALS.length; i++) {
-      // eslint-disable-next-line no-unused-vars
-      const [name, dateStr] = FESTIVALS[i];
+  // Funkcija za dohvat intervala festivala
+  function getFestivalInterval(dateStr, year) {
+    if (dateStr.includes("-")) {
       const [startStr, endStr] = dateStr.split("-");
+      const start = DateTime.fromFormat(startStr.trim() + year, "d.M.yyyy");
+      const end = DateTime.fromFormat(endStr.trim() + year, "d.M.yyyy").endOf("day");
+      return Interval.fromDateTimes(start, end);
+    } else {
+      const date = DateTime.fromFormat(dateStr.trim() + year, "d.M.yyyy");
+      return Interval.fromDateTimes(date.startOf("day"), date.endOf("day"));
+    }
+  }
 
-      const startDate = parse(`${startStr}${currentYear}`, "d.M.yyyy", new Date());
+  useEffect(() => {
+    const today = DateTime.local();
+    const currentYear = today.year;
 
-      if (endStr) {
-        const endDate = parse(`${endStr}${currentYear}`, "d.M.yyyy", new Date());
-
-        if (isWithinInterval(today, { start: startDate, end: endDate })) {
-          nextIndex = i;
-          nextFestivalDate = startDate;
-          break;
-        }
-      }
-
-      if (isToday(startDate) || isAfter(startDate, today)) {
-        nextIndex = i;
-        nextFestivalDate = startDate;
+    // Prvo traži aktivni festival
+    let activeFestival = null;
+    for (let i = 0; i < FESTIVALS.length; i++) {
+      const interval = getFestivalInterval(FESTIVALS[i][1], currentYear);
+      if (interval.contains(today)) {
+        activeFestival = FESTIVALS[i];
         break;
       }
     }
+    if (activeFestival) {
+      setNextFestivalInfo({
+        name: activeFestival[0],
+        daysRemaining: null,
+        timeRemaining: "",
+        message: "is today",
+      });
+      return;
+    }
 
-    const nextFestival = FESTIVALS[nextIndex];
-    const timeDifference = nextFestivalDate ? differenceInMilliseconds(nextFestivalDate, today) : 0;
+    // Traži prvi festival u budućnosti
+    let nextFestival = null;
+    let nextFestivalDate = null;
+    for (let i = 0; i < FESTIVALS.length; i++) {
+      const interval = getFestivalInterval(FESTIVALS[i][1], currentYear);
+      if (interval.start > today) {
+        nextFestival = FESTIVALS[i];
+        nextFestivalDate = interval.start;
+        break;
+      }
+    }
+    if (!nextFestival) {
+      setNextFestivalInfo({
+        name: "",
+        daysRemaining: "",
+        timeRemaining: "",
+        message: "No more festivals this year",
+      });
+      return;
+    }
 
-    // Calculate days, hours, and minutes remaining
-    const daysRemaining = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const hoursRemaining = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutesRemaining = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-
+    const diff = nextFestivalDate.diff(today, ["days", "hours", "minutes"]).toObject();
     setNextFestivalInfo({
-      name: nextFestival ? nextFestival[0] : "",
-      daysRemaining: `${daysRemaining} days`,
-      timeRemaining: `${hoursRemaining} hours | ${minutesRemaining} minutes`,
+      name: nextFestival[0],
+      daysRemaining: Math.floor(diff.days),
+      timeRemaining: `${Math.floor(diff.hours)}:${Math.floor(diff.minutes)}h`,
+      message: "",
     });
   }, []);
+
+  function formatFestivalCountdown(days, time) {
+    if (days > 1) {
+      return `in ${days} days`;
+    } else if (days === 1) {
+      return `in 1 day`;
+    } else if (days === 0) {
+      return `in ${time}`; // prikazuje sate i minute kad je 0 dana
+    } else {
+      return time; // za slučaj kad je null ili undefined
+    }
+  }
 
   const festivalTable = () => (
     <div style={{ marginTop: "30px" }}>
@@ -382,7 +415,7 @@ export default function FestivalCard({ location, tithiDay }) {
         <div className='topBar' onClick={toggleContainer}>
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & CALENDAR</small>
-          <small className='aktivniInfo'>in {nextFestivalInfo.daysRemaining}</small>
+          <small className='aktivniInfo'>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</small>{" "}
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
@@ -527,11 +560,9 @@ export default function FestivalCard({ location, tithiDay }) {
           </div>
           {nextFestivalInfo.name && (
             <div style={{ marginTop: "25px", textAlign: "center", fontWeight: "500" }}>
-              <span>{`Next is "${nextFestivalInfo.name}"`}</span>
+              <span>{`${nextFestivalInfo.name}`}</span>
               <br />
-              <span>
-                in {nextFestivalInfo.daysRemaining} | {nextFestivalInfo.timeRemaining}
-              </span>
+              <span>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</span>
             </div>
           )}
           {festivalTable()}

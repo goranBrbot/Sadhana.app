@@ -69,7 +69,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "☽",
     guna: "Sattva",
     tatva: "Water",
-    title: "Amrit Choghadiya | Nectar",
+    title: "Amrit (Nectar) Choghadiya",
     description: "Best time for bhakti, japa and meditation.",
   },
   Shubh: {
@@ -77,7 +77,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♃",
     guna: "Sattva",
     tatva: "Ether",
-    title: "Shubh Choghadiya | Auspicious",
+    title: "Shubh (Auspicious) Choghadiya",
     description: "Best time for svadhyaya or spread of wisdom.",
   },
   Labh: {
@@ -85,7 +85,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "☿",
     guna: "Rajas",
     tatva: "Earth",
-    title: "Labh Choghadiya | Profitable",
+    title: "Labh (Profitable) Choghadiya",
     description: "Best time for chanting of mantras.*",
   },
   Char: {
@@ -93,7 +93,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♀",
     guna: "Rajas",
     tatva: "Water",
-    title: "Char Choghadiya | Moving",
+    title: "Char (Moving) Choghadiya",
     description: "Best time for bhajans, kirtans, and sangha.",
   },
   Rog: {
@@ -101,7 +101,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♂",
     guna: "Tamas",
     tatva: "Fire",
-    title: "Rog Choghadiya | Disease",
+    title: "Rog (Disease) Choghadiya",
     description: "Best time for asanas, pranayama, and physical exercise.",
   },
   Kaal: {
@@ -109,7 +109,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "♄",
     guna: "Tamas",
     tatva: "Air",
-    title: "Kal Choghadiya | Time",
+    title: "Kal (Time) Choghadiya",
     description: "Best time for mauna or pratyahara.",
   },
   Udveg: {
@@ -117,7 +117,7 @@ const CHOGHADIYA_INFO = {
     rulerIcon: "☉",
     guna: "Sattva",
     tatva: "Fire",
-    title: "Udveg Choghadiya | Anxiety",
+    title: "Udveg (Anxiety) Choghadiya",
     description: "Best time for karma yoga or confronting ego through disciplined practice.",
   },
   // Rahu Kaal is a period of time considered inauspicious in Hindu astrology.
