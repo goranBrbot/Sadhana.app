@@ -255,7 +255,7 @@ tr:last-child td {
 }
 
 .aktivni {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .card {
@@ -495,11 +495,19 @@ tr:last-child td {
   flex: 0 0 auto;
 }
 
+.panchangContainer {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(3px);
+  will-change: opacity;
+  border-radius: 25px;
+  padding: 1em;
+}
+
 .panchangChart {
   position: absolute;
-  top: 170px;
-  right: 15px;
-  transform: scale(0.7);
+  top: 108px;
+  right: 8px;
+  transform: scale(0.6);
   border-radius: 100px;
   border: 0px solid rgba(255, 255, 255, 1);
 }

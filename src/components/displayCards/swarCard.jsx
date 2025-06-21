@@ -137,21 +137,21 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <div>
-            <p>{idaDays.includes(tithiDay) ? `Day start with left nostril.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril.` : "Swara"}</p>
+            <p>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</p>
           </div>
           <ul>
             {idaVremena.map((item, index) => (
-              <li key={index}>{`${item.sequence} at ${format(item.start, "kk:mm'h'")} - ${format(item.end, "kk:mm'h'")}`}</li>
+              <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
             ))}
           </ul>
           <ul>
             {pingalaVremena.map((item, index) => (
-              <li key={index}>{`${item.sequence} at ${format(item.start, "kk:mm'h'")} - ${format(item.end, "kk:mm'h'")}`}</li>
+              <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
             ))}
           </ul>
           {remainingTime && (
             <span>
-              Changes for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
+              Nadi change for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
             </span>
           )}
         </div>

@@ -145,14 +145,14 @@ export default function FestivalCard({ location, tithiDay }) {
                 <td
                   style={{
                     textAlign: "left",
-                    fontWeight: name === nextFestivalInfo.name ? "bold" : "normal",
+                    fontWeight: name === nextFestivalInfo.name ? "500" : "normal",
                   }}>
                   {name}
                 </td>
                 <td
                   style={{
                     textAlign: "right",
-                    fontWeight: name === nextFestivalInfo.name ? "bold" : "normal",
+                    fontWeight: name === nextFestivalInfo.name ? "500" : "normal",
                   }}>
                   {date}
                 </td>
@@ -423,7 +423,7 @@ export default function FestivalCard({ location, tithiDay }) {
           {/* <p>{vedicTime}</p> */}
           <div className='panchangContainer'>
             <div>
-              <p>According to the panchang, this moment is {povoljnost.opis} for your sadhana.</p>
+              <p>According to all elements of panchang this moment is {povoljnost.opis}.</p>
               <h4>Purnimanta Panchang</h4>
               <span>
                 Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}

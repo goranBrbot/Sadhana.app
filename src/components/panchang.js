@@ -447,8 +447,6 @@ export default function Panchang(date, location) {
     return result;
   }
 
-  console.log(getTithiInfo(getTithi()));
-
   // Paksha - svijetla/tamna polovica mjeseca
   function getPaksha(system = "") {
     let tithi = getPakshaTithi(system);
@@ -469,7 +467,7 @@ export default function Panchang(date, location) {
     let masaIndex = Math.ceil(sunLongitude / 30) % 12; // 0-11
 
     // Tithi na izlasku Sunca
-    const tithiToday = getPakshaTithi(false);
+    const tithiToday = getPakshaTithi("Purnimanta");
 
     // Za Purnimanta: masa se mijenja na Purnimu (tithi 15)
     // Za Amanta: masa se mijenja na Amavasya (tithi 30)

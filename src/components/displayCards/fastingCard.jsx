@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { format, isSameDay } from "date-fns";
 import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
@@ -41,7 +40,7 @@ export default function FastingCard({ sunrise }) {
     const endStr = format(fullMoonEnd.date, "dd.MM. HH:mm");
 
     if (isToday) {
-      return `Purnima is today till ${format(fullMoonEnd.date, "HH:mm")}h`;
+      return <span className='aktivni'>Purnima is today till ${format(fullMoonEnd.date, "HH:mm")}h</span>;
     } else {
       return `Purnima ${startStr}h – ${endStr}h`;
     }
@@ -70,7 +69,7 @@ export default function FastingCard({ sunrise }) {
     const endStr = format(newMoonEnd.date, "dd.MM. HH:mm");
 
     if (isToday) {
-      return `Amavasya is today till ${format(newMoonEnd.date, "HH:mm")}h`;
+      return <span className='aktivni'>Amavasya is today till ${format(newMoonEnd.date, "HH:mm")}h</span>;
     } else {
       return `Amavasya ${startStr}h – ${endStr}h`;
     }
@@ -139,11 +138,11 @@ export default function FastingCard({ sunrise }) {
 
     // Ako je sada unutar Shukla Ekadashija
     if (now >= prevShuklaStart.date && now < prevShuklaEnd.date) {
-      return `Shukla Ekadashi is today till ${format(prevShuklaEnd.date, "HH:mm")}h`;
+      return <span className='aktivni'>Shukla Ekadashi is today till {format(prevShuklaEnd.date, "HH:mm")}h</span>;
     }
     // Ako je sada unutar Krishna Ekadashija
     if (now >= prevKrishnaStart.date && now < prevKrishnaEnd.date) {
-      return `Krishna Ekadashi is today till ${format(prevKrishnaEnd.date, "HH:mm")}h`;
+      return <span className='aktivni'>Krishna Ekadashi is today till {format(prevKrishnaEnd.date, "dd.MM. HH:mm")}h</span>;
     }
     // Inače, prikaži sljedeći ekadashi (onaj koji dolazi prije)
     const nextShuklaStart = SearchMoonPhase(120, now, 31);
