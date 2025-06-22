@@ -1171,6 +1171,7 @@ export default function Panchang(date, location) {
     Yoga: getYoga(),
     Karana: getKarana(),
     Var: getVara(),
+    sunriseOnDay: SearchRiseSet("Sun", location, +1, date, -1, 0.0).date,
   };
 }
 

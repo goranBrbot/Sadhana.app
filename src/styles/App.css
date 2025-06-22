@@ -333,15 +333,15 @@ tr:last-child td {
   right: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/backgrounds/fastingcard3.png");
-  background-position: bottom left;
+  background-image: url("/backgrounds/fastingcard.png");
+  background-position: top right;
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: 100%;
   border-radius: 8px;
-  opacity: 0.5;
+  opacity: 1;
   pointer-events: none;
   z-index: -1;
-  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 10%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%);
+  mask-image: linear-gradient(-135deg, rgba(0, 0, 0, 0.107) 0%, rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 1) 100%);
 }
 
 .card.festivalCard::before {
@@ -392,7 +392,7 @@ tr:last-child td {
 
 .aktivniInfo {
   position: absolute;
-  top: 42px;
+  top: 34px;
   right: 15px;
   width: auto;
   padding: 1px 8px;
@@ -435,7 +435,7 @@ tr:last-child td {
   visibility: hidden;
 }
 
-/* .bird {
+.bird {
   position: absolute;
   top: 15px;
   left: 120px;
@@ -460,7 +460,7 @@ tr:last-child td {
     opacity: 1;
     transform: scale(1) translateX(100vw) translateY(-50px);
   }
-} */
+}
 
 .quoteContainer {
   border: 1px solid rgba(255, 255, 255, 0.8);

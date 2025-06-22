@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { format, isSameDay, differenceInDays, formatDistanceStrict } from "date-fns";
+import { format, isSameDay, isAfter, addDays, differenceInDays, formatDistanceStrict } from "date-fns";
 import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
+import Panchang from "../panchang";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
-export default function FastingCard({ sunrise }) {
+export default function FastingCard({ sunrise, location }) {
   const [containerVisible, setContainerVisible] = useState(false);
 
   const toggleContainer = () => setContainerVisible(!containerVisible);
@@ -36,17 +37,17 @@ export default function FastingCard({ sunrise }) {
     const isSameVedicDay = isSameDay(sunrise, fullMoonEnd.date);
     const isToday = now >= sunrise && now < fullMoonEnd.date && isSameVedicDay;
 
-    const startStr = format(fullMoonStart.date, "dd.MM. HH:mm");
-    const endStr = format(fullMoonEnd.date, "dd.MM. HH:mm");
+    const startStr = format(fullMoonStart.date, "dd.MM HH:mm");
+    const endStr = format(fullMoonEnd.date, "dd.MM HH:mm");
 
     if (isToday) {
       return <span className='aktivni'>Purnima is today till ${format(fullMoonEnd.date, "HH:mm")}h</span>;
     } else {
       return (
         <div>
-          <span>Purnima is for {getTimeUntil(fullMoonStart.date, now)}</span> <br />
+          <span>Purnima is for {getTimeUntil(fullMoonStart.date, now)}.</span> <br />
           <span>
-            {startStr}h – {endStr}h
+            From {startStr}h till {endStr}h
           </span>
         </div>
       );
@@ -72,17 +73,17 @@ export default function FastingCard({ sunrise }) {
     const isSameVedicDay = isSameDay(sunrise, newMoonEnd.date);
     const isToday = now >= sunrise && now < newMoonEnd.date && isSameVedicDay;
 
-    const startStr = format(newMoonStart.date, "dd.MM. HH:mm");
-    const endStr = format(newMoonEnd.date, "dd.MM. HH:mm");
+    const startStr = format(newMoonStart.date, "dd.MM HH:mm");
+    const endStr = format(newMoonEnd.date, "dd.MM HH:mm");
 
     if (isToday) {
       return <span className='aktivni'>Amavasya is today till ${format(newMoonEnd.date, "HH:mm")}h</span>;
     } else {
       return (
         <div>
-          <span>Amavasya is for {getTimeUntil(newMoonStart.date, now)}</span> <br />
+          <span>Amavasya is for {getTimeUntil(newMoonStart.date, now)}.</span> <br />
           <span>
-            {startStr}h – {endStr}h
+            From {startStr}h till {endStr}h
           </span>
         </div>
       );
@@ -156,7 +157,7 @@ export default function FastingCard({ sunrise }) {
     }
     // Ako je sada unutar Krishna Ekadashija
     if (now >= prevKrishnaStart.date && now < prevKrishnaEnd.date) {
-      return <span className='aktivni'>Krishna Ekadashi is today till {format(prevKrishnaEnd.date, "dd.MM. HH:mm")}h</span>;
+      return <span className='aktivni'>Krishna Ekadashi is today till {format(prevKrishnaEnd.date, "HH:mm")}h</span>;
     }
     // Inače, prikaži sljedeći ekadashi (onaj koji dolazi prije)
     const nextShuklaStart = SearchMoonPhase(120, now, 31);
@@ -173,30 +174,34 @@ export default function FastingCard({ sunrise }) {
       nextEnd = nextKrishnaEnd;
       label = "Krishna Ekadashi";
     }
-    const startStr = format(nextStart.date, "dd.MM. HH:mm");
-    const endStr = format(nextEnd.date, "dd.MM. HH:mm");
+    const startStr = format(nextStart.date, "dd.MM HH:mm");
+    const endStr = format(nextEnd.date, "dd.MM HH:mm");
     return (
       <div>
         <span>
-          {label} is for {getTimeUntil(nextStart.date, now)}
+          {label} is for {getTimeUntil(nextStart.date, now)}.
         </span>
         <br />
         <span>
-          {startStr}h – {endStr}h
+          From {startStr}h till {endStr}h
         </span>
       </div>
     );
   }
 
-  // Funkcija za prikaz preostalog vremena do određenog datuma koristeći date-fns
+  // Funkcija za prikaz preostalog vremena do određenog datuma
   function getTimeUntil(targetDate, now = new Date()) {
-    const days = differenceInDays(targetDate, now);
+    const targetDateSunrise = Panchang(targetDate, location).sunriseOnDay;
+
+    // Ako je targetDate nakon izlaska sunca, pomakni ga na sutrašnji dan u isto vrijeme
+    const adjustedTarget = isAfter(targetDate, targetDateSunrise) ? addDays(targetDate, 1) : targetDate;
+
+    const days = differenceInDays(adjustedTarget, now);
+
     if (days > 0) {
-      // Prikaži samo dane
       return `${days} days`;
     } else {
-      // Ako je manje od 1 dan, koristi formatDistanceStrict za precizno vrijeme
-      return formatDistanceStrict(targetDate, now, { unit: "hour" });
+      return formatDistanceStrict(adjustedTarget, now, { unit: "hour" });
     }
   }
 
@@ -224,6 +229,7 @@ export default function FastingCard({ sunrise }) {
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
           <div className='fastingContainer'>
+            <p>According to tradition, observances of vrata or upavāsa should align with the corresponding tithi at sunrise.</p>
             <span>{purnima()}</span>
             <br />
             <span>{amavasya()}</span>
@@ -238,4 +244,5 @@ export default function FastingCard({ sunrise }) {
 
 FastingCard.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
+  location: PropTypes.object,
 };

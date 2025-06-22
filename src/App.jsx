@@ -216,7 +216,7 @@ function App() {
       <br />
       <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} />}</div>
       <br />
-      <div>{dataReady && <FastingCard sunrise={sunrise} />}</div>
+      <div>{dataReady && <FastingCard sunrise={sunrise} location={location} />}</div>
       {/* <footer>
         <small>Made with&nbsp;</small>
         <svg className='heart' viewBox='0 0 24 24' fill='tomato' xmlns='http://www.w3.org/2000/svg'>
