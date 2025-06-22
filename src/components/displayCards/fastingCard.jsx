@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format, isSameDay } from "date-fns";
+import { format, isSameDay, differenceInDays, formatDistanceStrict } from "date-fns";
 import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
@@ -42,7 +42,14 @@ export default function FastingCard({ sunrise }) {
     if (isToday) {
       return <span className='aktivni'>Purnima is today till ${format(fullMoonEnd.date, "HH:mm")}h</span>;
     } else {
-      return `Purnima ${startStr}h – ${endStr}h`;
+      return (
+        <div>
+          <span>Purnima is for {getTimeUntil(fullMoonStart.date, now)}</span> <br />
+          <span>
+            {startStr}h – {endStr}h
+          </span>
+        </div>
+      );
     }
   }
 
@@ -71,7 +78,14 @@ export default function FastingCard({ sunrise }) {
     if (isToday) {
       return <span className='aktivni'>Amavasya is today till ${format(newMoonEnd.date, "HH:mm")}h</span>;
     } else {
-      return `Amavasya ${startStr}h – ${endStr}h`;
+      return (
+        <div>
+          <span>Amavasya is for {getTimeUntil(newMoonStart.date, now)}</span> <br />
+          <span>
+            {startStr}h – {endStr}h
+          </span>
+        </div>
+      );
     }
   }
 
@@ -161,7 +175,29 @@ export default function FastingCard({ sunrise }) {
     }
     const startStr = format(nextStart.date, "dd.MM. HH:mm");
     const endStr = format(nextEnd.date, "dd.MM. HH:mm");
-    return `${label} ${startStr}h – ${endStr}h`;
+    return (
+      <div>
+        <span>
+          {label} is for {getTimeUntil(nextStart.date, now)}
+        </span>
+        <br />
+        <span>
+          {startStr}h – {endStr}h
+        </span>
+      </div>
+    );
+  }
+
+  // Funkcija za prikaz preostalog vremena do određenog datuma koristeći date-fns
+  function getTimeUntil(targetDate, now = new Date()) {
+    const days = differenceInDays(targetDate, now);
+    if (days > 0) {
+      // Prikaži samo dane
+      return `${days} days`;
+    } else {
+      // Ako je manje od 1 dan, koristi formatDistanceStrict za precizno vrijeme
+      return formatDistanceStrict(targetDate, now, { unit: "hour" });
+    }
   }
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -187,11 +223,13 @@ export default function FastingCard({ sunrise }) {
           </small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <span>{purnima()}</span>
-          <br />
-          <span>{amavasya()}</span>
-          <br />
-          <span>{ekadashi()}</span>
+          <div className='fastingContainer'>
+            <span>{purnima()}</span>
+            <br />
+            <span>{amavasya()}</span>
+            <br />
+            <span>{ekadashi()}</span>
+          </div>
         </div>
       </div>
     </motion.div>

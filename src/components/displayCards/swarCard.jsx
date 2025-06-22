@@ -136,24 +136,33 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
           {/* <img className='iconSwar' src='/icons/hinduism.png' alt='Air flow' /> */}
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <div>
-            <p>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</p>
+          <div className='swaraContainer'>
+            <div>
+              <span>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</span>
+              <br />
+              <span>Observe! Let your breath guide your actions, in tune with the cosmic flow.</span>
+            </div>
+            <br />
+            <div>
+              <ul>
+                {idaVremena.map((item, index) => (
+                  <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
+                ))}
+              </ul>
+              <ul>
+                {pingalaVremena.map((item, index) => (
+                  <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
+                ))}
+              </ul>
+              <span>
+                {remainingTime && (
+                  <span>
+                    Day starting nadi change for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
+                  </span>
+                )}
+              </span>
+            </div>
           </div>
-          <ul>
-            {idaVremena.map((item, index) => (
-              <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
-            ))}
-          </ul>
-          <ul>
-            {pingalaVremena.map((item, index) => (
-              <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
-            ))}
-          </ul>
-          {remainingTime && (
-            <span>
-              Nadi change for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
-            </span>
-          )}
         </div>
       </div>
     </motion.div>

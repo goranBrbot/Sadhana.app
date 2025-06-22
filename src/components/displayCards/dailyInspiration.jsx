@@ -519,11 +519,11 @@ export default function DailyInspiration() {
       <div className='card dailyInspirationCard'>
         <div className='topBar' onClick={toggleContainer} style={{ position: "relative" }}>
           <h3>Daily inspiration</h3>
-          <small>GURU QUOTES</small>
+          <small>GURU UPADESHA</small>
           <small className='aktivniInfo'>{selectedQuote.author.split(" ").slice(-1)[0]}</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
-          <blockquote className='quote' onClick={() => setSelectedQuote(getRandomQuote())}>
+          <blockquote className='quoteContainer' onClick={() => setSelectedQuote(getRandomQuote())}>
             <div>
               <span className='quoteMark'>&quot;</span>
               <span> {selectedQuote.quote} </span>
