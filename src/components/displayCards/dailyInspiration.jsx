@@ -519,7 +519,7 @@ export default function DailyInspiration() {
       <div className='card dailyInspirationCard'>
         <div className='topBar' onClick={toggleContainer} style={{ position: "relative" }}>
           <h3>Daily inspiration</h3>
-          <small>GURU UPADESHA</small>
+          <small>GURU VAKYA</small>
           <small className='aktivniInfo'>{selectedQuote.author.split(" ").slice(-1)[0]}</small>
         </div>
         <div className={`container ${containerVisible ? "visible" : "hidden"}`}>

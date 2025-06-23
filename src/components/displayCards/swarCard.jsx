@@ -139,8 +139,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
           <div className='swaraContainer'>
             <div>
               <span>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</span>
-              <br />
-              <span>Observe! Let your breath guide your actions, in tune with the cosmic flow.</span>
+              <span> Observe! Let your breath guide your actions, in tune with the cosmic flow.</span>
             </div>
             <br />
             <div>
