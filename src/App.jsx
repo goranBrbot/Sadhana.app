@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SearchRiseSet, PairLongitude } from "astronomy-engine";
 import GeoFindMe from "./components/geoLocation";
 import DayCard from "./components/displayCards/dayCard";
@@ -21,8 +21,44 @@ function App() {
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
   const [openCard, setOpenCard] = useState(null);
 
+  // Koristimo useRef za referenciranje DOM elemenata kartica
+  const dayCardRef = useRef(null);
+  const inspirationRef = useRef(null);
+  const swaraRef = useRef(null);
+  const choghadiyaRef = useRef(null);
+  const festivalRef = useRef(null);
+  const fastingRef = useRef(null);
+
+  const cardRefs = {
+    day: dayCardRef,
+    inspiration: inspirationRef,
+    swara: swaraRef,
+    choghadiya: choghadiyaRef,
+    festival: festivalRef,
+    fasting: fastingRef,
+  };
+
   const handleToggleCard = (cardName) => {
-    setOpenCard((prev) => (prev === cardName ? null : cardName));
+    setOpenCard((prev) => {
+      const next = prev === cardName ? null : cardName;
+      if (next) {
+        const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
+        const idx = cardOrder.indexOf(cardName);
+        if (idx > 0 && cardRefs[cardOrder[idx - 1]]?.current) {
+          setTimeout(() => {
+            const prevCard = cardRefs[cardOrder[idx - 1]].current;
+            const offset = 1; // px
+            const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
+            window.scrollTo({ top: scrollTo, behavior: "smooth" });
+          }, 100);
+        } else if (cardRefs[cardName]?.current) {
+          setTimeout(() => {
+            cardRefs[cardName].current.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 100);
+        }
+      }
+      return next;
+    });
   };
 
   // Custom install prompt event
@@ -211,7 +247,7 @@ function App() {
   return (
     <div>
       <GeoFindMe setLocation={handleLocationUpdate} />
-      <div>
+      <div ref={dayCardRef}>
         {dataReady && (
           <DayCard
             sunrise={sunrise}
@@ -226,15 +262,15 @@ function App() {
         )}
       </div>
       <br />
-      <div>{dataReady && <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />}</div>
+      <div ref={inspirationRef}>{dataReady && <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />}</div>
       <br />
-      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />}</div>
+      <div ref={swaraRef}>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />}</div>
       <br />
-      <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />}</div>
+      <div ref={choghadiyaRef}>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />}</div>
       <br />
-      <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />}</div>
+      <div ref={festivalRef}>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />}</div>
       <br />
-      <div>{dataReady && <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />}</div>
+      <div ref={fastingRef}>{dataReady && <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />}</div>
       {/* <footer>
         <small>Made with&nbsp;</small>
         <svg className='heart' viewBox='0 0 24 24' fill='tomato' xmlns='http://www.w3.org/2000/svg'>
