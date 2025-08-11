@@ -38,12 +38,11 @@ const FESTIVALS = [
   ["UN World Meditation Day", "21.12.", "Global observance encouraging Dhyana (meditation) as a universal path to inner peace and spiritual awakening."],
 ];
 
-export default function FestivalCard({ location, tithiDay }) {
+export default function FestivalCard({ location, tithiDay, isOpen, onToggle }) {
   const panchangData = Panchang(new Date(), location);
   //const vedicTime = GregorianToVedicTime(new Date(), location);
   //const obljetnicaMahasamadhi = FindGregorianDateFromVedic("Pauṣa", "Kṛṣṇa Pakṣa", "Caturthī", "Purnimanta", location);
 
-  const [containerVisible, setContainerVisible] = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [nextFestivalInfo, setNextFestivalInfo] = useState({
     name: "",
@@ -51,8 +50,6 @@ export default function FestivalCard({ location, tithiDay }) {
     timeRemaining: "",
     message: "",
   });
-
-  const toggleContainer = () => setContainerVisible(!containerVisible);
 
   // Funkcija za dohvat intervala festivala
   function getFestivalInterval(dateStr, year) {
@@ -131,6 +128,10 @@ export default function FestivalCard({ location, tithiDay }) {
       return time; // za slučaj kad je null ili undefined
     }
   }
+
+  useEffect(() => {
+    if (!isOpen) setShowTable(false);
+  }, [isOpen]);
 
   const festivalTable = () => (
     <div style={{ marginTop: "10px" }}>
@@ -412,12 +413,12 @@ export default function FestivalCard({ location, tithiDay }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card festivalCard'>
-        <div className='topBar' onClick={toggleContainer}>
+        <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & CALENDAR</small>
           <small className='aktivniInfo'>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</small>{" "}
         </div>
-        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
           {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
           {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
           {/* <p>{vedicTime}</p> */}
@@ -586,4 +587,6 @@ export default function FestivalCard({ location, tithiDay }) {
 FestivalCard.propTypes = {
   location: PropTypes.object,
   tithiDay: PropTypes.number,
+  isOpen: PropTypes.bool,
+  onToggle: PropTypes.func,
 };

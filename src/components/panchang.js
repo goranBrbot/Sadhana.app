@@ -6,8 +6,16 @@ export default function Panchang(date, location) {
   const pulledLocation = location;
   const SunRise = SearchRiseSet("Sun", pulledLocation, +1, new Date(date), -1, 0.0);
 
-  function getSiderealLong(ayanamsha = 24.21824) {
-    // Vrijednost Ayanamsha za 2024. godinu (Lahiri Ayanamsha)
+  function calcLahiriAyanamsha(date) {
+    const JD = 2440587.5 + date.getTime() / 86400000;
+    const T = (JD - 2451545.0) / 36525;
+    const precession = (5028.796195 * T + 1.1054348 * T * T) / 3600;
+    const lahiriBase = 23.51 + 1.396042 * T + 0.000308 * T * T;
+    return (lahiriBase + precession) % 360;
+  }
+
+  function getSiderealLong() {
+    const ayanamsha = calcLahiriAyanamsha(date);
     const sun = SunPosition(date);
     const moon = EclipticGeoMoon(date);
     const sunLongitudeSidereal = (sun.elon - ayanamsha + 360) % 360;
@@ -15,32 +23,33 @@ export default function Panchang(date, location) {
     return {
       sunLongitude: sunLongitudeSidereal,
       moonLongitude: moonLongitudeSidereal,
+      ayanamsha,
     };
   }
-  console.log(getSiderealLong());
 
   // -------------------------------------------------------------------------------------------
 
   // Izračunavanje Tithi od 1-30
   function getTithi() {
     const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
-    const tithi = Math.ceil(razlikaMoonSun / 12);
+    let tithi = Math.floor(razlikaMoonSun / 12) + 1;
+    if (razlikaMoonSun % 12 === 0 && razlikaMoonSun !== 0) {
+      tithi += 1;
+    }
+    if (tithi > 30) tithi = tithi % 30;
     return tithi;
   }
+  console.log(getTithi);
 
   // Paksha tithi - lunarni dan 1-15
-  function getPakshaTithi(system = "") {
-    const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
-    const tithi = Math.ceil(razlikaMoonSun / 12);
-    if (system === "Purnimanta") {
-      return ((tithi + 14) % 30) + 1;
-    }
-    return tithi; // amanta system
+  function getPakshaTithi() {
+    const tithi = getTithi();
+    return ((tithi - 1) % 15) + 1;
   }
 
   // Tithi info objekt - grupe tithija sa specifičnim kvalitetama (phala – plodovima)
   function getTithiInfo(tithiNumber) {
-    const tithiData = [
+    /*     const tithiData = [
       // u radu sa gpt
       {
         index: 1,
@@ -366,7 +375,7 @@ export default function Panchang(date, location) {
         notes: "Day for deep meditation, retreat, work with ancestors, end of cycle, new intention.",
       },
     ];
-    console.log(tithiData);
+    console.log(tithiData); */
 
     const tithiNames = [
       "Pratipadā",
@@ -463,15 +472,19 @@ export default function Panchang(date, location) {
   // lunarni mjesec u godini
   function getMasa(system = "") {
     const { sunLongitude } = getSiderealLong();
-    // Masa prema sideralnoj dužini Sunca (Chaitra = 1)
-    let masaIndex = Math.ceil(sunLongitude / 30) % 12; // 0-11
+    const tithiToday = getTithi();
+    console.log(tithiToday);
 
-    // Tithi na izlasku Sunca
-    const tithiToday = getPakshaTithi("Purnimanta");
+    // MasaIndex po sunLongitude
+    let masaIndex = Math.floor(sunLongitude / 30) % 12;
 
-    // Za Purnimanta: masa se mijenja na Purnimu (tithi 15)
-    // Za Amanta: masa se mijenja na Amavasya (tithi 30)
-    if ((system === "Purnimanta" && tithiToday > 15) || (system === "Amanta" && tithiToday === 30)) {
+    // U Purnimanta sistemu, masa se mijenja na tithi 16 (nakon Purnime)
+    if (system === "Purnimanta" && tithiToday > 15) {
+      masaIndex = (masaIndex + 1) % 12;
+    }
+
+    // U Amanta sistemu, masa se mijenja na tithi 1 (nakon Amavasye)
+    if (system === "Amanta" && tithiToday === 1) {
       masaIndex = (masaIndex + 1) % 12;
     }
 
@@ -479,6 +492,7 @@ export default function Panchang(date, location) {
 
     return masaNames[masaIndex];
   }
+  console.log(getMasa());
 
   // Lunarna godina (Vikram Samvat)
   function getSamvat() {
@@ -543,7 +557,7 @@ export default function Panchang(date, location) {
   }
 
   // sa weba https://vedictime.com/en/library/nakshatra
-  const nakshatras = [
+  /*   const nakshatras = [
     {
       number: 1,
       name: "Aswini",
@@ -1058,7 +1072,7 @@ export default function Panchang(date, location) {
       shaktiResult: "nourishment of the entire world",
     },
   ];
-  console.log(nakshatras);
+  console.log(nakshatras); */
 
   // Yoga - spajanje Mjeseca i Sunca
   function getYoga() {
@@ -1127,8 +1141,6 @@ export default function Panchang(date, location) {
   // Karana - polovina tithija
   function getKarana() {
     const razlikaMoonSun = PairLongitude("Moon", "Sun", new Date(date));
-    console.log(date, razlikaMoonSun);
-
     const karanaIndex = Math.ceil(razlikaMoonSun / 6); // 60 karana u mjesecu - Math.ceil prebacuje na početak karane a floor na kraj
 
     const karanaNames = ["Bava", "Bālava", "Kaulava", "Taitila", "Gara", "Vaṇija", "Vṛṣṭi"];
@@ -1163,7 +1175,7 @@ export default function Panchang(date, location) {
   return {
     TithiNum: getTithi(),
     TithiInfo: getTithiInfo(getTithi()),
-    Tithi: getPakshaTithi("Purnimanta"),
+    Tithi: getPakshaTithi(),
     Paksha: getPaksha("Purnimanta"),
     Masa: getMasa("Purnimanta"),
     Samvat: getSamvat(),

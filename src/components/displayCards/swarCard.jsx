@@ -3,16 +3,13 @@ import { format, add } from "date-fns";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
-const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
+const Swara = ({ sunrise, tithiDay, setSwaraText, isOpen, onToggle }) => {
   const idaDays = [1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21, 25, 26, 27];
   const pingalaDays = [4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24, 28, 29, 30];
 
   const [idaVremena, setIdaVremena] = useState([]);
   const [pingalaVremena, setPingalaVremena] = useState([]);
   const [remainingTime, setRemainingTime] = useState(null);
-  const [containerVisible, setContainerVisible] = useState(false);
-
-  const toggleContainer = () => setContainerVisible(!containerVisible);
 
   const swarVrijeme = (dan, lista, startVrijeme, trajanjeMinuta, brojElemenata) => {
     const rezultat = [];
@@ -128,14 +125,14 @@ const Swara = ({ sunrise, tithiDay, setSwaraText }) => {
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
       <div className='card swarCard'>
-        <div className='topBar' onClick={toggleContainer}>
+        <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Active nostril</h3>
           <small>SWARA YOGA</small>
           <small className='aktivniInfo'>{getCurrentSwara()}</small>
           {/* <img className='gurudevIcon' src='/backgrounds/gurudev.png' alt='Gurudev' /> */}
           {/* <img className='iconSwar' src='/icons/hinduism.png' alt='Air flow' /> */}
         </div>
-        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
           <div className='swaraContainer'>
             <div>
               <span>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</span>
@@ -177,4 +174,6 @@ Swara.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
   tithiDay: PropTypes.number,
   setSwaraText: PropTypes.func,
+  isOpen: PropTypes.bool,
+  onToggle: PropTypes.func,
 };

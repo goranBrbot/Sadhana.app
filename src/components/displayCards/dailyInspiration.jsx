@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { PropTypes } from "prop-types";
 
-export default function DailyInspiration() {
+export default function DailyInspiration({ isOpen, onToggle }) {
   const quotes = [
     { quote: "Love God with a pure heart.", author: "Sri Deep Narayan Mahaprabhuji" },
     {
@@ -510,19 +511,16 @@ export default function DailyInspiration() {
   }
 
   const [selectedQuote, setSelectedQuote] = useState(() => getRandomQuote());
-  const [containerVisible, setContainerVisible] = useState(false);
-
-  const toggleContainer = () => setContainerVisible(!containerVisible);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card dailyInspirationCard'>
-        <div className='topBar' onClick={toggleContainer} style={{ position: "relative" }}>
+        <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Daily inspiration</h3>
           <small>GURU VAKYA</small>
           <small className='aktivniInfo'>{selectedQuote.author.split(" ").slice(-1)[0]}</small>
         </div>
-        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
           <blockquote className='quoteContainer' onClick={() => setSelectedQuote(getRandomQuote())}>
             <div>
               <span className='quoteMark'>&quot;</span>
@@ -536,3 +534,8 @@ export default function DailyInspiration() {
     </motion.div>
   );
 }
+
+DailyInspiration.propTypes = {
+  isOpen: PropTypes.bool,
+  onToggle: PropTypes.func,
+};

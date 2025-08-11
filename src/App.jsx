@@ -19,6 +19,11 @@ function App() {
   const [dataReady, setDataReady] = useState(false);
   const [notificationSent, setNotificationSent] = useState(false);
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
+  const [openCard, setOpenCard] = useState(null);
+
+  const handleToggleCard = (cardName) => {
+    setOpenCard((prev) => (prev === cardName ? null : cardName));
+  };
 
   // Custom install prompt event
   useEffect(() => {
@@ -76,7 +81,11 @@ function App() {
     // Izračunavanje Tithi od 1-30
     function getTithi() {
       const razlikaMoonSun = PairLongitude("Moon", "Sun", SunRise.date);
-      const tithi = Math.ceil(razlikaMoonSun / 12);
+      let tithi = Math.floor(razlikaMoonSun / 12) + 1;
+      if (razlikaMoonSun % 12 === 0 && razlikaMoonSun !== 0) {
+        tithi += 1;
+      }
+      if (tithi > 30) tithi = tithi % 30;
       return tithi;
     }
 
@@ -204,19 +213,28 @@ function App() {
       <GeoFindMe setLocation={handleLocationUpdate} />
       <div>
         {dataReady && (
-          <DayCard sunrise={sunrise} sunset={sunset} location={location} locationName={locationName} installPromptEvent={installPromptEvent} setInstallPromptEvent={setInstallPromptEvent} />
+          <DayCard
+            sunrise={sunrise}
+            sunset={sunset}
+            location={location}
+            locationName={locationName}
+            installPromptEvent={installPromptEvent}
+            setInstallPromptEvent={setInstallPromptEvent}
+            isOpen={openCard === "day"}
+            onToggle={() => handleToggleCard("day")}
+          />
         )}
       </div>
       <br />
-      <div>{dataReady && <DailyInspiration />}</div>
+      <div>{dataReady && <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />}</div>
       <br />
-      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} />}</div>
+      <div>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />}</div>
       <br />
-      <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} />}</div>
+      <div>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />}</div>
       <br />
-      <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} />}</div>
+      <div>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />}</div>
       <br />
-      <div>{dataReady && <FastingCard sunrise={sunrise} location={location} />}</div>
+      <div>{dataReady && <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />}</div>
       {/* <footer>
         <small>Made with&nbsp;</small>
         <svg className='heart' viewBox='0 0 24 24' fill='tomato' xmlns='http://www.w3.org/2000/svg'>

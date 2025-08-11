@@ -1,15 +1,10 @@
-import { useState } from "react";
 import { format, isSameDay, isAfter, addDays, differenceInDays, formatDistanceStrict } from "date-fns";
 import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import Panchang from "../panchang";
 import { PropTypes } from "prop-types";
 import { motion } from "framer-motion";
 
-export default function FastingCard({ sunrise, location }) {
-  const [containerVisible, setContainerVisible] = useState(false);
-
-  const toggleContainer = () => setContainerVisible(!containerVisible);
-
+export default function FastingCard({ sunrise, location, isOpen, onToggle }) {
   function getElongation(date) {
     let elongation = EclipticLongitude("Moon", date);
     if (elongation < 0) {
@@ -211,7 +206,7 @@ export default function FastingCard({ sunrise, location }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card fastingCard'>
-        <div className='topBar' onClick={toggleContainer} style={{ position: "relative" }}>
+        <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Fasting days</h3>
           <small>VRAT & UPVAS</small>
           <small className='aktivniInfo'>
@@ -227,7 +222,7 @@ export default function FastingCard({ sunrise, location }) {
             ))}
           </small>
         </div>
-        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
           <div className='fastingContainer'>
             <p>According to tradition, observances of vrata or upavāsa should align with the corresponding tithi at sunrise.</p>
             <span>{purnima()}</span>
@@ -245,4 +240,6 @@ export default function FastingCard({ sunrise, location }) {
 FastingCard.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
   location: PropTypes.object,
+  isOpen: PropTypes.bool,
+  onToggle: PropTypes.func,
 };

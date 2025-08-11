@@ -130,13 +130,10 @@ const CHOGHADIYA_INFO = {
   },
 };
 
-const Choghadiya = ({ sunrise, sunset }) => {
+const Choghadiya = ({ sunrise, sunset, isOpen, onToggle }) => {
   const [dnevnaTablica, setDnevnaTablica] = useState([]);
   const [nocnaTablica, setNocnaTablica] = useState([]);
-  const [containerVisible, setContainerVisible] = useState(false);
   const [aktivnaChoghadiya, setAktivnaChoghadiya] = useState(null); // Dodano za aktivnu Choghadiya
-
-  const toggleContainer = () => setContainerVisible(!containerVisible);
 
   /* useEffect(() => {
     if (!sunrise || !sunset) return;
@@ -359,7 +356,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
       transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
     >
       <div className='card choghadiyaCard'>
-        <div className='topBar' onClick={toggleContainer}>
+        <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Best daily timings</h3>
           <small>CHOGHADIYA MUHURTA</small>
           {aktivnaChoghadiya && (
@@ -368,7 +365,7 @@ const Choghadiya = ({ sunrise, sunset }) => {
             </small>
           )}
         </div>
-        <div className={`container ${containerVisible ? "visible" : "hidden"}`}>
+        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
           {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
             <div className='muhurtaContainer'>
               <p>
@@ -398,4 +395,6 @@ export default Choghadiya;
 Choghadiya.propTypes = {
   sunrise: PropTypes.instanceOf(Date),
   sunset: PropTypes.instanceOf(Date),
+  isOpen: PropTypes.bool,
+  onToggle: PropTypes.func,
 };
