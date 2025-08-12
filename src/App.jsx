@@ -83,7 +83,7 @@ function App() {
       setScrollTarget(null);
     };
 
-    setTimeout(doScroll, 200);
+    setTimeout(doScroll, 400);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCard, scrollTarget]);
 
@@ -99,7 +99,7 @@ function App() {
           onUpdate: (value) => window.scrollTo(0, value),
         });
       };
-      setTimeout(() => scrollToY(0), 200);
+      setTimeout(() => scrollToY(0), 400);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCard]);
