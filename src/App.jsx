@@ -59,7 +59,7 @@ function App() {
     if (!openCard || !scrollTarget) return;
     const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
 
-    const scrollToY = (targetY, duration = 0.4, ease = [0.4, 0, 0.2, 1]) => {
+    const scrollToY = (targetY, duration = 0.8, ease = [0.4, 0, 0.2, 1]) => {
       const startY = window.scrollY;
       animate(startY, targetY, {
         duration,
@@ -91,7 +91,7 @@ function App() {
   useEffect(() => {
     if (openCard === null && scrollTarget === null) {
       // Scroll to top kad se zatvori kartica bez otvaranja druge
-      const scrollToY = (targetY, duration = 0.4, ease = [0.4, 0, 0.2, 1]) => {
+      const scrollToY = (targetY, duration = 0.8, ease = [0.4, 0, 0.2, 1]) => {
         const startY = window.scrollY;
         animate(startY, targetY, {
           duration,
