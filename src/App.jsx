@@ -66,19 +66,20 @@ function App() {
         onUpdate: (value) => window.scrollTo(0, value),
       });
     };
-
-    if (scrollTarget.type === "prev" && cardRefs[cardOrder[scrollTarget.idx - 1]]?.current) {
-      const prevCard = cardRefs[cardOrder[scrollTarget.idx - 1]].current;
-      const offset = 3;
-      const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
-      scrollToY(scrollTo, 1, [0.4, 0, 0.2, 1]);
-    } else if (scrollTarget.type === "self" && cardRefs[cardOrder[scrollTarget.idx]]?.current) {
-      const el = cardRefs[cardOrder[scrollTarget.idx]].current;
-      const targetY = el.getBoundingClientRect().top + window.scrollY;
-      scrollToY(targetY, 1, [0.4, 0, 0.2, 1]);
-    }
-    setScrollTarget(null);
-
+    const doScroll = () => {
+      if (scrollTarget.type === "prev" && cardRefs[cardOrder[scrollTarget.idx - 1]]?.current) {
+        const prevCard = cardRefs[cardOrder[scrollTarget.idx - 1]].current;
+        const offset = 5; // 5px offset for better visibility
+        const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
+        scrollToY(scrollTo, 1, [0.4, 0, 0.2, 1]);
+      } else if (scrollTarget.type === "self" && cardRefs[cardOrder[scrollTarget.idx]]?.current) {
+        const el = cardRefs[cardOrder[scrollTarget.idx]].current;
+        const targetY = el.getBoundingClientRect().top + window.scrollY;
+        scrollToY(targetY, 1, [0.4, 0, 0.2, 1]);
+      }
+      setScrollTarget(null);
+    };
+    setTimeout(doScroll, 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCard, scrollTarget]);
 
