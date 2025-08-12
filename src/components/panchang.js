@@ -39,7 +39,6 @@ export default function Panchang(date, location) {
     if (tithi > 30) tithi = tithi % 30;
     return tithi;
   }
-  console.log(getTithi);
 
   // Paksha tithi - lunarni dan 1-15
   function getPakshaTithi() {
@@ -457,42 +456,27 @@ export default function Panchang(date, location) {
   }
 
   // Paksha - svijetla/tamna polovica mjeseca
-  function getPaksha(system = "") {
-    let tithi = getPakshaTithi(system);
-    if (system === "Purnimanta") {
-      tithi = ((tithi + 14) % 30) + 1;
-    }
-    if (tithi <= 15) {
-      return "Śukla";
-    } else {
-      return "Kṛṣṇa";
-    }
+  function getPaksha() {
+    const tithi = getTithi();
+    return tithi <= 15 ? "Śukla" : "Kṛṣṇa";
   }
 
   // lunarni mjesec u godini
   function getMasa(system = "") {
     const { sunLongitude } = getSiderealLong();
     const tithiToday = getTithi();
-    console.log(tithiToday);
 
-    // MasaIndex po sunLongitude
-    let masaIndex = Math.floor(sunLongitude / 30) % 12;
-
-    // U Purnimanta sistemu, masa se mijenja na tithi 16 (nakon Purnime)
+    let masaIndex = Math.floor(sunLongitude / 30) + 1;
     if (system === "Purnimanta" && tithiToday > 15) {
       masaIndex = (masaIndex + 1) % 12;
     }
-
-    // U Amanta sistemu, masa se mijenja na tithi 1 (nakon Amavasye)
     if (system === "Amanta" && tithiToday === 1) {
       masaIndex = (masaIndex + 1) % 12;
     }
 
     const masaNames = ["Caitraḥ", "Vaiśākhaḥ", "Jyeṣṭhaḥ", "Āṣāḍhaḥ", "Śrāvaṇaḥ", "Bhādrapadaḥ", "Āśvinaḥ", "Kārtikaḥ", "Mārgaśīrṣaḥ", "Pauṣaḥ", "Māghaḥ", "Phālgunaḥ"];
-
     return masaNames[masaIndex];
   }
-  console.log(getMasa());
 
   // Lunarna godina (Vikram Samvat)
   function getSamvat() {
@@ -1176,7 +1160,7 @@ export default function Panchang(date, location) {
     TithiNum: getTithi(),
     TithiInfo: getTithiInfo(getTithi()),
     Tithi: getPakshaTithi(),
-    Paksha: getPaksha("Purnimanta"),
+    Paksha: getPaksha(),
     Masa: getMasa("Purnimanta"),
     Samvat: getSamvat(),
     Nakshatra: getNakshatra(),

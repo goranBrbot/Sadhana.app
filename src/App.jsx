@@ -21,7 +21,6 @@ function App() {
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
   const [openCard, setOpenCard] = useState(null);
 
-  // Koristimo useRef za referenciranje DOM elemenata kartica
   const dayCardRef = useRef(null);
   const inspirationRef = useRef(null);
   const swaraRef = useRef(null);
@@ -47,14 +46,14 @@ function App() {
         if (idx > 0 && cardRefs[cardOrder[idx - 1]]?.current) {
           setTimeout(() => {
             const prevCard = cardRefs[cardOrder[idx - 1]].current;
-            const offset = 1; // px
+            const offset = 3; // px
             const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
             window.scrollTo({ top: scrollTo, behavior: "smooth" });
-          }, 100);
+          }, 0);
         } else if (cardRefs[cardName]?.current) {
           setTimeout(() => {
             cardRefs[cardName].current.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 100);
+          }, 0);
         }
       }
       return next;
