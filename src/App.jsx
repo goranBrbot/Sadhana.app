@@ -8,6 +8,7 @@ import Swara from "./components/displayCards/swarCard";
 import Choghadiya from "./components/displayCards/choghadiya";
 import DailyInspiration from "./components/displayCards/dailyInspiration";
 import "./styles/App.css";
+import { animate } from "framer-motion";
 
 function App() {
   const [location, setLocation] = useState(null);
@@ -20,6 +21,7 @@ function App() {
   const [notificationSent, setNotificationSent] = useState(false);
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
   const [openCard, setOpenCard] = useState(null);
+  const [scrollTarget, setScrollTarget] = useState(null);
 
   const dayCardRef = useRef(null);
   const inspirationRef = useRef(null);
@@ -44,21 +46,39 @@ function App() {
         const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
         const idx = cardOrder.indexOf(cardName);
         if (idx > 0 && cardRefs[cardOrder[idx - 1]]?.current) {
-          setTimeout(() => {
-            const prevCard = cardRefs[cardOrder[idx - 1]].current;
-            const offset = 3; // px
-            const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
-            window.scrollTo({ top: scrollTo, behavior: "smooth" });
-          }, 0);
+          setScrollTarget({ type: "prev", idx });
         } else if (cardRefs[cardName]?.current) {
-          setTimeout(() => {
-            cardRefs[cardName].current.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 0);
+          setScrollTarget({ type: "self", idx });
         }
       }
       return next;
     });
   };
+
+  useEffect(() => {
+    if (!openCard || !scrollTarget) return;
+    const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
+    const scrollToY = (targetY, duration = 0.4, ease = [0.4, 0, 0.2, 1]) => {
+      const startY = window.scrollY;
+      animate(startY, targetY, {
+        duration,
+        ease,
+        onUpdate: (value) => window.scrollTo(0, value),
+      });
+    };
+
+    if (scrollTarget.type === "prev" && cardRefs[cardOrder[scrollTarget.idx - 1]]?.current) {
+      const prevCard = cardRefs[cardOrder[scrollTarget.idx - 1]].current;
+      const offset = 3;
+      const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
+      scrollToY(scrollTo, 1, [0.4, 0, 0.2, 1]);
+    } else if (scrollTarget.type === "self" && cardRefs[cardOrder[scrollTarget.idx]]?.current) {
+      const el = cardRefs[cardOrder[scrollTarget.idx]].current;
+      const targetY = el.getBoundingClientRect().top + window.scrollY;
+      scrollToY(targetY, 1, [0.4, 0, 0.2, 1]);
+    }
+    setScrollTarget(null); // reset
+  }, [openCard, scrollTarget]);
 
   // Custom install prompt event
   useEffect(() => {
