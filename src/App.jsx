@@ -77,7 +77,9 @@ function App() {
       const targetY = el.getBoundingClientRect().top + window.scrollY;
       scrollToY(targetY, 1, [0.4, 0, 0.2, 1]);
     }
-    setScrollTarget(null); // reset
+    setScrollTarget(null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCard, scrollTarget]);
 
   // Custom install prompt event
