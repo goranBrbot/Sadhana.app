@@ -430,7 +430,7 @@ tr:last-child td {
 .container.hidden {
   padding-top: 0;
   padding-bottom: 0;
-  height: 0;
+  max-height: 0;
   overflow: hidden;
   visibility: hidden;
 }

@@ -58,6 +58,7 @@ function App() {
   useEffect(() => {
     if (!openCard || !scrollTarget) return;
     const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
+
     const scrollToY = (targetY, duration = 0.4, ease = [0.4, 0, 0.2, 1]) => {
       const startY = window.scrollY;
       animate(startY, targetY, {
@@ -66,22 +67,42 @@ function App() {
         onUpdate: (value) => window.scrollTo(0, value),
       });
     };
+
     const doScroll = () => {
       if (scrollTarget.type === "prev" && cardRefs[cardOrder[scrollTarget.idx - 1]]?.current) {
         const prevCard = cardRefs[cardOrder[scrollTarget.idx - 1]].current;
-        const offset = 5; // 5px offset for better visibility
+        const offset = 5;
         const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
-        scrollToY(scrollTo, 1, [0.4, 0, 0.2, 1]);
+        scrollToY(scrollTo);
       } else if (scrollTarget.type === "self" && cardRefs[cardOrder[scrollTarget.idx]]?.current) {
         const el = cardRefs[cardOrder[scrollTarget.idx]].current;
         const targetY = el.getBoundingClientRect().top + window.scrollY;
-        scrollToY(targetY, 1, [0.4, 0, 0.2, 1]);
+        scrollToY(targetY);
       }
+
       setScrollTarget(null);
     };
-    setTimeout(doScroll, 100);
+
+    setTimeout(doScroll, 200);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openCard, scrollTarget]);
+
+  // useEffect za scroll to top kada se kartica zatvori
+  useEffect(() => {
+    if (openCard === null && scrollTarget === null) {
+      // Scroll to top kad se zatvori kartica bez otvaranja druge
+      const scrollToY = (targetY, duration = 0.4, ease = [0.4, 0, 0.2, 1]) => {
+        const startY = window.scrollY;
+        animate(startY, targetY, {
+          duration,
+          ease,
+          onUpdate: (value) => window.scrollTo(0, value),
+        });
+      };
+      setTimeout(() => scrollToY(0), 200);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openCard]);
 
   // Custom install prompt event
   useEffect(() => {
