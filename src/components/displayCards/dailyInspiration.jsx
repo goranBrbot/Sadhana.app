@@ -513,7 +513,7 @@ export default function DailyInspiration({ isOpen, onToggle }) {
   const [selectedQuote, setSelectedQuote] = useState(() => getRandomQuote());
 
   return (
-    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.2, duration: 0.3 }}>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
       <div className='card dailyInspirationCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Daily inspiration</h3>

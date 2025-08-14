@@ -7,7 +7,6 @@ import FestivalCard from "./components/displayCards/festivalCard";
 import Swara from "./components/displayCards/swarCard";
 import Choghadiya from "./components/displayCards/choghadiya";
 import DailyInspiration from "./components/displayCards/dailyInspiration";
-import { LayoutGroup, motion } from "framer-motion";
 import "./styles/App.css";
 
 function App() {
@@ -210,77 +209,45 @@ function App() {
   }, [location, publicVapidKey, dataReady, sunrise, tithiDay, swaraText, notificationSent]);
 
   return (
-    <LayoutGroup>
-      <div>
-        <GeoFindMe setLocation={handleLocationUpdate} />
-        {dataReady && (
-          <>
-            {/* DAY CARD */}
-            <motion.div
-              layoutId='card-day'
-              transition={{
-                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
-              }}>
-              <DayCard
-                sunrise={sunrise}
-                sunset={sunset}
-                location={location}
-                locationName={locationName}
-                installPromptEvent={installPromptEvent}
-                setInstallPromptEvent={setInstallPromptEvent}
-                isOpen={openCard === "day"}
-                onToggle={() => handleToggleCard("day")}
-              />
-            </motion.div>
-            <br />
-            {/* INSPIRATION CARD */}
-            <motion.div
-              layoutId='card-inspiration'
-              transition={{
-                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
-              }}>
-              <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />
-            </motion.div>
-            <br />
-            {/* SWARA CARD */}
-            <motion.div
-              layoutId='card-swara'
-              transition={{
-                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
-              }}>
-              <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />
-            </motion.div>{" "}
-            <br />
-            {/* CHOGHADIYA CARD */}
-            <motion.div
-              layoutId='card-choghadiya'
-              transition={{
-                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
-              }}>
-              <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />
-            </motion.div>
-            <br />
-            {/* FESTIVAL CARD */}
-            <motion.div
-              layoutId='card-festival'
-              transition={{
-                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
-              }}>
-              <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />
-            </motion.div>
-            <br />
-            {/* FASTING CARD */}
-            <motion.div
-              layoutId='card-fasting'
-              transition={{
-                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
-              }}>
-              <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />
-            </motion.div>
-          </>
-        )}
-      </div>
-    </LayoutGroup>
+    <div>
+      <GeoFindMe setLocation={handleLocationUpdate} />
+      {dataReady && (
+        <>
+          <div>
+            <DayCard
+              sunrise={sunrise}
+              sunset={sunset}
+              location={location}
+              locationName={locationName}
+              installPromptEvent={installPromptEvent}
+              setInstallPromptEvent={setInstallPromptEvent}
+              isOpen={openCard === "day"}
+              onToggle={() => handleToggleCard("day")}
+            />
+          </div>
+          <br />
+          <div>
+            <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />
+          </div>
+          <br />
+          <div>
+            <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />
+          </div>
+          <br />
+          <div>
+            <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />
+          </div>
+          <br />
+          <div>
+            <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />
+          </div>
+          <br />
+          <div>
+            <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

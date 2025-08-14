@@ -204,7 +204,7 @@ export default function FastingCard({ sunrise, location, isOpen, onToggle }) {
   const currentDay = format(new Date(), "EEE");
 
   return (
-    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.6, duration: 0.3 }}>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }}>
       <div className='card fastingCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Fasting days</h3>

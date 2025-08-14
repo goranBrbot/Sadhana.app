@@ -119,7 +119,7 @@ const Swara = ({ sunrise, tithiDay, setSwaraText, isOpen, onToggle }) => {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.3, duration: 0.3 }}>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className='card swarCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Active nostril</h3>

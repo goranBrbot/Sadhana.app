@@ -350,7 +350,7 @@ const Choghadiya = ({ sunrise, sunset, isOpen, onToggle }) => {
   console.log("Choghadiya data:", { dnevnaTablica, nocnaTablica });
 
   return (
-    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.4, duration: 0.3 }}>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }}>
       <div className='card choghadiyaCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Best daily timings</h3>
@@ -365,12 +365,7 @@ const Choghadiya = ({ sunrise, sunset, isOpen, onToggle }) => {
           {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
             <AnimatePresence>
               {isOpen && (
-                <motion.div
-                  className='muhurtaContainer'
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: 0.15, duration: 0.25 }}>
+                <motion.div className='muhurtaContainer' initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ delay: 0.15, duration: 0.25 }}>
                   <p>
                     Brahmamuhurta {brahmamuhurtaStart} - {brahmamuhurtaEnd}
                   </p>

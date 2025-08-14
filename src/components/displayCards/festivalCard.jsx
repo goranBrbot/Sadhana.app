@@ -411,7 +411,7 @@ export default function FestivalCard({ location, tithiDay, isOpen, onToggle }) {
   const povoljnost = postotakPovoljnosti(favorability.Tithi, favorability.Nakshatra, favorability.Yoga, favorability.Karana, favorability.Var);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.5, duration: 0.3 }}>
+    <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}>
       <div className='card festivalCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Upcoming festivals</h3>
