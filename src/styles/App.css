@@ -202,7 +202,7 @@ li:nth-child(-n + 1) {
 table {
   border-collapse: separate;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
   border-radius: 25px;
   overflow: hidden;
 }
@@ -411,28 +411,19 @@ tr:last-child td {
   padding-top: 16px;
   padding-left: 24px;
   padding-right: 24px;
-  padding-bottom: 16px;
+  padding-bottom: 11px;
   text-align: left;
 }
 
 .container {
   padding-top: 5px;
   padding-left: 24px;
-  padding-bottom: 16px;
   padding-right: 24px;
   transition: max-height 0.3s ease-out;
 }
 
-.container.visible {
-  visibility: visible;
-}
-
-.container.hidden {
-  padding-top: 0;
-  padding-bottom: 0;
-  max-height: 0;
-  overflow: hidden;
-  visibility: hidden;
+.container.expanded {
+  max-height: 1000px; /* dovoljno veliko da prikaže sadržaj */
 }
 
 .bird {
@@ -462,13 +453,17 @@ tr:last-child td {
   }
 }
 
+.dayContainer {
+  margin-bottom: 1em;
+}
+
 .quoteContainer {
   border: 1px solid rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(3px);
   will-change: opacity;
   border-radius: 25px;
   padding: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1.3em;
 }
 
 .quoteMark {
@@ -482,7 +477,7 @@ tr:last-child td {
   backdrop-filter: blur(3px);
   border-radius: 25px;
   padding: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1.3em;
 }
 
 .muhurtaContainer {
@@ -490,7 +485,7 @@ tr:last-child td {
   backdrop-filter: blur(3px);
   border-radius: 25px;
   padding: 1em;
-  margin-bottom: 1.5em;
+  margin-bottom: 1.3em;
 }
 
 .panchangContainer {
@@ -526,7 +521,6 @@ tr:last-child td {
 
 .calendarContainer {
   margin-top: 15px;
-  padding: 1em;
 }
 
 .fastingContainer {
@@ -535,7 +529,7 @@ tr:last-child td {
   will-change: opacity;
   border-radius: 25px;
   padding: 1em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1.3em;
 }
 
 .festivalButton {

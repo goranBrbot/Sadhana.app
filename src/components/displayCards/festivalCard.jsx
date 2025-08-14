@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { DateTime, Interval } from "luxon";
 import { PropTypes } from "prop-types";
 import Panchang from "../panchang";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { PolarArea, Doughnut } from "react-chartjs-2";
 import { Chart, RadialLinearScale, ArcElement, Tooltip, Legend } from "chart.js";
 Chart.register(RadialLinearScale, ArcElement, Tooltip, Legend);
@@ -134,7 +134,7 @@ export default function FestivalCard({ location, tithiDay, isOpen, onToggle }) {
   }, [isOpen]);
 
   const festivalTable = () => (
-    <div style={{ marginTop: "10px" }}>
+    <div style={{ marginBottom: "24px" }}>
       <div className='festivalButton' onClick={() => setShowTable((prev) => !prev)}>
         <h4>All festival dates in 2025</h4>
       </div>
@@ -411,174 +411,179 @@ export default function FestivalCard({ location, tithiDay, isOpen, onToggle }) {
   const povoljnost = postotakPovoljnosti(favorability.Tithi, favorability.Nakshatra, favorability.Yoga, favorability.Karana, favorability.Var);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
+    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.5, duration: 0.3 }}>
       <div className='card festivalCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Upcoming festivals</h3>
           <small>PANCHANG & CALENDAR</small>
           <small className='aktivniInfo'>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</small>{" "}
         </div>
-        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
-          {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
-          {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
-          {/* <p>{vedicTime}</p> */}
-          <div className='panchangContainer'>
-            <div>
-              <p>According to all elements of panchang this moment is {povoljnost.opis}.</p>
-              <h4>Purnimanta Panchang</h4>
-              <span>
-                Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}
-              </span>
-              <br /> {/* lunar day */}
-              <span>
-                Nakshatra<span style={{ fontWeight: 900, color: "rgb(255, 211, 71)" }}> •</span> {panchangData.Nakshatra}
-              </span>
-              <br /> {/* lunar constelation (house) */}
-              <span>
-                Yoga<span style={{ fontWeight: 900, color: "rgb(242, 142, 65)" }}> •</span> {panchangData.Yoga}
-              </span>
-              <br /> {/* Sun and Moon combination */}
-              <span>
-                Karana<span style={{ fontWeight: 900, color: "rgb(56, 76, 92)" }}> •</span> {panchangData.Karana}
-              </span>
-              <br /> {/* half of tithi */}
-              <span>
-                Vara<span style={{ fontWeight: 900, color: "rgb(104, 139, 169)" }}> •</span> {panchangData.Var}
-              </span>
-              <br /> {/* day of the week */}
-            </div>
-            <div className='panchangChart' style={{ width: "130px", height: "130px", backdropFilter: "blur(3px)" }}>
-              {/* Doughnut kao tanki prsten */}
-              <Doughnut
-                data={doughnutData}
-                options={doughnutOptions}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "130px",
-                  height: "130px",
-                  zIndex: 1,
-                  pointerEvents: "none",
-                }}
-              />
-              {/* PolarArea u sredini */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "10px",
-                  left: "10px",
-                  width: "110px",
-                  height: "110px",
-                  zIndex: 2,
-                  pointerEvents: "none",
-                }}>
-                <PolarArea data={polarData} options={polarOptions} />
-                {/* Transparentni krug u sredini */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "47.5px",
-                    left: "47.5px",
-                    width: "15px",
-                    height: "15px",
-                    borderRadius: "50%",
-                    background: "rgb(255,255,255)",
-                    zIndex: 10,
-                    pointerEvents: "none",
-                    boxShadow: "0 0 8px 2px rgba(255,255,255,0.7) inset",
-                  }}
-                />
-              </div>
-              {/* Svi graničnici u jednom SVG-u */}
-              <svg
-                width='130'
-                height='130'
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  pointerEvents: "none",
-                  zIndex: 4,
-                }}>
-                <defs>
-                  {panchangLabels.map((label, i) => {
-                    // Parametri kružnice
-                    const r = 47; // polumjer za tekst (unutar donata)
-                    const cx = 65;
-                    const cy = 65;
-                    // Kutovi za segment
-                    const startAngle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
-                    const endAngle = ((i + 1) / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
-                    // Početna i završna točka luka
-                    const x1 = cx + r * Math.cos(startAngle);
-                    const y1 = cy + r * Math.sin(startAngle);
-                    const x2 = cx + r * Math.cos(endAngle);
-                    const y2 = cy + r * Math.sin(endAngle);
-                    // Veliki luk (always 0 jer je <180deg)
-                    const largeArcFlag = 0;
-                    // Sweep flag (1 = "naprijed")
-                    const sweepFlag = 1;
-                    // Jedinstveni ID za svaki path
-                    const pathId = `arc-path-${i}`;
-                    return <path key={pathId} id={pathId} d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} ${sweepFlag} ${x2} ${y2}`} fill='none' />;
-                  })}
-                </defs>
-                {/* Graničnici */}
-                {panchangLabels.map((_, i) => {
-                  const angle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
-                  const x = 65 + 65 * Math.cos(angle);
-                  const y = 65 + 65 * Math.sin(angle);
-                  return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='2' strokeDasharray='0' />;
-                })}
-                {/* Tekst po kružnici */}
-                {/*                 {panchangLabels.map((label, i) => (
+        <motion.div className='container' initial={false} animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div className='panchangContainer' initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ delay: 0.15, duration: 0.25 }}>
+                {/* <img className='iconFestival' src='icons/puja.png' alt='Bell' /> */}
+                {/* <img className='iconFestival2' src='festivalIcons/durga.png' alt='Festival avatar' /> */}
+                {/* <p>{vedicTime}</p> */}
+                <div>
+                  <p>According to all elements of panchang this moment is {povoljnost.opis}.</p>
+                  <h4>Purnimanta Panchang</h4>
+                  <span>
+                    Tithi<span style={{ fontWeight: 900, color: "rgb(152, 202, 246)" }}> •</span> {panchangData.TithiInfo.tithiName}
+                  </span>
+                  <br /> {/* lunar day */}
+                  <span>
+                    Nakshatra<span style={{ fontWeight: 900, color: "rgb(255, 211, 71)" }}> •</span> {panchangData.Nakshatra}
+                  </span>
+                  <br /> {/* lunar constelation (house) */}
+                  <span>
+                    Yoga<span style={{ fontWeight: 900, color: "rgb(242, 142, 65)" }}> •</span> {panchangData.Yoga}
+                  </span>
+                  <br /> {/* Sun and Moon combination */}
+                  <span>
+                    Karana<span style={{ fontWeight: 900, color: "rgb(56, 76, 92)" }}> •</span> {panchangData.Karana}
+                  </span>
+                  <br /> {/* half of tithi */}
+                  <span>
+                    Vara<span style={{ fontWeight: 900, color: "rgb(104, 139, 169)" }}> •</span> {panchangData.Var}
+                  </span>
+                  <br /> {/* day of the week */}
+                </div>
+                <div className='panchangChart' style={{ width: "130px", height: "130px", backdropFilter: "blur(3px)" }}>
+                  {/* Doughnut kao tanki prsten */}
+                  <Doughnut
+                    data={doughnutData}
+                    options={doughnutOptions}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "130px",
+                      height: "130px",
+                      zIndex: 1,
+                      pointerEvents: "none",
+                    }}
+                  />
+                  {/* PolarArea u sredini */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      left: "10px",
+                      width: "110px",
+                      height: "110px",
+                      zIndex: 2,
+                      pointerEvents: "none",
+                    }}>
+                    <PolarArea data={polarData} options={polarOptions} />
+                    {/* Transparentni krug u sredini */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "47.5px",
+                        left: "47.5px",
+                        width: "15px",
+                        height: "15px",
+                        borderRadius: "50%",
+                        background: "rgb(255,255,255)",
+                        zIndex: 10,
+                        pointerEvents: "none",
+                        boxShadow: "0 0 8px 2px rgba(255,255,255,0.7) inset",
+                      }}
+                    />
+                  </div>
+                  {/* Svi graničnici u jednom SVG-u */}
+                  <svg
+                    width='130'
+                    height='130'
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      pointerEvents: "none",
+                      zIndex: 4,
+                    }}>
+                    <defs>
+                      {panchangLabels.map((label, i) => {
+                        // Parametri kružnice
+                        const r = 47; // polumjer za tekst (unutar donata)
+                        const cx = 65;
+                        const cy = 65;
+                        // Kutovi za segment
+                        const startAngle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
+                        const endAngle = ((i + 1) / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
+                        // Početna i završna točka luka
+                        const x1 = cx + r * Math.cos(startAngle);
+                        const y1 = cy + r * Math.sin(startAngle);
+                        const x2 = cx + r * Math.cos(endAngle);
+                        const y2 = cy + r * Math.sin(endAngle);
+                        // Veliki luk (always 0 jer je <180deg)
+                        const largeArcFlag = 0;
+                        // Sweep flag (1 = "naprijed")
+                        const sweepFlag = 1;
+                        // Jedinstveni ID za svaki path
+                        const pathId = `arc-path-${i}`;
+                        return <path key={pathId} id={pathId} d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} ${sweepFlag} ${x2} ${y2}`} fill='none' />;
+                      })}
+                    </defs>
+                    {/* Graničnici */}
+                    {panchangLabels.map((_, i) => {
+                      const angle = (i / panchangLabels.length) * 2 * Math.PI - Math.PI / 2;
+                      const x = 65 + 65 * Math.cos(angle);
+                      const y = 65 + 65 * Math.sin(angle);
+                      return <line key={i} x1='65' y1='65' x2={x} y2={y} stroke='#fff' strokeWidth='2' strokeDasharray='0' />;
+                    })}
+                    {/* Tekst po kružnici */}
+                    {/*                 {panchangLabels.map((label, i) => (
                   <text key={label} fontSize='8' fontWeight='bold' fill='rgba(88, 88, 88, 0.5)' textAnchor='middle' dominantBaseline='middle'>
                     <textPath href={`#arc-path-${i}`} startOffset='50%' alignmentBaseline='middle'>
                       {label}
                     </textPath>
                   </text>
                 ))} */}
-              </svg>
-            </div>
-          </div>
-          <div className='calendarContainer'>
-            <div className='moonPhase'>
-              <div>{getTithiMoonImage(tithiDay)}</div>
-              <div>
-                <span>
-                  {panchangData.Paksha} Pakṣa {panchangData.TithiInfo.tithiName}
-                </span>
-                {/* lunar waxing or waning */}
-                <br />
-                <span>
-                  {panchangData.Tithi} {panchangData.Masa} Māsa Tithi
-                </span>
-                {/* lunar month, purnimanta system*/}
-                <br />
-                <span>{panchangData.Samvat} Vikrama Samvata</span>
-                {/* lunar year */}
-              </div>
-            </div>
-            {nextFestivalInfo.name && (
-              <div>
-                <div style={{ marginTop: "35px", textAlign: "center", fontWeight: "500" }}>
-                  <span>{`${nextFestivalInfo.name}`}</span>
-                  <br />
-                  <span>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</span>
+                  </svg>
                 </div>
-                <br />
-                <div>
-                  {(() => {
-                    const fest = FESTIVALS.find((f) => f[0] === nextFestivalInfo.name);
-                    return fest ? fest[2] : "";
-                  })()}
-                </div>
-              </div>
+              </motion.div>
             )}
-          </div>
-          {festivalTable()}
-        </div>
+            <motion.div className='calendarContainer'>
+              <div className='moonPhase'>
+                <div>{getTithiMoonImage(tithiDay)}</div>
+                <div>
+                  <span>
+                    {panchangData.Paksha} Pakṣa {panchangData.TithiInfo.tithiName}
+                  </span>
+                  {/* lunar waxing or waning */}
+                  <br />
+                  <span>
+                    {panchangData.Tithi} {panchangData.Masa} Māsa Tithi
+                  </span>
+                  {/* lunar month, purnimanta system*/}
+                  <br />
+                  <span>{panchangData.Samvat} Vikrama Samvata</span>
+                  {/* lunar year */}
+                </div>
+              </div>
+              {nextFestivalInfo.name && (
+                <div>
+                  <div style={{ marginTop: "35px", textAlign: "center", fontWeight: "500" }}>
+                    <span>{`${nextFestivalInfo.name}`}</span>
+                    <br />
+                    <span>{nextFestivalInfo.message ? nextFestivalInfo.message : formatFestivalCountdown(nextFestivalInfo.daysRemaining, nextFestivalInfo.timeRemaining)}</span>
+                  </div>
+                  <br />
+                  <div>
+                    {(() => {
+                      const fest = FESTIVALS.find((f) => f[0] === nextFestivalInfo.name);
+                      return fest ? fest[2] : "";
+                    })()}
+                  </div>
+                  <br />
+                </div>
+              )}
+              {festivalTable()}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </motion.div>
   );

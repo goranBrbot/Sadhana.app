@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { PropTypes } from "prop-types";
 
 export default function DailyInspiration({ isOpen, onToggle }) {
@@ -513,23 +513,33 @@ export default function DailyInspiration({ isOpen, onToggle }) {
   const [selectedQuote, setSelectedQuote] = useState(() => getRandomQuote());
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
+    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.2, duration: 0.3 }}>
       <div className='card dailyInspirationCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Daily inspiration</h3>
           <small>GURU VAKYA</small>
           <small className='aktivniInfo'>{selectedQuote.author.split(" ").slice(-1)[0]}</small>
         </div>
-        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
-          <blockquote className='quoteContainer' onClick={() => setSelectedQuote(getRandomQuote())}>
-            <div>
-              <span className='quoteMark'>&quot;</span>
-              <span> {selectedQuote.quote} </span>
-              <span className='quoteMark'>&quot;</span>
-            </div>
-            <cite>- {selectedQuote.author}</cite>
-          </blockquote>
-        </div>
+        <motion.div className='container' initial={false} animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.blockquote
+                className='quoteContainer'
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ delay: 0.15, duration: 0.25 }}
+                onClick={() => setSelectedQuote(getRandomQuote())}>
+                <div>
+                  <span className='quoteMark'>&quot;</span>
+                  <span> {selectedQuote.quote} </span>
+                  <span className='quoteMark'>&quot;</span>
+                </div>
+                <cite>- {selectedQuote.author}</cite>
+              </motion.blockquote>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </motion.div>
   );

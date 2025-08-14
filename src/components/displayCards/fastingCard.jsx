@@ -2,7 +2,7 @@ import { format, isSameDay, isAfter, addDays, differenceInDays, formatDistanceSt
 import { EclipticLongitude, SearchMoonPhase } from "astronomy-engine";
 import Panchang from "../panchang";
 import { PropTypes } from "prop-types";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function FastingCard({ sunrise, location, isOpen, onToggle }) {
   function getElongation(date) {
@@ -204,7 +204,7 @@ export default function FastingCard({ sunrise, location, isOpen, onToggle }) {
   const currentDay = format(new Date(), "EEE");
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
+    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.6, duration: 0.3 }}>
       <div className='card fastingCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Fasting days</h3>
@@ -222,16 +222,20 @@ export default function FastingCard({ sunrise, location, isOpen, onToggle }) {
             ))}
           </small>
         </div>
-        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
-          <div className='fastingContainer'>
-            <p>According to tradition, observances of vrata or upavāsa should align with the corresponding tithi at sunrise.</p>
-            <span>{purnima()}</span>
-            <br />
-            <span>{amavasya()}</span>
-            <br />
-            <span>{ekadashi()}</span>
-          </div>
-        </div>
+        <motion.div className='container' initial={false} animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div className='fastingContainer' initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ delay: 0.15, duration: 0.25 }}>
+                <p>According to tradition, observances of vrata or upavāsa should align with the corresponding tithi at sunrise.</p>
+                <span>{purnima()}</span>
+                <br />
+                <span>{amavasya()}</span>
+                <br />
+                <span>{ekadashi()}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </motion.div>
   );

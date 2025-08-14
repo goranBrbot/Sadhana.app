@@ -8,7 +8,7 @@ import Swara from "./components/displayCards/swarCard";
 import Choghadiya from "./components/displayCards/choghadiya";
 import DailyInspiration from "./components/displayCards/dailyInspiration";
 import "./styles/App.css";
-import { animate } from "framer-motion";
+import { animate, LayoutGroup, motion } from "framer-motion";
 
 function App() {
   const [location, setLocation] = useState(null);
@@ -288,33 +288,107 @@ function App() {
   }, [location, publicVapidKey, dataReady, sunrise, tithiDay, swaraText, notificationSent]);
 
   return (
-    <div>
-      <GeoFindMe setLocation={handleLocationUpdate} />
-      <div ref={dayCardRef}>
+    <LayoutGroup>
+      <div>
+        <GeoFindMe setLocation={handleLocationUpdate} />
         {dataReady && (
-          <DayCard
-            sunrise={sunrise}
-            sunset={sunset}
-            location={location}
-            locationName={locationName}
-            installPromptEvent={installPromptEvent}
-            setInstallPromptEvent={setInstallPromptEvent}
-            isOpen={openCard === "day"}
-            onToggle={() => handleToggleCard("day")}
-          />
+          <>
+            {/* DAY CARD */}
+            <motion.div
+              ref={dayCardRef}
+              layoutId='card-day'
+              transition={{
+                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
+              }}>
+              <DayCard
+                sunrise={sunrise}
+                sunset={sunset}
+                location={location}
+                locationName={locationName}
+                installPromptEvent={installPromptEvent}
+                setInstallPromptEvent={setInstallPromptEvent}
+                isOpen={openCard === "day"}
+                onToggle={() => handleToggleCard("day")}
+              />
+            </motion.div>
+            <br />
+            {/* INSPIRATION CARD */}
+            <motion.div
+              ref={inspirationRef}
+              layoutId='card-inspiration'
+              transition={{
+                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
+              }}>
+              <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />
+            </motion.div>
+            <br />
+            {/* SWARA CARD */}
+            <motion.div
+              ref={swaraRef}
+              layoutId='card-swara'
+              transition={{
+                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
+              }}>
+              <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />
+            </motion.div>{" "}
+            <br />
+            {/* CHOGHADIYA CARD */}
+            <motion.div
+              ref={choghadiyaRef}
+              layoutId='card-choghadiya'
+              transition={{
+                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
+              }}>
+              <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />
+            </motion.div>
+            <br />
+            {/* FESTIVAL CARD */}
+            <motion.div
+              ref={festivalRef}
+              layoutId='card-festival'
+              transition={{
+                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
+              }}>
+              <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />
+            </motion.div>
+            <br />
+            {/* FASTING CARD */}
+            <motion.div
+              ref={fastingRef}
+              layoutId='card-fasting'
+              transition={{
+                layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
+              }}>
+              <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />
+            </motion.div>
+          </>
         )}
-      </div>
-      <br />
-      <div ref={inspirationRef}>{dataReady && <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />}</div>
-      <br />
-      <div ref={swaraRef}>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />}</div>
-      <br />
-      <div ref={choghadiyaRef}>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />}</div>
-      <br />
-      <div ref={festivalRef}>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />}</div>
-      <br />
-      <div ref={fastingRef}>{dataReady && <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />}</div>
-      {/* <footer>
+        {/*         <div ref={dayCardRef}>
+          {dataReady && (
+            <DayCard
+              sunrise={sunrise}
+              sunset={sunset}
+              location={location}
+              locationName={locationName}
+              installPromptEvent={installPromptEvent}
+              setInstallPromptEvent={setInstallPromptEvent}
+              isOpen={openCard === "day"}
+              onToggle={() => handleToggleCard("day")}
+            />
+          )}
+        </div>
+        <br />
+        <div ref={inspirationRef}>{dataReady && <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />}</div>
+        <br />
+        <div ref={swaraRef}>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />}</div>
+        <br />
+        <div ref={choghadiyaRef}>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />}</div>
+        <br />
+        <div ref={festivalRef}>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />}</div>
+        <br />
+        <div ref={fastingRef}>{dataReady && <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />}</div>
+ */}{" "}
+        {/* <footer>
         <small>Made with&nbsp;</small>
         <svg className='heart' viewBox='0 0 24 24' fill='tomato' xmlns='http://www.w3.org/2000/svg'>
           <path
@@ -327,7 +401,8 @@ function App() {
         </svg>
         <small>&nbsp;just for you!</small>
       </footer> */}
-    </div>
+      </div>
+    </LayoutGroup>
   );
 }
 

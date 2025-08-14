@@ -59,11 +59,7 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }} // Initial state (invisible)
-      animate={{ opacity: 1 }} // Animation to apply (fade in)
-      transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
-    >
+    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.1, duration: 0.3 }}>
       <div className='card dayCard'>
         <React.Fragment>
           <img className='iconSun' src='icons/sun.png' alt='Sun' onClick={handleClickOpen} />
@@ -376,7 +372,7 @@ export default function DayCard({ sunrise, sunset, location, locationName, insta
           <h3>Basic information</h3>
           <small>BY YOUR LOCATION</small>
         </div>
-        <div className='container'>
+        <div className='container dayContainer'>
           {/* <div className='bird'></div> */}
           <span>{todayDayDate}</span>
           <br />

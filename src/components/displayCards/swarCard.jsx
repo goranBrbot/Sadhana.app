@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { format, add } from "date-fns";
 import { PropTypes } from "prop-types";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Swara = ({ sunrise, tithiDay, setSwaraText, isOpen, onToggle }) => {
   const idaDays = [1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21, 25, 26, 27];
@@ -119,47 +119,45 @@ const Swara = ({ sunrise, tithiDay, setSwaraText, isOpen, onToggle }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }} // Initial state (invisible)
-      animate={{ opacity: 1 }} // Animation to apply (fade in)
-      transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
-    >
+    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.3, duration: 0.3 }}>
       <div className='card swarCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Active nostril</h3>
           <small>SWARA YOGA</small>
           <small className='aktivniInfo'>{getCurrentSwara()}</small>
-          {/* <img className='gurudevIcon' src='/backgrounds/gurudev.png' alt='Gurudev' /> */}
-          {/* <img className='iconSwar' src='/icons/hinduism.png' alt='Air flow' /> */}
         </div>
-        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
-          <div className='swaraContainer'>
-            <div>
-              <span>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</span>
-              <span> Observe! Let your breath guide your actions ..</span>
-            </div>
-            <br />
-            <div>
-              <ul>
-                {idaVremena.map((item, index) => (
-                  <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
-                ))}
-              </ul>
-              <ul>
-                {pingalaVremena.map((item, index) => (
-                  <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
-                ))}
-              </ul>
-              <span>
-                {remainingTime && (
+        <motion.div className='container' initial={false} animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div className='swaraContainer' initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ delay: 0.15, duration: 0.25 }}>
+                <div>
+                  <span>{idaDays.includes(tithiDay) ? `Day start with left nostril, Ida nadi.` : pingalaDays.includes(tithiDay) ? `Day start with right nostril, pingala nadi.` : "Swara"}</span>
+                  <span> Observe! Let your breath guide your actions ..</span>
+                </div>
+                <br />
+                <div>
+                  <ul>
+                    {idaVremena.map((item, index) => (
+                      <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
+                    ))}
+                  </ul>
+                  <ul>
+                    {pingalaVremena.map((item, index) => (
+                      <li key={index}>{`${item.sequence} nadi start at ${format(item.start, "kk:mm'h'")} till ${format(item.end, "kk:mm'h'")}`}</li>
+                    ))}
+                  </ul>
                   <span>
-                    Day starting nadi change for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
+                    {remainingTime && (
+                      <span>
+                        Day starting nadi change for {twoDigits(remainingTime.hours)}:{twoDigits(remainingTime.minutes)}h
+                      </span>
+                    )}
                   </span>
-                )}
-              </span>
-            </div>
-          </div>
-        </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </motion.div>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { addDays, differenceInMilliseconds, addMilliseconds, getDay } from "date-fns";
 import { format, addMinutes } from "date-fns";
 import { PropTypes } from "prop-types";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const PLANETARY_MAP = {
   0: {
@@ -350,11 +350,7 @@ const Choghadiya = ({ sunrise, sunset, isOpen, onToggle }) => {
   console.log("Choghadiya data:", { dnevnaTablica, nocnaTablica });
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }} // Initial state (invisible)
-      animate={{ opacity: 1 }} // Animation to apply (fade in)
-      transition={{ delay: 0.3, duration: 0.5 }} // Duration of the animation
-    >
+    <motion.div initial={{ opacity: 0, y: 27 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 27 }} transition={{ delay: 0.4, duration: 0.3 }}>
       <div className='card choghadiyaCard'>
         <div className='topBar' onClick={onToggle} style={{ position: "relative" }}>
           <h3>Best daily timings</h3>
@@ -365,26 +361,35 @@ const Choghadiya = ({ sunrise, sunset, isOpen, onToggle }) => {
             </small>
           )}
         </div>
-        <div className={`container ${isOpen ? "visible" : "hidden"}`}>
+        <motion.div className='container' initial={false} animate={isOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }}>
           {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
-            <div className='muhurtaContainer'>
-              <p>
-                Brahmamuhurta {brahmamuhurtaStart} - {brahmamuhurtaEnd}
-              </p>
-              <span className='aktivni'>Active muhurta | {CHOGHADIYA_INFO[aktivnaChoghadiya].title}</span> <br />
-              <span>
-                {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler} | {CHOGHADIYA_INFO[aktivnaChoghadiya].tatva} | {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
-              </span>
-            </div>
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  className='muhurtaContainer'
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: 0.15, duration: 0.25 }}>
+                  <p>
+                    Brahmamuhurta {brahmamuhurtaStart} - {brahmamuhurtaEnd}
+                  </p>
+                  <span className='aktivni'>Active muhurta | {CHOGHADIYA_INFO[aktivnaChoghadiya].title}</span> <br />
+                  <span>
+                    {CHOGHADIYA_INFO[aktivnaChoghadiya].rulerIcon} {CHOGHADIYA_INFO[aktivnaChoghadiya].ruler} | {CHOGHADIYA_INFO[aktivnaChoghadiya].tatva} | {CHOGHADIYA_INFO[aktivnaChoghadiya].guna}
+                  </span>
+                </motion.div>
+              )}
+              {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
+                <div>
+                  {/* <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p> */}
+                  {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")}
+                  {renderTablica(nocnaTablica, "NIGHT CHOGHADIYA")}
+                </div>
+              )}
+            </AnimatePresence>
           )}
-          {CHOGHADIYA_INFO[aktivnaChoghadiya] && (
-            <div>
-              {/* <p>{CHOGHADIYA_INFO[aktivnaChoghadiya].description}</p> */}
-              {renderTablica(dnevnaTablica, "DAY CHOGHADIYA")} <br />
-              {renderTablica(nocnaTablica, "NIGHT CHOGHADIYA")}
-            </div>
-          )}
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
