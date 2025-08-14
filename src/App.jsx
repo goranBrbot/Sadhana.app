@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { SearchRiseSet, PairLongitude } from "astronomy-engine";
 import GeoFindMe from "./components/geoLocation";
 import DayCard from "./components/displayCards/dayCard";
@@ -7,8 +7,8 @@ import FestivalCard from "./components/displayCards/festivalCard";
 import Swara from "./components/displayCards/swarCard";
 import Choghadiya from "./components/displayCards/choghadiya";
 import DailyInspiration from "./components/displayCards/dailyInspiration";
+import { LayoutGroup, motion } from "framer-motion";
 import "./styles/App.css";
-import { animate, LayoutGroup, motion } from "framer-motion";
 
 function App() {
   const [location, setLocation] = useState(null);
@@ -21,88 +21,10 @@ function App() {
   const [notificationSent, setNotificationSent] = useState(false);
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
   const [openCard, setOpenCard] = useState(null);
-  const [scrollTarget, setScrollTarget] = useState(null);
-
-  const dayCardRef = useRef(null);
-  const inspirationRef = useRef(null);
-  const swaraRef = useRef(null);
-  const choghadiyaRef = useRef(null);
-  const festivalRef = useRef(null);
-  const fastingRef = useRef(null);
-
-  const cardRefs = {
-    day: dayCardRef,
-    inspiration: inspirationRef,
-    swara: swaraRef,
-    choghadiya: choghadiyaRef,
-    festival: festivalRef,
-    fasting: fastingRef,
-  };
 
   const handleToggleCard = (cardName) => {
-    setOpenCard((prev) => {
-      const next = prev === cardName ? null : cardName;
-      if (next) {
-        const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
-        const idx = cardOrder.indexOf(cardName);
-        if (idx > 0 && cardRefs[cardOrder[idx - 1]]?.current) {
-          setScrollTarget({ type: "prev", idx });
-        } else if (cardRefs[cardName]?.current) {
-          setScrollTarget({ type: "self", idx });
-        }
-      }
-      return next;
-    });
+    setOpenCard((prev) => (prev === cardName ? null : cardName));
   };
-
-  useEffect(() => {
-    if (!openCard || !scrollTarget) return;
-    const cardOrder = ["day", "inspiration", "swara", "choghadiya", "festival", "fasting"];
-
-    const scrollToY = (targetY, duration = 0.8, ease = [0.4, 0, 0.2, 1]) => {
-      const startY = window.scrollY;
-      animate(startY, targetY, {
-        duration,
-        ease,
-        onUpdate: (value) => window.scrollTo(0, value),
-      });
-    };
-
-    const doScroll = () => {
-      if (scrollTarget.type === "prev" && cardRefs[cardOrder[scrollTarget.idx - 1]]?.current) {
-        const prevCard = cardRefs[cardOrder[scrollTarget.idx - 1]].current;
-        const offset = 5;
-        const scrollTo = prevCard.getBoundingClientRect().bottom + window.scrollY + offset;
-        scrollToY(scrollTo);
-      } else if (scrollTarget.type === "self" && cardRefs[cardOrder[scrollTarget.idx]]?.current) {
-        const el = cardRefs[cardOrder[scrollTarget.idx]].current;
-        const targetY = el.getBoundingClientRect().top + window.scrollY;
-        scrollToY(targetY);
-      }
-
-      setScrollTarget(null);
-    };
-
-    setTimeout(doScroll, 400);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openCard, scrollTarget]);
-
-  // useEffect za scroll to top kada se kartica zatvori
-  useEffect(() => {
-    if (openCard === null && scrollTarget === null) {
-      // Scroll to top kad se zatvori kartica bez otvaranja druge
-      const scrollToY = (targetY, duration = 0.8, ease = [0.4, 0, 0.2, 1]) => {
-        const startY = window.scrollY;
-        animate(startY, targetY, {
-          duration,
-          ease,
-          onUpdate: (value) => window.scrollTo(0, value),
-        });
-      };
-      setTimeout(() => scrollToY(0), 400);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openCard]);
 
   // Custom install prompt event
   useEffect(() => {
@@ -295,7 +217,6 @@ function App() {
           <>
             {/* DAY CARD */}
             <motion.div
-              ref={dayCardRef}
               layoutId='card-day'
               transition={{
                 layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
@@ -314,7 +235,6 @@ function App() {
             <br />
             {/* INSPIRATION CARD */}
             <motion.div
-              ref={inspirationRef}
               layoutId='card-inspiration'
               transition={{
                 layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
@@ -324,7 +244,6 @@ function App() {
             <br />
             {/* SWARA CARD */}
             <motion.div
-              ref={swaraRef}
               layoutId='card-swara'
               transition={{
                 layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
@@ -334,7 +253,6 @@ function App() {
             <br />
             {/* CHOGHADIYA CARD */}
             <motion.div
-              ref={choghadiyaRef}
               layoutId='card-choghadiya'
               transition={{
                 layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
@@ -344,7 +262,6 @@ function App() {
             <br />
             {/* FESTIVAL CARD */}
             <motion.div
-              ref={festivalRef}
               layoutId='card-festival'
               transition={{
                 layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
@@ -354,7 +271,6 @@ function App() {
             <br />
             {/* FASTING CARD */}
             <motion.div
-              ref={fastingRef}
               layoutId='card-fasting'
               transition={{
                 layout: { duration: 0.3, ease: [0.2, 0, 0, 1] },
@@ -363,44 +279,6 @@ function App() {
             </motion.div>
           </>
         )}
-        {/*         <div ref={dayCardRef}>
-          {dataReady && (
-            <DayCard
-              sunrise={sunrise}
-              sunset={sunset}
-              location={location}
-              locationName={locationName}
-              installPromptEvent={installPromptEvent}
-              setInstallPromptEvent={setInstallPromptEvent}
-              isOpen={openCard === "day"}
-              onToggle={() => handleToggleCard("day")}
-            />
-          )}
-        </div>
-        <br />
-        <div ref={inspirationRef}>{dataReady && <DailyInspiration isOpen={openCard === "inspiration"} onToggle={() => handleToggleCard("inspiration")} />}</div>
-        <br />
-        <div ref={swaraRef}>{dataReady && <Swara sunrise={sunrise} tithiDay={tithiDay} setSwaraText={updateSwaraText} isOpen={openCard === "swara"} onToggle={() => handleToggleCard("swara")} />}</div>
-        <br />
-        <div ref={choghadiyaRef}>{dataReady && <Choghadiya sunrise={sunrise} sunset={sunset} isOpen={openCard === "choghadiya"} onToggle={() => handleToggleCard("choghadiya")} />}</div>
-        <br />
-        <div ref={festivalRef}>{dataReady && <FestivalCard location={location} tithiDay={tithiDay} isOpen={openCard === "festival"} onToggle={() => handleToggleCard("festival")} />}</div>
-        <br />
-        <div ref={fastingRef}>{dataReady && <FastingCard sunrise={sunrise} location={location} isOpen={openCard === "fasting"} onToggle={() => handleToggleCard("fasting")} />}</div>
- */}{" "}
-        {/* <footer>
-        <small>Made with&nbsp;</small>
-        <svg className='heart' viewBox='0 0 24 24' fill='tomato' xmlns='http://www.w3.org/2000/svg'>
-          <path
-            d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-             2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
-             C13.09 3.81 14.76 3 16.5 3
-             19.58 3 22 5.42 22 8.5
-             c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
-          />
-        </svg>
-        <small>&nbsp;just for you!</small>
-      </footer> */}
       </div>
     </LayoutGroup>
   );
